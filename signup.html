@@ -1,0 +1,2516 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up — COSMIC GALAXY</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --earth-blue: #4a90e2;
+            --mars-red: #e74c3c;
+            --bg-dark: #0a0a0f;
+            --bg-card: #1a1a24;
+            --text-primary: #fff;
+            --text-secondary: #888899;
+            --border: rgba(255, 255, 255, 0.1);
+            --grid-color: rgba(255, 255, 255, 0.03)
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            min-height: 100vh
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(var(--grid-color) 1px, transparent 1px), linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0
+        }
+
+        .stars::before,
+        .stars::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            box-shadow: 120px 80px white, 230px 160px white, 340px 60px white, 450px 210px white, 560px 110px white, 670px 260px white, 780px 140px white, 890px 70px white, 980px 220px white, 1100px 90px white, 1200px 170px white, 60px 320px white, 180px 430px white, 290px 510px white, 400px 370px white, 510px 460px white, 620px 290px white, 1310px 190px white, 740px 90px white, 860px 330px white, 990px 450px white, 200px 570px white, 1080px 390px white, 1360px 280px white, 1450px 140px white;
+            animation: twinkle 5s infinite
+        }
+
+        .stars::after {
+            animation-delay: 2.5s
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: .3
+            }
+
+            50% {
+                opacity: 1
+            }
+        }
+
+        .announcement-bar {
+            background: var(--earth-blue);
+            text-align: center;
+            padding: 8px 20px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1001;
+            color: white
+        }
+
+        .announcement-bar a {
+            color: white;
+            text-decoration: underline;
+            margin-left: 10px;
+            cursor: pointer
+        }
+
+        .navbar {
+            position: fixed;
+            top: 36px;
+            width: 100%;
+            background: rgba(10, 10, 15, .97);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            transition: all .3s
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 19px;
+            font-weight: 900;
+            color: var(--earth-blue);
+            text-decoration: none;
+            letter-spacing: 1px
+        }
+
+        .logo-dot {
+            width: 7px;
+            height: 7px;
+            background: var(--earth-blue);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+            display: inline-block
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1)
+            }
+
+            50% {
+                opacity: .5;
+                transform: scale(1.5)
+            }
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 34px;
+            list-style: none
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: color .3s;
+            position: relative
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--earth-blue);
+            transition: width .3s
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary)
+        }
+
+        .nav-link:hover::after {
+            width: 100%
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center
+        }
+
+        .btn-nav {
+            padding: 8px 20px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .3s;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 1px;
+            text-decoration: none;
+            display: inline-block
+        }
+
+        .btn-nav:hover {
+            border-color: var(--earth-blue);
+            color: var(--earth-blue)
+        }
+
+        .btn-nav-primary {
+            padding: 8px 20px;
+            background: var(--earth-blue);
+            border: 1px solid var(--earth-blue);
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .3s;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 1px;
+            text-decoration: none;
+            display: inline-block
+        }
+
+        .btn-nav-primary:hover {
+            background: #6bb6ff;
+            border-color: #6bb6ff
+        }
+
+        .nav-icon-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 16px;
+            cursor: pointer;
+            transition: color .3s;
+            padding: 6px 8px
+        }
+
+        .nav-icon-btn:hover {
+            color: var(--earth-blue)
+        }
+
+        .cart-wrap {
+            position: relative;
+            display: inline-block
+        }
+
+        .cart-wrap span {
+            position: absolute;
+            top: -7px;
+            right: -9px;
+            background: var(--mars-red);
+            color: white;
+            font-size: 9px;
+            font-weight: 700;
+            width: 17px;
+            height: 17px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif
+        }
+
+        .nav-mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 22px;
+            cursor: pointer;
+            padding: 4px
+        }
+
+        .mobile-nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .6);
+            z-index: 1499;
+            display: none
+        }
+
+        .mobile-nav-overlay.open {
+            display: block
+        }
+
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 80%;
+            max-width: 320px;
+            height: 100%;
+            background: var(--bg-card);
+            border-right: 1px solid var(--border);
+            z-index: 1500;
+            transition: left .3s;
+            padding: 80px 30px 40px;
+            display: flex;
+            flex-direction: column
+        }
+
+        .mobile-nav.open {
+            left: 0
+        }
+
+        .mobile-nav-link {
+            display: block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+            transition: color .2s
+        }
+
+        .mobile-nav-link:hover {
+            color: var(--earth-blue)
+        }
+
+        .mobile-nav-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+            flex-direction: column
+        }
+
+        .search-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .92);
+            backdrop-filter: blur(16px);
+            z-index: 2000;
+            display: none;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 120px
+        }
+
+        .search-overlay.open {
+            display: flex
+        }
+
+        .search-box {
+            width: 100%;
+            max-width: 680px;
+            padding: 0 30px
+        }
+
+        .search-label {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            letter-spacing: 3px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            display: block
+        }
+
+        .search-input-wrap {
+            display: flex;
+            border-bottom: 2px solid var(--earth-blue)
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 14px 0;
+            background: transparent;
+            border: none;
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 22px;
+            font-weight: 600;
+            outline: none
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, .2)
+        }
+
+        .search-close-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 22px;
+            cursor: pointer;
+            padding: 0 8px;
+            transition: color .2s
+        }
+
+        .search-close-btn:hover {
+            color: white
+        }
+
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .6);
+            z-index: 1999;
+            display: none
+        }
+
+        .cart-overlay.open {
+            display: block
+        }
+
+        .cart-drawer {
+            position: fixed;
+            top: 0;
+            right: -440px;
+            width: 420px;
+            height: 100%;
+            background: var(--bg-card);
+            border-left: 1px solid var(--border);
+            z-index: 2000;
+            transition: right .35s cubic-bezier(.4, 0, .2, 1);
+            display: flex;
+            flex-direction: column
+        }
+
+        .cart-drawer.open {
+            right: 0
+        }
+
+        .cart-header {
+            padding: 22px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center
+        }
+
+        .cart-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 1px
+        }
+
+        .cart-close-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 18px;
+            cursor: pointer;
+            transition: color .2s
+        }
+
+        .cart-close-btn:hover {
+            color: white
+        }
+
+        .cart-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px
+        }
+
+        .cart-empty-state {
+            text-align: center;
+            padding: 60px 20px
+        }
+
+        .cart-empty-state i {
+            font-size: 40px;
+            color: rgba(74, 144, 226, .2);
+            margin-bottom: 14px;
+            display: block
+        }
+
+        .cart-empty-state p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 18px;
+            line-height: 1.6
+        }
+
+        .btn-checkout {
+            width: 100%;
+            padding: 13px;
+            background: var(--earth-blue);
+            border: none;
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: background .3s
+        }
+
+        .btn-checkout:hover {
+            background: #6bb6ff
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 26px;
+            right: 26px;
+            z-index: 9999;
+            background: var(--bg-card);
+            border-left: 3px solid var(--earth-blue);
+            border-top: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            transform: translateX(200px);
+            opacity: 0;
+            transition: all .4s;
+            pointer-events: none;
+            min-width: 210px
+        }
+
+        .toast.show {
+            transform: translateX(0);
+            opacity: 1
+        }
+
+        .toast i {
+            color: var(--earth-blue);
+            font-size: 14px
+        }
+
+        /* ── SIGNUP LAYOUT ── */
+        .page-wrap {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 140px 20px 60px;
+            position: relative;
+            z-index: 1
+        }
+
+        .auth-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            max-width: 1100px;
+            width: 100%;
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden
+        }
+
+        /* LEFT VISUAL — Mars theme for signup */
+        .auth-visual {
+            background: linear-gradient(135deg, #0f0606 0%, #2a0808 50%, #0a0a0f 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 40px;
+            position: relative;
+            overflow: hidden
+        }
+
+        .auth-visual::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 60% 40%, rgba(231, 76, 60, .12) 0%, transparent 65%);
+            pointer-events: none
+        }
+
+        .tc {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            border: 1px solid rgba(231, 76, 60, .35)
+        }
+
+        .tc-tl {
+            top: 14px;
+            left: 14px;
+            border-right: none;
+            border-bottom: none
+        }
+
+        .tc-tr {
+            top: 14px;
+            right: 14px;
+            border-left: none;
+            border-bottom: none
+        }
+
+        .tc-bl {
+            bottom: 14px;
+            left: 14px;
+            border-right: none;
+            border-top: none
+        }
+
+        .tc-br {
+            bottom: 14px;
+            right: 14px;
+            border-left: none;
+            border-top: none
+        }
+
+        .auth-planet {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 30%, #ff8080, #e74c3c 35%, #8b0000 70%, #3d0a0a);
+            box-shadow: inset -16px -16px 36px rgba(0, 0, 0, .7), 0 0 60px rgba(231, 76, 60, .35);
+            animation: floatPlanet 8s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 40px
+        }
+
+        .auth-planet-surf {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: repeating-linear-gradient(20deg, transparent, transparent 18px, rgba(255, 255, 255, .025) 18px, rgba(255, 255, 255, .025) 20px)
+        }
+
+        .auth-planet-glow {
+            position: absolute;
+            top: 14%;
+            left: 18%;
+            width: 32%;
+            height: 22%;
+            background: radial-gradient(ellipse, rgba(255, 255, 255, .15), transparent);
+            border-radius: 50%
+        }
+
+        .auth-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            animation: orbitSpin 28s linear infinite
+        }
+
+        .auth-ring-1 {
+            width: 270px;
+            height: 270px;
+            border: 1px dashed rgba(255, 255, 255, .08)
+        }
+
+        .auth-ring-2 {
+            width: 320px;
+            height: 320px;
+            border: 1px solid rgba(231, 76, 60, .08);
+            animation-direction: reverse;
+            animation-duration: 40s
+        }
+
+        .orbit-dot {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 6px;
+            height: 6px;
+            background: var(--mars-red);
+            border-radius: 50%;
+            margin-top: -3px;
+            box-shadow: 0 0 8px var(--mars-red)
+        }
+
+        @keyframes floatPlanet {
+
+            0%,
+            100% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-14px)
+            }
+        }
+
+        @keyframes orbitSpin {
+            from {
+                transform: translate(-50%, -50%) rotate(0deg)
+            }
+
+            to {
+                transform: translate(-50%, -50%) rotate(360deg)
+            }
+        }
+
+        .auth-visual-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 22px;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1
+        }
+
+        .auth-visual-title span {
+            color: var(--mars-red)
+        }
+
+        .auth-visual-sub {
+            color: var(--text-secondary);
+            font-size: 14px;
+            text-align: center;
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
+            max-width: 280px
+        }
+
+        .auth-perks {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-top: 36px;
+            position: relative;
+            z-index: 1;
+            width: 100%
+        }
+
+        .auth-perk {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: var(--text-secondary)
+        }
+
+        .auth-perk i {
+            color: var(--mars-red);
+            font-size: 14px;
+            width: 16px;
+            text-align: center;
+            flex-shrink: 0
+        }
+
+        /* RIGHT FORM */
+        .auth-form-panel {
+            background: var(--bg-card);
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-left: 1px solid var(--border)
+        }
+
+        .auth-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 14px;
+            background: rgba(231, 76, 60, .08);
+            border: 1px solid rgba(231, 76, 60, .25);
+            color: var(--mars-red);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 20px
+        }
+
+        .auth-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 26px;
+            font-weight: 900;
+            margin-bottom: 6px;
+            line-height: 1.1
+        }
+
+        .auth-subtitle {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 28px;
+            line-height: 1.6
+        }
+
+        .auth-subtitle a {
+            color: var(--earth-blue);
+            text-decoration: none;
+            font-weight: 600
+        }
+
+        .auth-subtitle a:hover {
+            text-decoration: underline
+        }
+
+        /* SOCIAL */
+        .social-auth {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 0
+        }
+
+        .btn-social {
+            flex: 1;
+            padding: 11px 14px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all .3s
+        }
+
+        .btn-social:hover {
+            border-color: var(--earth-blue);
+            color: var(--earth-blue)
+        }
+
+        .btn-social i {
+            font-size: 15px
+        }
+
+        .btn-social.google i {
+            color: #EA4335
+        }
+
+        .btn-social.github i {
+            color: white
+        }
+
+        /* DIVIDER */
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin: 22px 0
+        }
+
+        .auth-divider::before,
+        .auth-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border)
+        }
+
+        .auth-divider span {
+            color: var(--text-secondary);
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            white-space: nowrap
+        }
+
+        /* FIELDS */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            margin-bottom: 16px
+        }
+
+        .form-label {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 9px;
+            letter-spacing: 2.5px;
+            color: var(--text-secondary);
+            text-transform: uppercase
+        }
+
+        .form-input-wrap {
+            position: relative
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px 12px 42px;
+            background: rgba(255, 255, 255, .03);
+            border: 1px solid var(--border);
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            outline: none;
+            transition: border-color .3s, background .3s
+        }
+
+        .form-input:focus {
+            border-color: var(--mars-red);
+            background: rgba(231, 76, 60, .03)
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, .18)
+        }
+
+        .form-input-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-size: 13px;
+            pointer-events: none;
+            transition: color .3s
+        }
+
+        .form-input-wrap:focus-within .form-input-icon {
+            color: var(--mars-red)
+        }
+
+        .form-input.has-toggle {
+            padding-right: 42px
+        }
+
+        .toggle-pw {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 13px;
+            transition: color .2s;
+            padding: 2px
+        }
+
+        .toggle-pw:hover {
+            color: var(--mars-red)
+        }
+
+        .form-input.error {
+            border-color: var(--mars-red) !important
+        }
+
+        .form-error {
+            color: var(--mars-red);
+            font-size: 11px;
+            letter-spacing: .5px;
+            margin-top: 4px;
+            display: none
+        }
+
+        .form-error.show {
+            display: block
+        }
+
+        /* PASSWORD STRENGTH */
+        .pw-strength {
+            margin-top: 8px
+        }
+
+        .pw-strength-bars {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 4px
+        }
+
+        .pw-bar {
+            flex: 1;
+            height: 3px;
+            background: var(--border);
+            border-radius: 2px;
+            transition: background .3s
+        }
+
+        .pw-bar.weak {
+            background: #e74c3c
+        }
+
+        .pw-bar.fair {
+            background: #e67e22
+        }
+
+        .pw-bar.good {
+            background: #f0a500
+        }
+
+        .pw-bar.strong {
+            background: #4ade80
+        }
+
+        .pw-strength-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            letter-spacing: .5px
+        }
+
+        /* TERMS */
+        .terms-wrap {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 20px;
+            cursor: pointer
+        }
+
+        .terms-wrap input[type=checkbox] {
+            width: 15px;
+            height: 15px;
+            accent-color: var(--mars-red);
+            cursor: pointer;
+            margin-top: 2px;
+            flex-shrink: 0
+        }
+
+        .terms-text {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5
+        }
+
+        .terms-text a {
+            color: var(--earth-blue);
+            text-decoration: none;
+            font-weight: 600
+        }
+
+        .terms-text a:hover {
+            text-decoration: underline
+        }
+
+        .form-error-terms {
+            color: var(--mars-red);
+            font-size: 11px;
+            display: none;
+            margin-top: -14px;
+            margin-bottom: 14px
+        }
+
+        .form-error-terms.show {
+            display: block
+        }
+
+        /* SUBMIT */
+        .btn-auth {
+            width: 100%;
+            padding: 14px;
+            background: var(--mars-red);
+            border: none;
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all .3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden
+        }
+
+        .btn-auth::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .1), transparent);
+            transition: left .5s
+        }
+
+        .btn-auth:hover::before {
+            left: 100%
+        }
+
+        .btn-auth:hover {
+            background: #ff6b5b;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(231, 76, 60, .3)
+        }
+
+        /* SUCCESS */
+        .auth-success {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px;
+            gap: 16px;
+            min-height: 400px
+        }
+
+        .auth-success.show {
+            display: flex
+        }
+
+        .success-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(231, 76, 60, .1);
+            border: 1px solid rgba(231, 76, 60, .3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: var(--mars-red);
+            animation: successPop .4s ease
+        }
+
+        @keyframes successPop {
+            0% {
+                transform: scale(0)
+            }
+
+            80% {
+                transform: scale(1.1)
+            }
+
+            100% {
+                transform: scale(1)
+            }
+        }
+
+        .success-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 20px;
+            font-weight: 700
+        }
+
+        .success-sub {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.65;
+            max-width: 280px
+        }
+
+        /* RESPONSIVE */
+        @media(max-width:900px) {
+            .navbar {
+                top: 32px
+            }
+
+            .nav-menu {
+                display: none
+            }
+
+            .nav-mobile-toggle {
+                display: block
+            }
+
+            .auth-container {
+                grid-template-columns: 1fr
+            }
+
+            .auth-visual {
+                display: none
+            }
+
+            .auth-form-panel {
+                padding: 40px 30px;
+                border-left: none
+            }
+
+            .page-wrap {
+                padding: 120px 16px 40px
+            }
+        }
+
+        @media(max-width:540px) {
+            .nav-container {
+                padding: 0 20px
+            }
+
+            .auth-form-panel {
+                padding: 32px 20px
+            }
+
+            .auth-title {
+                font-size: 20px
+            }
+
+            .form-row {
+                grid-template-columns: 1fr
+            }
+
+            .social-auth {
+                flex-direction: column
+            }
+        }
+
+        /* ── CHECKOUT MODAL ── */
+        @keyframes cgPop {
+            0% {
+                transform: scale(0)
+            }
+
+            70% {
+                transform: scale(1.15)
+            }
+
+            100% {
+                transform: scale(1)
+            }
+        }
+
+        .cg-modal-bg {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .88);
+            backdrop-filter: blur(10px);
+            z-index: 5000;
+            display: none;
+            align-items: flex-start;
+            justify-content: center;
+            overflow-y: auto;
+            padding: 24px 16px
+        }
+
+        .cg-modal-bg.open {
+            display: flex
+        }
+
+        .cg-modal {
+            background: var(--bg-card);
+            border: 1px solid rgba(74, 144, 226, .25);
+            width: 100%;
+            max-width: 880px;
+            margin: auto;
+            position: relative;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, .7)
+        }
+
+        .cg-modal-close {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .2s;
+            z-index: 10
+        }
+
+        .cg-modal-close:hover {
+            border-color: #e74c3c;
+            color: #e74c3c
+        }
+
+        .cg-modal-header {
+            padding: 22px 28px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: rgba(74, 144, 226, .03)
+        }
+
+        .cg-modal-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 17px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            flex: 1
+        }
+
+        .cg-secure-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            color: var(--text-secondary);
+            letter-spacing: 1px
+        }
+
+        .cg-secure-badge i {
+            color: #4ade80
+        }
+
+        .cg-modal-body {
+            display: grid;
+            grid-template-columns: 1fr 360px
+        }
+
+        .cg-left {
+            padding: 28px 32px;
+            border-right: 1px solid var(--border)
+        }
+
+        .cg-right {
+            padding: 24px;
+            background: rgba(255, 255, 255, .01)
+        }
+
+        .cg-step-head {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 2px solid var(--border);
+            margin-bottom: 24px;
+            transition: all .3s;
+            opacity: .45
+        }
+
+        .cg-step-num {
+            width: 30px;
+            height: 30px;
+            border: 1px solid var(--earth-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--earth-blue);
+            flex-shrink: 0;
+            transition: all .3s
+        }
+
+        .cg-step-lbl {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.5px
+        }
+
+        .cg-grid2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 14px
+        }
+
+        .cg-field {
+            margin-bottom: 14px
+        }
+
+        .cg-lbl {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 9px;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            display: block;
+            margin-bottom: 6px;
+            text-transform: uppercase
+        }
+
+        .cg-inp {
+            width: 100%;
+            padding: 11px 14px;
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid var(--border);
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            outline: none;
+            transition: border-color .3s
+        }
+
+        .cg-inp:focus {
+            border-color: var(--earth-blue);
+            background: rgba(74, 144, 226, .03)
+        }
+
+        .cg-inp::placeholder {
+            color: rgba(255, 255, 255, .2)
+        }
+
+        .cg-sel {
+            width: 100%;
+            padding: 11px 14px;
+            background: #0d0d18;
+            border: 1px solid var(--border);
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 14px;
+            outline: none;
+            cursor: pointer;
+            transition: border-color .3s
+        }
+
+        .cg-sel:focus {
+            border-color: var(--earth-blue)
+        }
+
+        .cg-sel option {
+            background: #1a1a24
+        }
+
+        .cg-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--earth-blue);
+            border: none;
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all .3s;
+            margin-top: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px
+        }
+
+        .cg-btn:hover {
+            background: #6bb6ff;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(74, 144, 226, .3)
+        }
+
+        .cg-btn-back {
+            width: 100%;
+            padding: 11px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all .3s;
+            margin-top: 8px;
+            text-transform: uppercase
+        }
+
+        .cg-btn-back:hover {
+            border-color: var(--earth-blue);
+            color: var(--earth-blue)
+        }
+
+        .cg-pay-opt {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 16px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all .25s;
+            margin-bottom: 10px
+        }
+
+        .cg-pay-opt:hover {
+            border-color: rgba(74, 144, 226, .5)
+        }
+
+        .cg-pay-opt input[type=radio] {
+            accent-color: var(--earth-blue);
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            cursor: pointer
+        }
+
+        .cg-pay-icon {
+            font-size: 20px;
+            color: var(--earth-blue);
+            width: 26px;
+            text-align: center;
+            flex-shrink: 0
+        }
+
+        .cg-pay-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 3px
+        }
+
+        .cg-pay-sub {
+            font-size: 12px;
+            color: var(--text-secondary)
+        }
+
+        .cg-card-fields {
+            padding: 16px;
+            background: rgba(74, 144, 226, .03);
+            border: 1px solid rgba(74, 144, 226, .2);
+            margin-bottom: 10px;
+            display: none
+        }
+
+        .cg-summary-lbl {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10px;
+            letter-spacing: 3px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .cg-trust {
+            margin-top: 22px;
+            padding-top: 18px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 10px
+        }
+
+        .cg-trust-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+            color: var(--text-secondary)
+        }
+
+        .cg-trust-row i {
+            color: #4ade80;
+            font-size: 13px;
+            width: 16px;
+            text-align: center
+        }
+
+        @media(max-width:720px) {
+            .cg-modal-body {
+                grid-template-columns: 1fr
+            }
+
+            .cg-right {
+                border-top: 1px solid var(--border)
+            }
+
+            .cg-grid2 {
+                grid-template-columns: 1fr
+            }
+        }
+
+        @media(max-width:480px) {
+            .cg-left {
+                padding: 20px
+            }
+
+            .cg-modal-header {
+                padding: 18px 20px
+            }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="cosmic-galaxy-backend.js"></script>
+</head>
+
+<body>
+    <div class="grid-overlay"></div>
+    <div class="stars"></div>
+
+    <!-- SEARCH -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-box">
+            <span class="search-label">Search the cosmos</span>
+            <div class="search-input-wrap">
+                <input class="search-input" id="searchInput" type="text"
+                    placeholder="e.g. nebula hoodie, mars jacket...">
+                <button class="search-close-btn" onclick="closeSearch()"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CART -->
+    <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+    <div class="cart-drawer" id="cartDrawer">
+        <div class="cart-header">
+            <div class="cart-title">YOUR CART</div>
+            <button class="cart-close-btn" onclick="closeCart()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-body">
+            <div class="cart-empty-state">
+                <i class="fas fa-shopping-bag"></i>
+                <p>Your cart is empty.<br>Explore the cosmos!</p>
+                <button class="btn-checkout" style="width:auto;padding:10px 24px"
+                    onclick="closeCart();window.location='shop.html'">Browse Shop</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MOBILE NAV -->
+    <div class="mobile-nav-overlay" id="mobileNavOverlay" onclick="closeMobileNav()"></div>
+    <div class="mobile-nav" id="mobileNav">
+        <a href="index.html" class="mobile-nav-link">Home</a>
+        <a href="shop.html" class="mobile-nav-link">Shop</a>
+        <a href="collections.html" class="mobile-nav-link">Collections</a>
+        <a href="lookbook.html" class="mobile-nav-link">Lookbook</a>
+        <a href="about.html" class="mobile-nav-link">About</a>
+        <div class="mobile-nav-actions">
+            <a href="login.html" class="btn-nav"
+                style="text-align:center;text-decoration:none;display:block;padding:10px">Login</a>
+            <a href="signup.html" class="btn-nav-primary"
+                style="text-align:center;text-decoration:none;display:block;padding:10px">Sign Up</a>
+        </div>
+    </div>
+
+    <!-- ANNOUNCEMENT -->
+    <div class="announcement-bar">
+        FREE SHIPPING ON ORDERS ABOVE &#8377;999 &nbsp;&bull;&nbsp; USE CODE <strong>COSMIC10</strong> FOR 10% OFF
+        <a href="shop.html">Shop Now</a>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo"><span class="logo-dot"></span> COSMIC GALAXY</a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="shop.html" class="nav-link">Shop</a></li>
+                <li><a href="collections.html" class="nav-link">Collections</a></li>
+                <li><a href="lookbook.html" class="nav-link">Lookbook</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="nav-icon-btn" onclick="openSearch()"><i class="fas fa-search"></i></button>
+                <button class="nav-icon-btn cart-wrap" onclick="openCart()">
+                    <i class="fas fa-shopping-bag"></i><span id="cartCount">0</span>
+                </button>
+                <a href="login.html" class="btn-nav">Login</a>
+                <a href="signup.html" class="btn-nav-primary">Sign Up</a>
+                <button class="nav-mobile-toggle" onclick="openMobileNav()"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- SIGNUP PAGE -->
+    <div class="page-wrap">
+        <div class="auth-container">
+
+            <!-- LEFT VISUAL -->
+            <div class="auth-visual">
+                <div class="tc tc-tl"></div>
+                <div class="tc tc-tr"></div>
+                <div class="tc tc-bl"></div>
+                <div class="tc tc-br"></div>
+                <div style="position:relative;width:200px;height:200px;flex-shrink:0">
+                    <div class="auth-ring auth-ring-2">
+                        <div class="orbit-dot"></div>
+                    </div>
+                    <div class="auth-ring auth-ring-1"></div>
+                    <div class="auth-planet">
+                        <div class="auth-planet-surf"></div>
+                        <div class="auth-planet-glow"></div>
+                    </div>
+                </div>
+                <div class="auth-visual-title" style="margin-top:40px">JOIN THE<br><span>COSMIC CREW</span></div>
+                <p class="auth-visual-sub">Create your account and step into the universe. Your journey starts here.</p>
+                <div class="auth-perks">
+                    <div class="auth-perk"><i class="fas fa-bolt"></i><span>Early access to every new drop</span></div>
+                    <div class="auth-perk"><i class="fas fa-percentage"></i><span>Exclusive member discounts</span>
+                    </div>
+                    <div class="auth-perk"><i class="fas fa-shipping-fast"></i><span>Free shipping on first order</span>
+                    </div>
+                    <div class="auth-perk"><i class="fas fa-star"></i><span>Earn cosmic points with every buy</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT FORM -->
+            <div class="auth-form-panel">
+
+                <div id="formView">
+                    <div class="auth-badge"><i class="fas fa-user-astronaut"></i> New Crew Member</div>
+                    <h1 class="auth-title">CREATE YOUR<br>ACCOUNT</h1>
+                    <p class="auth-subtitle">Already in the crew? <a href="login.html">Sign in here &rarr;</a></p>
+
+                    <!-- SOCIAL -->
+                    <div class="social-auth">
+                        <button class="btn-social google" onclick="showToast('Google signup coming soon!')">
+                            <i class="fab fa-google"></i> Google
+                        </button>
+                        <button class="btn-social github" onclick="showToast('GitHub signup coming soon!')">
+                            <i class="fab fa-github"></i> GitHub
+                        </button>
+                    </div>
+
+                    <div class="auth-divider"><span>or sign up with email</span></div>
+
+                    <!-- NAME ROW -->
+                    <div class="form-row">
+                        <div class="form-group" style="margin-bottom:0">
+                            <label class="form-label">First Name</label>
+                            <div class="form-input-wrap">
+                                <input type="text" class="form-input" id="firstName" placeholder="Arjun"
+                                    autocomplete="given-name">
+                                <i class="fas fa-user form-input-icon"></i>
+                            </div>
+                            <span class="form-error" id="firstNameError">Enter your first name</span>
+                        </div>
+                        <div class="form-group" style="margin-bottom:0">
+                            <label class="form-label">Last Name</label>
+                            <div class="form-input-wrap">
+                                <input type="text" class="form-input" id="lastName" placeholder="Sharma"
+                                    autocomplete="family-name">
+                                <i class="fas fa-user form-input-icon"></i>
+                            </div>
+                            <span class="form-error" id="lastNameError">Enter your last name</span>
+                        </div>
+                    </div>
+                    <div style="margin-bottom:16px"></div>
+
+                    <!-- EMAIL -->
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <div class="form-input-wrap">
+                            <input type="email" class="form-input" id="signupEmail" placeholder="you@cosmicgalaxy.in"
+                                autocomplete="email">
+                            <i class="fas fa-envelope form-input-icon"></i>
+                        </div>
+                        <span class="form-error" id="signupEmailError">Please enter a valid email address</span>
+                    </div>
+
+                    <!-- PASSWORD -->
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <div class="form-input-wrap">
+                            <input type="password" class="form-input has-toggle" id="signupPassword"
+                                placeholder="Min. 8 characters" autocomplete="new-password"
+                                oninput="checkStrength(this.value)">
+                            <i class="fas fa-lock form-input-icon"></i>
+                            <button class="toggle-pw" onclick="togglePassword('signupPassword',this)" type="button"
+                                tabindex="-1">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="pw-strength" id="pwStrength" style="display:none">
+                            <div class="pw-strength-bars">
+                                <div class="pw-bar" id="bar1"></div>
+                                <div class="pw-bar" id="bar2"></div>
+                                <div class="pw-bar" id="bar3"></div>
+                                <div class="pw-bar" id="bar4"></div>
+                            </div>
+                            <span class="pw-strength-label" id="pwLabel">Weak</span>
+                        </div>
+                        <span class="form-error" id="signupPasswordError">Password must be at least 8 characters</span>
+                    </div>
+
+                    <!-- CONFIRM PASSWORD -->
+                    <div class="form-group">
+                        <label class="form-label">Confirm Password</label>
+                        <div class="form-input-wrap">
+                            <input type="password" class="form-input has-toggle" id="confirmPassword"
+                                placeholder="Repeat your password" autocomplete="new-password">
+                            <i class="fas fa-lock form-input-icon"></i>
+                            <button class="toggle-pw" onclick="togglePassword('confirmPassword',this)" type="button"
+                                tabindex="-1">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <span class="form-error" id="confirmPasswordError">Passwords do not match</span>
+                    </div>
+
+                    <!-- TERMS -->
+                    <label class="terms-wrap">
+                        <input type="checkbox" id="termsCheck">
+                        <span class="terms-text">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy
+                                Policy</a>. I'm ready to explore the cosmos.</span>
+                    </label>
+                    <span class="form-error-terms" id="termsError">You must agree to the terms to continue</span>
+
+                    <!-- SUBMIT -->
+                    <button class="btn-auth" onclick="handleSignup()">
+                        <i class="fas fa-rocket"></i> LAUNCH MY ACCOUNT
+                    </button>
+                </div>
+
+                <!-- SUCCESS -->
+                <div class="auth-success" id="successView">
+                    <div class="success-icon"><i class="fas fa-rocket"></i></div>
+                    <div class="success-title">WELCOME TO THE CREW!</div>
+                    <p class="success-sub">Your account has been created successfully.<br>Get ready to explore the
+                        cosmos.</p>
+                    <div
+                        style="width:100%;height:3px;background:var(--border);margin-top:8px;border-radius:2px;overflow:hidden">
+                        <div id="progressBar"
+                            style="height:100%;background:var(--mars-red);width:0;transition:width 2s linear"></div>
+                    </div>
+                    <a href="shop.html"
+                        style="margin-top:8px;padding:12px 28px;background:var(--mars-red);color:white;font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:background .3s"
+                        onmouseover="this.style.background='#ff6b5b'"
+                        onmouseout="this.style.background='var(--mars-red)'">
+                        <i class="fas fa-shopping-bag"></i> START SHOPPING
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toastMsg">Done!</span></div>
+
+    <script>
+        let toastTimer;
+        function showToast(msg, isError) {
+            const t = document.getElementById('toast');
+            t.style.borderLeftColor = isError ? 'var(--mars-red)' : 'var(--earth-blue)';
+            t.querySelector('i').style.color = isError ? 'var(--mars-red)' : 'var(--earth-blue)';
+            document.getElementById('toastMsg').textContent = msg;
+            t.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+        }
+
+        function togglePassword(inputId, btn) {
+            const inp = document.getElementById(inputId);
+            const icon = btn.querySelector('i');
+            inp.type = inp.type === 'password' ? 'text' : 'password';
+            icon.className = inp.type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
+        }
+
+        function setError(inputId, errorId, show) {
+            const input = document.getElementById(inputId);
+            const err = document.getElementById(errorId);
+            if (show) { input.classList.add('error'); err.classList.add('show'); }
+            else { input.classList.remove('error'); err.classList.remove('show'); }
+        }
+
+        function checkStrength(pw) {
+            const strength = document.getElementById('pwStrength');
+            strength.style.display = pw.length > 0 ? 'block' : 'none';
+            const bars = [document.getElementById('bar1'), document.getElementById('bar2'), document.getElementById('bar3'), document.getElementById('bar4')];
+            const label = document.getElementById('pwLabel');
+
+            bars.forEach(b => b.className = 'pw-bar');
+
+            let score = 0;
+            if (pw.length >= 8) score++;
+            if (/[A-Z]/.test(pw)) score++;
+            if (/[0-9]/.test(pw)) score++;
+            if (/[^A-Za-z0-9]/.test(pw)) score++;
+
+            const levels = ['weak', 'fair', 'good', 'strong'];
+            const labels = ['Weak', 'Fair', 'Good', 'Strong'];
+            const cls = levels[score - 1] || 'weak';
+            for (let i = 0; i < score; i++) bars[i].classList.add(cls);
+            label.textContent = labels[score - 1] || 'Weak';
+            label.style.color = { weak: '#e74c3c', fair: '#e67e22', good: '#f0a500', strong: '#4ade80' }[cls] || '#e74c3c';
+        }
+
+        async function handleSignup() {
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const email = document.getElementById('signupEmail').value.trim();
+            const password = document.getElementById('signupPassword').value;
+            const confirm = document.getElementById('confirmPassword').value;
+            const terms = document.getElementById('termsCheck').checked;
+            let valid = true;
+
+            const setErr = (inputId, errId, show) => {
+                const inp = document.getElementById(inputId);
+                const err = document.getElementById(errId);
+                if (!inp || !err) return;
+                inp.classList.toggle('error', show);
+                err.classList.toggle('show', show);
+            };
+
+            setErr('firstName', 'firstNameError', !firstName); if (!firstName) valid = false;
+            setErr('lastName', 'lastNameError', !lastName); if (!lastName) valid = false;
+            setErr('signupEmail', 'signupEmailError', !email || !email.includes('@'));
+            if (!email || !email.includes('@')) valid = false;
+            setErr('signupPassword', 'signupPasswordError', password.length < 8);
+            if (password.length < 8) valid = false;
+
+            const confErr = document.getElementById('confirmPasswordError');
+            const confInp = document.getElementById('confirmPassword');
+            if (password !== confirm || !confirm) {
+                confInp.classList.add('error'); confErr.classList.add('show'); valid = false;
+            } else { confInp.classList.remove('error'); confErr.classList.remove('show'); }
+
+            const termsErr = document.getElementById('termsError');
+            if (!terms) { termsErr.classList.add('show'); valid = false; }
+            else { termsErr.classList.remove('show'); }
+
+            if (!valid) return;
+
+            const btn = document.querySelector('.btn-auth');
+            const origText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> CREATING ACCOUNT...';
+            btn.disabled = true;
+
+            const result = await CG_Auth.signUp(firstName, lastName, email, password);
+
+            if (result.success) {
+                document.getElementById('formView').style.display = 'none';
+                document.getElementById('successView').classList.add('show');
+                setTimeout(() => {
+                    const bar = document.getElementById('progressBar');
+                    if (bar) bar.style.width = '100%';
+                }, 100);
+                setTimeout(() => { window.location.href = 'profile.html'; }, 2500);
+            } else {
+                btn.innerHTML = origText;
+                btn.disabled = false;
+                const msg = result.error && result.error.includes('already')
+                    ? 'This email is already registered. Try logging in.'
+                    : (result.error || 'Signup failed. Please try again.');
+                showToast(msg);
+            }
+        }
+
+
+        // NAV / CART / SEARCH
+        function openSearch() { document.getElementById('searchOverlay').classList.add('open'); document.body.style.overflow = 'hidden'; setTimeout(() => document.getElementById('searchInput').focus(), 100); }
+        function closeSearch() { document.getElementById('searchOverlay').classList.remove('open'); document.body.style.overflow = ''; }
+        function openMobileNav() { document.getElementById('mobileNav').classList.add('open'); document.getElementById('mobileNavOverlay').classList.add('open'); document.body.style.overflow = 'hidden'; }
+        function closeMobileNav() { document.getElementById('mobileNav').classList.remove('open'); document.getElementById('mobileNavOverlay').classList.remove('open'); document.body.style.overflow = ''; }
+
+        document.getElementById('searchInput').addEventListener('keydown', e => {
+            if (e.key === 'Enter') { const q = e.target.value.trim(); if (q) window.location = 'shop.html?q=' + encodeURIComponent(q); }
+            if (e.key === 'Escape') closeSearch();
+        });
+
+        window.addEventListener('scroll', () => {
+            document.getElementById('navbar').style.boxShadow = window.scrollY > 50 ? '0 4px 30px rgba(0,0,0,.6)' : '';
+        });
+
+        // ══════════════════════════════════════════════════
+        // COSMIC GALAXY — SHARED CART (persists across pages)
+        // ══════════════════════════════════════════════════
+        const CART_KEY = 'cg_cart';
+
+        const PRODUCT_DB = {
+            1: { id: 1, name: 'LAUNCH SEQUENCE TEE', category: 'T-Shirts', price: '₹1,299', priceNum: 1299 },
+            2: { id: 2, name: 'NEBULA DRIFT HOODIE', category: 'Hoodies', price: '₹2,799', priceNum: 2799 },
+            3: { id: 3, name: 'MARS ORBIT JACKET', category: 'Jackets', price: '₹4,499', priceNum: 4499 },
+            4: { id: 4, name: 'STARDUST CARGO PANTS', category: 'Cargo Pants', price: '₹3,199', priceNum: 3199 },
+            5: { id: 5, name: 'GALAXY HOODIE', category: 'Hoodies', price: '₹2,599', priceNum: 2599 },
+            6: { id: 6, name: 'PULSAR ZIP HOODIE', category: 'Hoodies', price: '₹2,499', priceNum: 2499 },
+            7: { id: 7, name: 'EVENT HORIZON TEE', category: 'T-Shirts', price: '₹1,199', priceNum: 1199 },
+            8: { id: 8, name: 'COSMOS CAP', category: 'Accessories', price: '₹699', priceNum: 699 },
+            9: { id: 9, name: 'DARK MATTER WINDBREAKER', category: 'Jackets', price: '₹3,499', priceNum: 3499 },
+            10: { id: 10, name: 'ORBIT STATION TEE', category: 'T-Shirts', price: '₹1,099', priceNum: 1099 },
+            11: { id: 11, name: 'GALAXY TOTE BAG', category: 'Accessories', price: '₹599', priceNum: 599 },
+            12: { id: 12, name: 'NEBULA CROP TEE', category: 'T-Shirts', price: '₹999', priceNum: 999 },
+            13: { id: 13, name: 'SATELLITE BEANIE', category: 'Accessories', price: '₹499', priceNum: 499 },
+            14: { id: 14, name: 'WARP DRIVE SHORTS', category: 'Cargo Pants', price: '₹1,799', priceNum: 1799 },
+            15: { id: 15, name: 'ECLIPSE DENIM JACKET', category: 'Jackets', price: '₹5,499', priceNum: 5499 },
+            16: { id: 16, name: 'SOLAR FLARE HOODIE', category: 'Hoodies', price: '₹2,299', priceNum: 2299 },
+            17: { id: 17, name: 'SUPERNOVA GRAPHIC TEE', category: 'T-Shirts', price: '₹1,399', priceNum: 1399 },
+            18: { id: 18, name: 'ASTEROID CARGO PANTS', category: 'Cargo Pants', price: '₹2,999', priceNum: 2999 },
+            19: { id: 19, name: 'COMET TAIL HOODIE', category: 'Hoodies', price: '₹2,699', priceNum: 2699 },
+            20: { id: 20, name: 'VOYAGER JACKET', category: 'Jackets', price: '₹4,999', priceNum: 4999 },
+            21: { id: 21, name: 'ZERO GRAVITY JOGGERS', category: 'Cargo Pants', price: '₹2,599', priceNum: 2599 },
+            22: { id: 22, name: 'COSMIC CREW NECK', category: 'Hoodies', price: '₹2,199', priceNum: 2199 },
+            23: { id: 23, name: 'BLACK HOLE CROP HOODIE', category: 'Hoodies', price: '₹2,199', priceNum: 2199 },
+            24: { id: 24, name: 'INTERSTELLAR TEE', category: 'T-Shirts', price: '₹1,299', priceNum: 1299 },
+            25: { id: 25, name: 'LUNAR CARGO PANTS', category: 'Cargo Pants', price: '₹3,499', priceNum: 3499 },
+            26: { id: 26, name: 'DEEP SPACE JACKET', category: 'Jackets', price: '₹5,999', priceNum: 5999 },
+            27: { id: 27, name: 'NOVA BURST TEE', category: 'T-Shirts', price: '₹1,199', priceNum: 1199 },
+            28: { id: 28, name: 'ORBIT RING ACCESSORY', category: 'Accessories', price: '₹399', priceNum: 399 },
+            29: { id: 29, name: 'TITAN TECH PANTS', category: 'Cargo Pants', price: '₹3,499', priceNum: 3499 },
+            30: { id: 30, name: 'AURORA TRACK JACKET', category: 'Jackets', price: '₹4,299', priceNum: 4299 },
+            36: { id: 36, name: 'COSMIC PINS SET (5pc)', category: 'Accessories', price: '₹249', priceNum: 249 },
+            43: { id: 43, name: 'STRATOSPHERE PARKA', category: 'Jackets', price: '₹6,999', priceNum: 6999 },
+            48: { id: 48, name: 'COSMOS SOCKS (3-PACK)', category: 'Accessories', price: '₹349', priceNum: 349 },
+        };
+
+        function cartLoad() {
+            try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; }
+            catch (e) { return []; }
+        }
+        function cartSave(cart) {
+            try { localStorage.setItem(CART_KEY, JSON.stringify(cart)); }
+            catch (e) { }
+        }
+
+
+        // init on every page load
+
+
+        // ═══════════════════════════════════════════════════════════
+        // COSMIC GALAXY · UNIVERSAL CART SYSTEM · v4
+        // Single source of truth via localStorage — works on ALL pages
+        // ═══════════════════════════════════════════════════════════
+
+        const _CG_KEY = 'cg_cart';
+
+        // Master product list — every product across the whole site
+        const _CG_DB = {
+            1: { id: 1, name: 'LAUNCH SEQUENCE TEE', category: 'T-Shirts', price: '₹1,299', priceNum: 1299 },
+            2: { id: 2, name: 'NEBULA DRIFT HOODIE', category: 'Hoodies', price: '₹2,799', priceNum: 2799 },
+            3: { id: 3, name: 'MARS ORBIT JACKET', category: 'Jackets', price: '₹4,499', priceNum: 4499 },
+            4: { id: 4, name: 'STARDUST CARGO PANTS', category: 'Cargo Pants', price: '₹3,199', priceNum: 3199 },
+            5: { id: 5, name: 'GALAXY HOODIE', category: 'Hoodies', price: '₹2,599', priceNum: 2599 },
+            6: { id: 6, name: 'PULSAR ZIP HOODIE', category: 'Hoodies', price: '₹2,499', priceNum: 2499 },
+            7: { id: 7, name: 'EVENT HORIZON TEE', category: 'T-Shirts', price: '₹1,199', priceNum: 1199 },
+            8: { id: 8, name: 'COSMOS CAP', category: 'Accessories', price: '₹699', priceNum: 699 },
+            9: { id: 9, name: 'DARK MATTER WINDBREAKER', category: 'Jackets', price: '₹3,499', priceNum: 3499 },
+            10: { id: 10, name: 'ORBIT STATION TEE', category: 'T-Shirts', price: '₹1,099', priceNum: 1099 },
+            11: { id: 11, name: 'GALAXY TOTE BAG', category: 'Accessories', price: '₹599', priceNum: 599 },
+            12: { id: 12, name: 'NEBULA CROP TEE', category: 'T-Shirts', price: '₹999', priceNum: 999 },
+            13: { id: 13, name: 'SATELLITE BEANIE', category: 'Accessories', price: '₹499', priceNum: 499 },
+            14: { id: 14, name: 'WARP DRIVE SHORTS', category: 'Cargo Pants', price: '₹1,799', priceNum: 1799 },
+            15: { id: 15, name: 'ECLIPSE DENIM JACKET', category: 'Jackets', price: '₹5,499', priceNum: 5499 },
+            16: { id: 16, name: 'SOLAR FLARE HOODIE', category: 'Hoodies', price: '₹2,299', priceNum: 2299 },
+            17: { id: 17, name: 'SUPERNOVA GRAPHIC TEE', category: 'T-Shirts', price: '₹1,399', priceNum: 1399 },
+            18: { id: 18, name: 'ASTEROID CARGO PANTS', category: 'Cargo Pants', price: '₹2,999', priceNum: 2999 },
+            19: { id: 19, name: 'COMET TAIL HOODIE', category: 'Hoodies', price: '₹2,699', priceNum: 2699 },
+            20: { id: 20, name: 'VOYAGER JACKET', category: 'Jackets', price: '₹4,999', priceNum: 4999 },
+            21: { id: 21, name: 'ZERO GRAVITY JOGGERS', category: 'Cargo Pants', price: '₹2,599', priceNum: 2599 },
+            22: { id: 22, name: 'COSMIC CREW NECK', category: 'Hoodies', price: '₹2,199', priceNum: 2199 },
+            23: { id: 23, name: 'BLACK HOLE CROP HOODIE', category: 'Hoodies', price: '₹2,199', priceNum: 2199 },
+            24: { id: 24, name: 'INTERSTELLAR TEE', category: 'T-Shirts', price: '₹1,299', priceNum: 1299 },
+            25: { id: 25, name: 'LUNAR CARGO PANTS', category: 'Cargo Pants', price: '₹3,499', priceNum: 3499 },
+            26: { id: 26, name: 'DEEP SPACE JACKET', category: 'Jackets', price: '₹5,999', priceNum: 5999 },
+            27: { id: 27, name: 'NOVA BURST TEE', category: 'T-Shirts', price: '₹1,199', priceNum: 1199 },
+            28: { id: 28, name: 'ORBIT RING KEYCHAIN', category: 'Accessories', price: '₹399', priceNum: 399 },
+            29: { id: 29, name: 'TITAN TECH PANTS', category: 'Cargo Pants', price: '₹3,499', priceNum: 3499 },
+            30: { id: 30, name: 'AURORA TRACK JACKET', category: 'Jackets', price: '₹4,299', priceNum: 4299 },
+            36: { id: 36, name: 'COSMIC PINS SET', category: 'Accessories', price: '₹249', priceNum: 249 },
+            43: { id: 43, name: 'STRATOSPHERE PARKA', category: 'Jackets', price: '₹6,999', priceNum: 6999 },
+            48: { id: 48, name: 'COSMOS SOCKS 3-PACK', category: 'Accessories', price: '₹349', priceNum: 349 },
+        };
+
+        // ── helpers ──────────────────────────────────────────────
+        function _cgLoad() { try { return JSON.parse(localStorage.getItem(_CG_KEY)) || []; } catch (e) { return []; } }
+        function _cgSave(c) { try { localStorage.setItem(_CG_KEY, JSON.stringify(c)); } catch (e) { } }
+        function _cgFmt(n) { return '\u20b9' + n.toLocaleString('en-IN'); }
+        function _cgSetEl(id, val) { var el = document.getElementById(id); if (el) el.textContent = val; }
+
+        // ── public API ───────────────────────────────────────────
+        function addToCart(id, e) {
+            if (e) { e.stopPropagation(); e.preventDefault(); }
+            // Support both numeric id AND product object (shop.html passes object sometimes)
+            var pid = (typeof id === 'object' && id !== null) ? parseInt(id.id) : parseInt(id);
+            var p = _CG_DB[pid];
+            if (!p) { showToast('Product not found'); return; }
+            var cart = _cgLoad();
+            var item = cart.find(function (i) { return i.id === pid; });
+            if (item) item.qty++;
+            else cart.push({ id: pid, qty: 1 });
+            _cgSave(cart);
+            _cgRender();
+            _cgBadgePop();
+            showToast(p.name.split(' ').slice(0, 3).join(' ') + ' added to cart!');
+        }
+
+        function removeFromCart(id) {
+            var pid = parseInt(id);
+            _cgSave(_cgLoad().filter(function (i) { return i.id !== pid; }));
+            _cgRender();
+        }
+
+        function changeQty(id, delta) {
+            var pid = parseInt(id);
+            var cart = _cgLoad();
+            var item = cart.find(function (i) { return i.id === pid; });
+            if (!item) return;
+            item.qty = Math.max(1, item.qty + delta);
+            _cgSave(cart);
+            _cgRender();
+        }
+
+        function _cgBadgePop() {
+            ['cartCount', 'cart-count'].forEach(function (bid) {
+                var el = document.getElementById(bid);
+                if (!el) return;
+                el.style.transform = 'scale(1.8)';
+                el.style.transition = 'transform .12s';
+                setTimeout(function () { el.style.transform = 'scale(1)'; }, 200);
+            });
+        }
+
+        function _cgRender() {
+            var cart = _cgLoad();
+            var total = cart.reduce(function (s, i) { return s + i.qty; }, 0);
+
+            // Update ALL badge variants used across pages
+            _cgSetEl('cartCount', total);
+            _cgSetEl('cart-count', total);
+            _cgSetEl('cartItemCount', '(' + total + ')');
+            _cgSetEl('cart-item-count', '(' + total + ')');
+
+            var body = document.getElementById('cartBody');
+            var footer = document.getElementById('cartFooter');
+            if (!body) return;
+
+            // ── EMPTY ─────────────────────────────────────────
+            if (cart.length === 0) {
+                body.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px;text-align:center;height:100%;min-height:280px">'
+                    + '<i class="fas fa-shopping-bag" style="font-size:46px;color:rgba(74,144,226,.15);margin-bottom:18px"></i>'
+                    + '<p style="font-family:\'Orbitron\',sans-serif;font-size:12px;letter-spacing:2px;color:var(--text-secondary);margin-bottom:8px">CART IS EMPTY</p>'
+                    + '<p style="color:var(--text-secondary);font-size:13px;line-height:1.65;margin-bottom:24px">Add some cosmic gear<br>to get started.</p>'
+                    + '<button onclick="closeCart();window.location=\'shop.html\'" style="padding:11px 28px;background:var(--earth-blue);border:none;color:white;font-family:\'Orbitron\',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;cursor:pointer" onmouseover="this.style.background=\'#6bb6ff\'" onmouseout="this.style.background=\'var(--earth-blue)\'">BROWSE SHOP</button>'
+                    + '</div>';
+                if (footer) footer.style.display = 'none';
+                return;
+            }
+
+            // ── ITEMS ─────────────────────────────────────────
+            if (footer) footer.style.display = 'block';
+            var html = '', subtotal = 0;
+            cart.forEach(function (item) {
+                var p = _CG_DB[item.id];
+                if (!p) return;
+                subtotal += p.priceNum * item.qty;
+                html += '<div style="display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)">'
+                    + '<div style="width:68px;height:68px;background:linear-gradient(135deg,#0c0e18,#0f1320);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0">'
+                    + '<i class="fas fa-tshirt" style="color:rgba(74,144,226,.3);font-size:22px"></i></div>'
+                    + '<div style="flex:1;min-width:0">'
+                    + '<div style="font-size:9px;color:var(--earth-blue);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:3px">' + p.category + '</div>'
+                    + '<div style="font-family:\'Orbitron\',sans-serif;font-size:11px;font-weight:700;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + p.name + '</div>'
+                    + '<div style="font-family:\'Orbitron\',sans-serif;font-size:14px;color:var(--earth-blue);font-weight:700;margin-bottom:10px">' + p.price + '</div>'
+                    + '<div style="display:flex;align-items:center;justify-content:space-between">'
+                    + '<div style="display:flex;align-items:center;border:1px solid var(--border)">'
+                    + '<button onclick="changeQty(' + item.id + ',-1)" style="width:30px;height:30px;background:none;border:none;color:var(--text-secondary);cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;transition:all .2s" onmouseover="this.style.background=\'rgba(74,144,226,.1)\';this.style.color=\'var(--earth-blue)\'" onmouseout="this.style.background=\'none\';this.style.color=\'var(--text-secondary)\'"><i class="fas fa-minus"></i></button>'
+                    + '<span style="min-width:34px;text-align:center;font-family:\'Orbitron\',sans-serif;font-size:12px;font-weight:700;border-left:1px solid var(--border);border-right:1px solid var(--border);height:30px;line-height:30px;display:inline-block;padding:0 4px">' + item.qty + '</span>'
+                    + '<button onclick="changeQty(' + item.id + ',1)" style="width:30px;height:30px;background:none;border:none;color:var(--text-secondary);cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;transition:all .2s" onmouseover="this.style.background=\'rgba(74,144,226,.1)\';this.style.color=\'var(--earth-blue)\'" onmouseout="this.style.background=\'none\';this.style.color=\'var(--text-secondary)\'"><i class="fas fa-plus"></i></button>'
+                    + '</div>'
+                    + '<span style="font-family:\'Orbitron\',sans-serif;font-size:12px;font-weight:700;color:white">' + _cgFmt(p.priceNum * item.qty) + '</span>'
+                    + '<button onclick="removeFromCart(' + item.id + ')" style="background:none;border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.3);cursor:pointer;padding:5px 8px;font-size:11px;transition:all .2s" onmouseover="this.style.borderColor=\'#e74c3c\';this.style.color=\'#e74c3c\'" onmouseout="this.style.borderColor=\'rgba(255,255,255,.1)\';this.style.color=\'rgba(255,255,255,.3)\'"><i class="fas fa-trash-alt"></i></button>'
+                    + '</div></div></div>';
+            });
+            body.innerHTML = html;
+
+            // Update totals — support both ID variants
+            var shipping = subtotal >= 999 ? 0 : 99;
+            var grandTotal = subtotal + shipping;
+            var shipText = shipping === 0 ? 'FREE' : _cgFmt(shipping);
+            var shipColor = shipping === 0 ? '#4ade80' : 'white';
+
+            ['cartSubtotal', 'cart-subtotal'].forEach(function (id) { _cgSetEl(id, _cgFmt(subtotal)); });
+            ['cartTotal', 'cart-total'].forEach(function (id) { _cgSetEl(id, _cgFmt(grandTotal)); });
+
+            // update shipping display
+            ['cartShipping', 'cart-shipping'].forEach(function (id) {
+                var el = document.getElementById(id);
+                if (el) { el.textContent = shipText; el.style.color = shipColor; }
+            });
+
+            // items count label
+            _cgSetEl('cartItemsLabel', total + ' ' + (total === 1 ? 'item' : 'items'));
+        }
+
+        // ── open / close ─────────────────────────────────────────
+        function openCart() {
+            _cgRender();
+            var d = document.getElementById('cartDrawer');
+            var o = document.getElementById('cartOverlay');
+            if (d) d.classList.add('open');
+            if (o) o.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeCart() {
+            var d = document.getElementById('cartDrawer');
+            var o = document.getElementById('cartOverlay');
+            if (d) d.classList.remove('open');
+            if (o) o.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        // ── checkout ─────────────────────────────────────────────
+        function openCheckout() {
+            var cart = _cgLoad();
+            if (cart.length === 0) { showToast('Your cart is empty!'); return; }
+            closeCart();
+            var modal = document.getElementById('checkoutModal');
+            if (modal) {
+                _cgBuildSummary();
+                modal.classList.add('open');
+                document.body.style.overflow = 'hidden';
+                _cgShowStep(1);
+            }
+        }
+        function closeCheckout() {
+            var modal = document.getElementById('checkoutModal');
+            if (modal) modal.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+        function _cgShowStep(n) {
+            [1, 2, 3].forEach(function (i) {
+                var s = document.getElementById('cgStep' + i);
+                var h = document.getElementById('cgHead' + i);
+                if (s) s.style.display = (i === n ? 'block' : 'none');
+                if (h) {
+                    h.style.borderBottomColor = i === n ? 'var(--earth-blue)' : (i < n ? 'rgba(74,144,226,.4)' : 'var(--border)');
+                    h.style.opacity = i <= n ? '1' : '0.45';
+                }
+            });
+            var modal = document.getElementById('checkoutModal');
+            if (modal) modal.scrollTop = 0;
+        }
+        function _cgBuildSummary() {
+            var cart = _cgLoad();
+            var subtotal = 0, rows = '';
+            cart.forEach(function (item) {
+                var p = _CG_DB[item.id]; if (!p) return;
+                subtotal += p.priceNum * item.qty;
+                rows += '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)">'
+                    + '<div style="flex:1;min-width:0;margin-right:10px">'
+                    + '<div style="font-size:10px;color:var(--earth-blue);text-transform:uppercase;letter-spacing:1px;margin-bottom:2px">' + p.category + '</div>'
+                    + '<div style="font-family:\'Orbitron\',sans-serif;font-size:11px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + p.name + '</div>'
+                    + '<div style="font-size:12px;color:var(--text-secondary);margin-top:2px">' + p.price + ' x ' + item.qty + '</div>'
+                    + '</div>'
+                    + '<div style="font-family:\'Orbitron\',sans-serif;font-size:12px;font-weight:700;white-space:nowrap">' + _cgFmt(p.priceNum * item.qty) + '</div>'
+                    + '</div>';
+            });
+            var shipping = subtotal >= 999 ? 0 : 99;
+            var total = subtotal + shipping;
+            rows += '<div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">'
+                + '<div style="display:flex;justify-content:space-between;font-size:13px;color:var(--text-secondary);margin-bottom:8px"><span>Subtotal</span><span>' + _cgFmt(subtotal) + '</span></div>'
+                + '<div style="display:flex;justify-content:space-between;font-size:13px;color:var(--text-secondary);margin-bottom:14px"><span>Shipping</span><span style="color:' + (shipping === 0 ? '#4ade80' : 'white') + '">' + (shipping === 0 ? 'FREE' : _cgFmt(shipping)) + '</span></div>'
+                + '<div style="display:flex;justify-content:space-between;font-family:\'Orbitron\',sans-serif;font-size:16px;font-weight:700"><span>TOTAL</span><span style="color:var(--earth-blue)">' + _cgFmt(total) + '</span></div>'
+                + '</div>';
+            var el = document.getElementById('cgSummary');
+            if (el) el.innerHTML = rows;
+        }
+        function cgNext(step) {
+            if (step === 1) {
+                var name = document.getElementById('cgName') || { value: '' };
+                var email = document.getElementById('cgEmail') || { value: '' };
+                var phone = document.getElementById('cgPhone') || { value: '' };
+                var addr = document.getElementById('cgAddr') || { value: '' };
+                var city = document.getElementById('cgCity') || { value: '' };
+                var pin = document.getElementById('cgPin') || { value: '' };
+                if (!name.value.trim() || !phone.value.trim() || !email.value.trim() || !email.value.includes('@') || !addr.value.trim() || !city.value.trim() || !pin.value.trim()) {
+                    showToast('Please fill all required fields!'); return;
+                }
+                _cgShowStep(2);
+            } else if (step === 2) {
+                var sel = document.querySelector('input[name="cgPay"]:checked');
+                if (!sel) { showToast('Please select a payment method!'); return; }
+                if (sel.value === 'card') {
+                    var cn = document.getElementById('cgCardNum') || { value: '' };
+                    var ce = document.getElementById('cgCardExp') || { value: '' };
+                    var cv = document.getElementById('cgCardCvv') || { value: '' };
+                    if (!cn.value.trim() || !ce.value.trim() || !cv.value.trim()) {
+                        showToast('Please enter your card details!'); return;
+                    }
+                }
+                _cgPlaceOrder();
+            }
+        }
+        function _cgPlaceOrder() {
+            _cgShowStep(3);
+            var name = (document.getElementById('cgName') || { value: 'Crew Member' }).value.trim() || 'Crew Member';
+            var email = (document.getElementById('cgEmail') || { value: '' }).value.trim();
+            var orderId = 'CG' + Date.now().toString().slice(-7);
+            var conf = document.getElementById('cgConfirm');
+            if (conf) conf.innerHTML = '<div style="text-align:center;padding:20px 0 10px">'
+                + '<div style="width:76px;height:76px;background:rgba(74,144,226,.1);border:2px solid rgba(74,144,226,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--earth-blue);margin:0 auto 20px;animation:cgPop .4s ease"><i class="fas fa-check"></i></div>'
+                + '<p style="font-family:\'Orbitron\',sans-serif;font-size:20px;font-weight:900;margin-bottom:10px;letter-spacing:1px">ORDER PLACED!</p>'
+                + '<p style="color:var(--text-secondary);font-size:14px;margin-bottom:6px">Thank you, <strong style="color:white">' + name + '</strong>!</p>'
+                + (email ? '<p style="color:var(--text-secondary);font-size:13px;margin-bottom:20px">Confirmation sent to<br><strong style="color:var(--earth-blue)">' + email + '</strong></p>' : '')
+                + '<div style="background:rgba(74,144,226,.06);border:1px solid rgba(74,144,226,.2);padding:16px 20px;margin-bottom:22px">'
+                + '<p style="font-size:10px;color:var(--text-secondary);letter-spacing:2px;margin-bottom:6px;text-transform:uppercase">Order ID</p>'
+                + '<p style="font-family:\'Orbitron\',sans-serif;font-size:18px;font-weight:700;color:var(--earth-blue)">#' + orderId + '</p>'
+                + '</div>'
+                + '<p style="color:var(--text-secondary);font-size:13px;margin-bottom:28px;line-height:1.7">Your cosmic gear is being packed.<br>Estimated delivery: <strong style="color:white">3–5 business days</strong></p>'
+                + '<button onclick="_cgDone()" style="padding:13px 36px;background:var(--earth-blue);border:none;color:white;font-family:\'Orbitron\',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:background .3s" onmouseover="this.style.background=\'#6bb6ff\'" onmouseout="this.style.background=\'var(--earth-blue)\'">CONTINUE SHOPPING</button>'
+                + '</div>';
+        }
+        function _cgDone() {
+            _cgSave([]);
+            _cgRender();
+            closeCheckout();
+            showToast('Order confirmed! Welcome to the crew!');
+        }
+        function cgSelectPay(el, method) {
+            document.querySelectorAll('.cg-pay-opt').forEach(function (m) { m.style.borderColor = 'var(--border)'; m.style.background = 'transparent'; });
+            el.style.borderColor = 'var(--earth-blue)';
+            el.style.background = 'rgba(74,144,226,.05)';
+            var cf = document.getElementById('cgCardFields');
+            if (cf) cf.style.display = method === 'card' ? 'block' : 'none';
+        }
+
+        // ── init on every page load ───────────────────────────────
+        _cgRender();
+
+
+        // Card number auto-format
+        (function () {
+            document.addEventListener('input', function (e) {
+                if (e.target.id === 'cgCardNum') {
+                    var v = e.target.value.replace(/\D/g, '').slice(0, 16);
+                    var m = v.match(/.{1,4}/g);
+                    e.target.value = m ? m.join('  ') : v;
+                }
+                if (e.target.id === 'cgCardExp') {
+                    var v = e.target.value.replace(/\D/g, '').slice(0, 4);
+                    if (v.length > 2) v = v.slice(0, 2) + '/' + v.slice(2);
+                    e.target.value = v;
+                }
+                if (e.target.id === 'cgCardCvv') {
+                    e.target.value = e.target.value.replace(/\D/g, '').slice(0, 3);
+                }
+                if (e.target.id === 'cgPin') {
+                    e.target.value = e.target.value.replace(/\D/g, '').slice(0, 6);
+                }
+            });
+        })();
+
+    </script>
+
+    <!-- CHECKOUT MODAL -->
+    <div class="cg-modal-bg" id="checkoutModal" onclick="if(event.target===this)closeCheckout()">
+        <div class="cg-modal">
+            <button class="cg-modal-close" onclick="closeCheckout()"><i class="fas fa-times"></i></button>
+            <div class="cg-modal-header">
+                <i class="fas fa-rocket" style="color:var(--earth-blue);font-size:20px"></i>
+                <span class="cg-modal-title">CHECKOUT</span>
+                <div class="cg-secure-badge"><i class="fas fa-lock"></i> 100% SECURE</div>
+            </div>
+            <div class="cg-modal-body">
+                <!-- LEFT: STEPS -->
+                <div class="cg-left">
+
+                    <!-- STEP 1: DELIVERY -->
+                    <div id="cgStep1">
+                        <div class="cg-step-head" id="cgHead1">
+                            <div class="cg-step-num">1</div>
+                            <div class="cg-step-lbl">DELIVERY DETAILS</div>
+                        </div>
+                        <div class="cg-grid2">
+                            <div><label class="cg-lbl">Full Name *</label><input class="cg-inp" id="cgName" type="text"
+                                    placeholder="Arjun Sharma" autocomplete="name"></div>
+                            <div><label class="cg-lbl">Phone Number *</label><input class="cg-inp" id="cgPhone"
+                                    type="tel" placeholder="98765 43210" autocomplete="tel"></div>
+                        </div>
+                        <div class="cg-field"><label class="cg-lbl">Email Address *</label><input class="cg-inp"
+                                id="cgEmail" type="email" placeholder="you@example.com" autocomplete="email"></div>
+                        <div class="cg-field"><label class="cg-lbl">Flat / House No, Street, Area *</label><input
+                                class="cg-inp" id="cgAddr" type="text"
+                                placeholder="House 42, Sector 17, Near Clock Tower" autocomplete="street-address"></div>
+                        <div class="cg-grid2">
+                            <div><label class="cg-lbl">City *</label><input class="cg-inp" id="cgCity" type="text"
+                                    placeholder="Chandigarh" autocomplete="address-level2"></div>
+                            <div><label class="cg-lbl">State</label>
+                                <select class="cg-sel" id="cgState">
+                                    <option value="">Select state...</option>
+                                    <option>Punjab</option>
+                                    <option>Haryana</option>
+                                    <option>Delhi</option>
+                                    <option>Himachal Pradesh</option>
+                                    <option>Uttarakhand</option>
+                                    <option>Uttar Pradesh</option>
+                                    <option>Rajasthan</option>
+                                    <option>Gujarat</option>
+                                    <option>Maharashtra</option>
+                                    <option>Madhya Pradesh</option>
+                                    <option>Karnataka</option>
+                                    <option>Tamil Nadu</option>
+                                    <option>Kerala</option>
+                                    <option>Andhra Pradesh</option>
+                                    <option>Telangana</option>
+                                    <option>West Bengal</option>
+                                    <option>Odisha</option>
+                                    <option>Bihar</option>
+                                    <option>Jharkhand</option>
+                                    <option>Assam</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="cg-grid2">
+                            <div><label class="cg-lbl">PIN Code *</label><input class="cg-inp" id="cgPin" type="text"
+                                    placeholder="160017" maxlength="6" autocomplete="postal-code"></div>
+                            <div><label class="cg-lbl">Coupon Code</label><input class="cg-inp" id="cgCoupon"
+                                    type="text" placeholder="COSMIC10" style="text-transform:uppercase"></div>
+                        </div>
+                        <button class="cg-btn" onclick="cgNext(1)">CONTINUE TO PAYMENT &nbsp;<i
+                                class="fas fa-arrow-right"></i></button>
+                    </div>
+
+                    <!-- STEP 2: PAYMENT -->
+                    <div id="cgStep2" style="display:none">
+                        <div class="cg-step-head" id="cgHead2">
+                            <div class="cg-step-num">2</div>
+                            <div class="cg-step-lbl">PAYMENT METHOD</div>
+                        </div>
+
+                        <label class="cg-pay-opt" onclick="cgSelectPay(this,'upi')">
+                            <input type="radio" name="cgPay" value="upi">
+                            <div class="cg-pay-icon"><i class="fas fa-mobile-alt"></i></div>
+                            <div>
+                                <div class="cg-pay-name">UPI / BHIM</div>
+                                <div class="cg-pay-sub">Google Pay, PhonePe, Paytm, BHIM</div>
+                            </div>
+                        </label>
+
+                        <label class="cg-pay-opt" onclick="cgSelectPay(this,'card')">
+                            <input type="radio" name="cgPay" value="card">
+                            <div class="cg-pay-icon"><i class="fas fa-credit-card"></i></div>
+                            <div>
+                                <div class="cg-pay-name">CREDIT / DEBIT CARD</div>
+                                <div class="cg-pay-sub">Visa, Mastercard, RuPay, Amex</div>
+                            </div>
+                        </label>
+
+                        <div class="cg-card-fields" id="cgCardFields">
+                            <div class="cg-field"><label class="cg-lbl">Card Number</label><input class="cg-inp"
+                                    id="cgCardNum" type="text" placeholder="1234  5678  9012  3456" maxlength="19">
+                            </div>
+                            <div class="cg-grid2">
+                                <div><label class="cg-lbl">Expiry (MM/YY)</label><input class="cg-inp" id="cgCardExp"
+                                        type="text" placeholder="08/27" maxlength="5"></div>
+                                <div><label class="cg-lbl">CVV</label><input class="cg-inp" id="cgCardCvv"
+                                        type="password" placeholder="•••" maxlength="3"></div>
+                            </div>
+                        </div>
+
+                        <label class="cg-pay-opt" onclick="cgSelectPay(this,'netbank')">
+                            <input type="radio" name="cgPay" value="netbank">
+                            <div class="cg-pay-icon"><i class="fas fa-university"></i></div>
+                            <div>
+                                <div class="cg-pay-name">NET BANKING</div>
+                                <div class="cg-pay-sub">SBI, HDFC, ICICI, Axis &amp; all banks</div>
+                            </div>
+                        </label>
+
+                        <label class="cg-pay-opt" onclick="cgSelectPay(this,'cod')">
+                            <input type="radio" name="cgPay" value="cod">
+                            <div class="cg-pay-icon"><i class="fas fa-money-bill-wave"></i></div>
+                            <div>
+                                <div class="cg-pay-name">CASH ON DELIVERY</div>
+                                <div class="cg-pay-sub">Pay when your order arrives at door</div>
+                            </div>
+                        </label>
+
+                        <button class="cg-btn" onclick="cgNext(2)"><i class="fas fa-rocket"></i> &nbsp;PLACE
+                            ORDER</button>
+                        <button class="cg-btn-back" onclick="_cgShowStep(1)"><i class="fas fa-chevron-left"></i>
+                            &nbsp;Back to Delivery</button>
+                    </div>
+
+                    <!-- STEP 3: CONFIRMATION -->
+                    <div id="cgStep3" style="display:none">
+                        <div class="cg-step-head" id="cgHead3">
+                            <div class="cg-step-num"
+                                style="background:var(--earth-blue);color:white;border-color:var(--earth-blue)"><i
+                                    class="fas fa-check" style="font-size:11px"></i></div>
+                            <div class="cg-step-lbl">ORDER CONFIRMED</div>
+                        </div>
+                        <div id="cgConfirm"></div>
+                    </div>
+
+                </div>
+
+                <!-- RIGHT: ORDER SUMMARY -->
+                <div class="cg-right">
+                    <div class="cg-summary-lbl">ORDER SUMMARY</div>
+                    <div id="cgSummary" style="max-height:420px;overflow-y:auto"></div>
+                    <div class="cg-trust">
+                        <div class="cg-trust-row"><i class="fas fa-shield-alt"></i> 100% secure &amp; encrypted</div>
+                        <div class="cg-trust-row"><i class="fas fa-undo-alt"></i> Easy 7-day returns</div>
+                        <div class="cg-trust-row"><i class="fas fa-shipping-fast"></i> Free shipping over ₹999</div>
+                        <div class="cg-trust-row"><i class="fas fa-headset"></i> 24hr support</div>
+                        <div class="cg-trust-row"><i class="fab fa-cc-visa" style="font-size:15px"></i> Visa, MC, RuPay,
+                            UPI accepted</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

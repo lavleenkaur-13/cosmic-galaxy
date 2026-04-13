@@ -1,0 +1,4019 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop — COSMIC GALAXY</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --earth-blue: #4a90e2;
+            --mars-red: #e74c3c;
+            --bg-dark: #0a0a0f;
+            --bg-card: #1a1a24;
+            --text-primary: #fff;
+            --text-secondary: #888899;
+            --border: rgba(255, 255, 255, 0.1);
+            --grid-color: rgba(255, 255, 255, 0.03)
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            overflow-x: hidden
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(var(--grid-color) 1px, transparent 1px), linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0
+        }
+
+        .stars::before,
+        .stars::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            box-shadow: 100px 100px white, 200px 150px white, 300px 50px white, 400px 200px white, 500px 100px white, 600px 250px white, 700px 150px white, 800px 50px white, 900px 200px white, 1000px 100px white, 1100px 150px white, 1200px 250px white, 50px 300px white, 150px 400px white, 250px 500px white, 350px 350px white, 450px 450px white, 550px 300px white, 1300px 200px white, 1400px 100px white, 720px 80px white, 840px 320px white, 960px 440px white, 180px 560px white, 1050px 380px white;
+            animation: twinkle 5s infinite
+        }
+
+        .stars::after {
+            animation-delay: 2.5s
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: .3
+            }
+
+            50% {
+                opacity: 1
+            }
+        }
+
+        /* ANNOUNCEMENT */
+        .announcement-bar {
+            background: var(--earth-blue);
+            text-align: center;
+            padding: 8px 20px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1001;
+            color: white
+        }
+
+        .announcement-bar a {
+            color: white;
+            text-decoration: underline;
+            margin-left: 10px
+        }
+
+        /* NAVBAR */
+        .navbar {
+            position: fixed;
+            top: 36px;
+            width: 100%;
+            background: rgba(10, 10, 15, .97);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            transition: all .3s
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 19px;
+            font-weight: 900;
+            color: var(--earth-blue);
+            text-decoration: none;
+            letter-spacing: 1px
+        }
+
+        .logo-dot {
+            width: 7px;
+            height: 7px;
+            background: var(--earth-blue);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+            display: inline-block
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1)
+            }
+
+            50% {
+                opacity: .5;
+                transform: scale(1.5)
+            }
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 34px;
+            list-style: none
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: color .3s;
+            position: relative
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--earth-blue);
+            transition: width .3s
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary)
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%
+        }
+
+        .nav-link.active {
+            color: var(--text-primary)
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center
+        }
+
+        .btn-nav {
+            padding: 8px 20px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .3s;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 1px
+        }
+
+        .btn-nav:hover {
+            border-color: var(--earth-blue);
+            color: var(--earth-blue)
+        }
+
+        .btn-nav-primary {
+            padding: 8px 20px;
+            background: var(--earth-blue);
+            border: 1px solid var(--earth-blue);
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .3s;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 1px
+        }
+
+        .btn-nav-primary:hover {
+            background: #6bb6ff;
+            border-color: #6bb6ff
+        }
+
+        .nav-icon-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 16px;
+            cursor: pointer;
+            transition: color .3s;
+            padding: 6px 8px
+        }
+
+        .nav-icon-btn:hover {
+            color: var(--earth-blue)
+        }
+
+        .cart-wrap {
+            position: relative;
+            display: inline-block
+        }
+
+        .cart-wrap span {
+            position: absolute;
+            top: -7px;
+            right: -9px;
+            background: var(--mars-red);
+            color: white;
+            font-size: 9px;
+            font-weight: 700;
+            width: 17px;
+            height: 17px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif
+        }
+
+        /* SEARCH OVERLAY */
+        .search-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .9);
+            backdrop-filter: blur(16px);
+            z-index: 2000;
+            display: none;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 120px
+        }
+
+        .search-overlay.open {
+            display: flex
+        }
+
+        .search-box {
+            width: 100%;
+            max-width: 700px;
+            padding: 0 30px
+        }
+
+        .search-label {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            letter-spacing: 3px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            text-transform: uppercase
+        }
+
+        .search-input-wrap {
+            display: flex;
+            border-bottom: 2px solid var(--earth-blue)
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 16px 0;
+            background: transparent;
+            border: none;
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 24px;
+            font-weight: 600;
+            outline: none
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, .2)
+        }
+
+        .search-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 22px;
+            cursor: pointer;
+            padding: 0 8px;
+            transition: color .2s
+        }
+
+        .search-close:hover {
+            color: white
+        }
+
+        .search-hints {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 24px
+        }
+
+        .search-hint {
+            padding: 6px 14px;
+            background: rgba(74, 144, 226, .1);
+            border: 1px solid rgba(74, 144, 226, .25);
+            color: var(--earth-blue);
+            font-size: 12px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all .2s
+        }
+
+        .search-hint:hover {
+            background: var(--earth-blue);
+            color: white
+        }
+
+        /* CART DRAWER */
+        .cart-drawer {
+            position: fixed;
+            top: 0;
+            right: -420px;
+            width: 420px;
+            height: 100%;
+            background: var(--bg-card);
+            border-left: 1px solid var(--border);
+            z-index: 2001;
+            transition: right .35s cubic-bezier(.4, 0, .2, 1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden
+        }
+
+        .cart-drawer.open {
+            right: 0
+        }
+
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .6);
+            z-index: 2000;
+            display: none
+        }
+
+        .cart-overlay.open {
+            display: block
+        }
+
+        .cart-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center
+        }
+
+        .cart-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 1px
+        }
+
+        .cart-header-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 18px;
+            cursor: pointer;
+            padding: 4px;
+            transition: color .2s
+        }
+
+        .cart-header-close:hover {
+            color: white
+        }
+
+        .cart-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 24px
+        }
+
+        .cart-empty {
+            text-align: center;
+            padding: 60px 20px
+        }
+
+        .cart-empty i {
+            font-size: 40px;
+            color: rgba(74, 144, 226, .2);
+            margin-bottom: 16px;
+            display: block
+        }
+
+        .cart-empty p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 20px
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 14px;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .cart-item-img {
+            width: 70px;
+            height: 70px;
+            background: transparent;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0
+        }
+
+        .cart-item-img i {
+            color: rgba(74, 144, 226, .2);
+            font-size: 20px
+        }
+
+        .cart-item-info {
+            flex: 1
+        }
+
+        .cart-item-cat {
+            font-size: 10px;
+            color: var(--earth-blue);
+            text-transform: uppercase;
+            letter-spacing: 1.5px
+        }
+
+        .cart-item-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            margin: 3px 0 6px;
+            line-height: 1.3
+        }
+
+        .cart-item-price {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            color: var(--earth-blue);
+            font-weight: 700
+        }
+
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            margin-top: 8px;
+            border: 1px solid var(--border);
+            width: fit-content
+        }
+
+        .qty-btn {
+            width: 28px;
+            height: 28px;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            transition: all .2s
+        }
+
+        .qty-btn:hover {
+            background: rgba(74, 144, 226, .1);
+            color: var(--earth-blue)
+        }
+
+        .qty-display {
+            width: 34px;
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            border-left: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            height: 28px;
+            line-height: 28px
+        }
+
+        .cart-item-remove {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 12px;
+            padding: 0;
+            margin-left: auto;
+            align-self: flex-start;
+            transition: color .2s
+        }
+
+        .cart-item-remove:hover {
+            color: var(--mars-red)
+        }
+
+        .cart-footer {
+            padding: 20px 24px;
+            border-top: 1px solid var(--border)
+        }
+
+        .cart-subtotal {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: var(--text-secondary)
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            font-weight: 700
+        }
+
+        .cart-total span:last-child {
+            color: var(--earth-blue)
+        }
+
+        .btn-checkout {
+            width: 100%;
+            padding: 14px;
+            background: var(--earth-blue);
+            border: none;
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: background .3s;
+            margin-bottom: 8px
+        }
+
+        .btn-checkout:hover {
+            background: #6bb6ff
+        }
+
+        .btn-continue {
+            width: 100%;
+            padding: 11px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all .3s
+        }
+
+        .btn-continue:hover {
+            border-color: var(--earth-blue);
+            color: var(--earth-blue)
+        }
+
+        /* PAGE BANNER */
+        .page-banner {
+            padding: 140px 60px 50px;
+            position: relative;
+            z-index: 1;
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(to bottom, rgba(74, 144, 226, .04) 0%, transparent 100%)
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-secondary);
+            margin-bottom: 20px
+        }
+
+        .breadcrumb a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color .2s
+        }
+
+        .breadcrumb a:hover {
+            color: var(--earth-blue)
+        }
+
+        .breadcrumb i {
+            font-size: 9px
+        }
+
+        .breadcrumb .current {
+            color: var(--earth-blue)
+        }
+
+        .page-banner-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 20px
+        }
+
+        .page-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 46px;
+            font-weight: 900;
+            line-height: 1.1
+        }
+
+        .page-title span {
+            color: var(--earth-blue)
+        }
+
+        .page-subtitle {
+            color: var(--text-secondary);
+            font-size: 15px;
+            margin-top: 10px
+        }
+
+        .page-stats {
+            display: flex;
+            gap: 32px
+        }
+
+        .page-stat-num {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--earth-blue);
+            text-align: right
+        }
+
+        .page-stat-label {
+            color: var(--text-secondary);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            text-align: right
+        }
+
+        /* LAYOUT */
+        .shop-layout {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 0;
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px 80px
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            padding: 36px 28px 36px 0;
+            border-right: 1px solid var(--border);
+            position: sticky;
+            top: 106px;
+            height: fit-content;
+            align-self: start
+        }
+
+        .sidebar-section {
+            margin-bottom: 32px
+        }
+
+        .sidebar-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .sidebar-clear {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 10px;
+            cursor: pointer;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color .2s
+        }
+
+        .sidebar-clear:hover {
+            color: var(--earth-blue)
+        }
+
+        .cat-list {
+            list-style: none
+        }
+
+        .cat-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 9px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, .04);
+            cursor: pointer;
+            transition: all .2s
+        }
+
+        .cat-item:last-child {
+            border-bottom: none
+        }
+
+        .cat-item:hover .cat-name,
+        .cat-item.active .cat-name {
+            color: var(--earth-blue)
+        }
+
+        .cat-item.active .cat-indicator {
+            background: var(--earth-blue)
+        }
+
+        .cat-left {
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .cat-indicator {
+            width: 3px;
+            height: 14px;
+            background: rgba(255, 255, 255, .1);
+            transition: background .2s;
+            flex-shrink: 0
+        }
+
+        .cat-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            transition: color .2s;
+            text-transform: uppercase;
+            letter-spacing: .5px
+        }
+
+        .cat-count {
+            font-size: 11px;
+            color: var(--text-secondary);
+            font-family: 'Orbitron', sans-serif
+        }
+
+        .cat-item.active .cat-count {
+            color: var(--earth-blue)
+        }
+
+        /* PRICE */
+        .price-range-display {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 14px
+        }
+
+        .price-val {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 13px;
+            color: var(--earth-blue);
+            font-weight: 700
+        }
+
+        input[type=range] {
+            width: 100%;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 2px;
+            background: rgba(255, 255, 255, .1);
+            outline: none;
+            border-radius: 2px
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--earth-blue);
+            cursor: pointer;
+            border: 2px solid var(--bg-dark)
+        }
+
+        input[type=range]::-moz-range-thumb {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--earth-blue);
+            cursor: pointer;
+            border: 2px solid var(--bg-dark)
+        }
+
+        /* SIZE */
+        .size-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px
+        }
+
+        .size-btn {
+            padding: 7px 4px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all .2s;
+            text-align: center;
+            text-transform: uppercase
+        }
+
+        .size-btn:hover,
+        .size-btn.active {
+            border-color: var(--earth-blue);
+            color: var(--earth-blue);
+            background: rgba(74, 144, 226, .08)
+        }
+
+        /* COLOR */
+        .color-swatches {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap
+        }
+
+        .swatch {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all .2s;
+            position: relative;
+            flex-shrink: 0
+        }
+
+        .swatch:hover,
+        .swatch.active {
+            border-color: var(--earth-blue);
+            transform: scale(1.12)
+        }
+
+        .swatch.active::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%
+        }
+
+        /* RATING */
+        .rating-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px
+        }
+
+        .rating-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 4px 0
+        }
+
+        .rating-row input[type=checkbox] {
+            accent-color: var(--earth-blue);
+            width: 14px;
+            height: 14px;
+            cursor: pointer
+        }
+
+        .rating-stars {
+            color: #f0a500;
+            font-size: 12px;
+            letter-spacing: 1px
+        }
+
+        .rating-label {
+            color: var(--text-secondary);
+            font-size: 12px
+        }
+
+        .btn-apply-filter {
+            width: 100%;
+            padding: 11px;
+            background: var(--earth-blue);
+            border: none;
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: background .3s;
+            margin-top: 8px
+        }
+
+        .btn-apply-filter:hover {
+            background: #6bb6ff
+        }
+
+        .btn-clear-all {
+            width: 100%;
+            padding: 9px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all .3s;
+            margin-top: 6px
+        }
+
+        .btn-clear-all:hover {
+            border-color: var(--mars-red);
+            color: var(--mars-red)
+        }
+
+        /* MAIN */
+        .shop-main {
+            padding: 36px 0 36px 40px
+        }
+
+        .shop-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+            gap: 14px
+        }
+
+        .toolbar-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap
+        }
+
+        .result-count {
+            font-size: 13px;
+            color: var(--text-secondary)
+        }
+
+        .result-count span {
+            color: var(--text-primary);
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px
+        }
+
+        .active-filters {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap
+        }
+
+        .filter-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            background: rgba(74, 144, 226, .1);
+            border: 1px solid rgba(74, 144, 226, .3);
+            color: var(--earth-blue);
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .5px
+        }
+
+        .filter-tag button {
+            background: none;
+            border: none;
+            color: var(--earth-blue);
+            cursor: pointer;
+            padding: 0;
+            font-size: 11px;
+            line-height: 1;
+            transition: color .2s
+        }
+
+        .filter-tag button:hover {
+            color: var(--mars-red)
+        }
+
+        .toolbar-right {
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .sort-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            white-space: nowrap
+        }
+
+        .sort-select {
+            padding: 8px 30px 8px 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            font-size: 12px;
+            cursor: pointer;
+            outline: none;
+            transition: border-color .2s;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888899'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center
+        }
+
+        .sort-select:focus {
+            border-color: var(--earth-blue)
+        }
+
+        .view-toggle {
+            display: flex;
+            gap: 4px
+        }
+
+        .view-btn {
+            width: 34px;
+            height: 34px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all .2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px
+        }
+
+        .view-btn:hover,
+        .view-btn.active {
+            border-color: var(--earth-blue);
+            color: var(--earth-blue);
+            background: rgba(74, 144, 226, .08)
+        }
+
+        /* PRODUCT GRID */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px
+        }
+
+        .products-grid.list-view {
+            grid-template-columns: 1fr
+        }
+
+
+
+
+
+        .product-card:hover .product-overlay {
+            opacity: 1
+        }
+
+        .product-card:hover .product-img-inner {
+            transform: scale(1.04)
+        }
+
+
+
+        .product-img-inner {
+            width: 100%;
+            height: 100%;
+            transition: transform .5s ease
+        }
+
+
+
+
+
+        .product-img-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border: 1px dashed rgba(74, 144, 226, .15)
+        }
+
+        .product-img-placeholder i {
+            font-size: 28px;
+            color: rgba(74, 144, 226, .22)
+        }
+
+        .product-img-placeholder span {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 9px;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, .1);
+            text-transform: uppercase
+        }
+
+        .product-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(to top, rgba(0, 0, 0, .88) 0%, transparent 100%);
+            display: flex;
+            justify-content: center;
+            opacity: 0;
+            transition: .3s;
+            z-index: 3
+        }
+
+        .btn-quick-add {
+            padding: 9px 0;
+            background: var(--earth-blue);
+            border: none;
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            width: 100%;
+            transition: background .2s
+        }
+
+        .btn-quick-add:hover {
+            background: #6bb6ff
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 4;
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 9px;
+            padding: 3px 10px;
+            letter-spacing: 1.5px
+        }
+
+        .badge-new {
+            background: var(--earth-blue)
+        }
+
+        .badge-hot {
+            background: var(--mars-red)
+        }
+
+        .badge-sale {
+            background: #e67e22
+        }
+
+        .product-wishlist {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 4;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all .2s;
+            font-size: 13px;
+            color: var(--text-secondary);
+            background: rgba(10, 10, 15, .65);
+            border: 1px solid rgba(255, 255, 255, .1);
+            outline: none
+        }
+
+        .product-wishlist:hover,
+        .product-wishlist.wishlisted {
+            color: var(--mars-red);
+            border-color: var(--mars-red)
+        }
+
+        .product-wishlist.wishlisted i {
+            font-weight: 900
+        }
+
+
+
+        .product-category {
+            color: var(--earth-blue);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 4px
+        }
+
+        .product-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            line-height: 1.4
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 10px
+        }
+
+        .stars-display {
+            color: #f0a500;
+            font-size: 11px;
+            letter-spacing: 1px
+        }
+
+        .rating-count-sm {
+            color: var(--text-secondary);
+            font-size: 11px
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center
+        }
+
+        .price-wrap {
+            display: flex;
+            align-items: baseline;
+            gap: 6px
+        }
+
+        .product-price {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            color: var(--earth-blue);
+            font-weight: 700
+        }
+
+        .product-price-old {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-decoration: line-through
+        }
+
+        .btn-add-cart {
+            width: 32px;
+            height: 32px;
+            background: rgba(74, 144, 226, .08);
+            border: 1px solid rgba(74, 144, 226, .3);
+            color: var(--earth-blue);
+            cursor: pointer;
+            transition: all .25s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px
+        }
+
+        .btn-add-cart:hover {
+            background: var(--earth-blue);
+            color: white;
+            border-color: var(--earth-blue)
+        }
+
+        /* list desc hidden in grid mode */
+        .list-desc {
+            color: var(--text-secondary);
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 14px;
+            display: none
+        }
+
+        /* LIST VIEW */
+        .products-grid.list-view .product-card {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            transform: none !important
+        }
+
+        .products-grid.list-view .product-card:hover {
+            transform: none !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, .4)
+        }
+
+        .products-grid.list-view .product-img {
+            height: 200px
+        }
+
+        .products-grid.list-view .product-info {
+            padding: 24px 28px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center
+        }
+
+        .products-grid.list-view .product-name {
+            font-size: 15px;
+            margin-bottom: 8px
+        }
+
+        .products-grid.list-view .product-price {
+            font-size: 18px
+        }
+
+        .products-grid.list-view .list-desc {
+            display: block
+        }
+
+        .products-grid.list-view .btn-add-cart {
+            width: auto;
+            padding: 0 20px;
+            height: 36px;
+            font-size: 12px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px
+        }
+
+        /* TECH CORNERS */
+        .tech-corner {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border: 1px solid rgba(74, 144, 226, .2);
+            pointer-events: none
+        }
+
+        .tc-tl {
+            top: 8px;
+            left: 8px;
+            border-right: none;
+            border-bottom: none
+        }
+
+        .tc-tr {
+            top: 8px;
+            right: 8px;
+            border-left: none;
+            border-bottom: none
+        }
+
+        /* NO RESULTS */
+        .no-results {
+            grid-column: 1/-1;
+            text-align: center;
+            padding: 80px 20px;
+            display: none
+        }
+
+        .no-results i {
+            font-size: 48px;
+            color: rgba(74, 144, 226, .2);
+            margin-bottom: 20px;
+            display: block
+        }
+
+        .no-results h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 20px;
+            margin-bottom: 10px
+        }
+
+        .no-results p {
+            color: var(--text-secondary);
+            font-size: 14px
+        }
+
+        /* LOAD MORE */
+        .load-more-wrap {
+            text-align: center;
+            margin-top: 36px
+        }
+
+        .progress-bar-wrap {
+            max-width: 300px;
+            margin: 0 auto 14px
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 2px;
+            background: rgba(255, 255, 255, .08)
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--earth-blue);
+            width: 25%;
+            transition: width .5s
+        }
+
+        .btn-load-more {
+            padding: 12px 40px;
+            background: transparent;
+            border: 1px solid rgba(74, 144, 226, .4);
+            color: var(--earth-blue);
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: all .3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .btn-load-more:hover {
+            background: var(--earth-blue);
+            color: white;
+            border-color: var(--earth-blue)
+        }
+
+        .btn-load-more:disabled {
+            opacity: .4;
+            cursor: default
+        }
+
+        /* FOOTER */
+        .footer {
+            background: var(--bg-card);
+            border-top: 1px solid var(--border);
+            padding: 50px 60px 24px;
+            position: relative;
+            z-index: 1
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 48px;
+            margin-bottom: 36px
+        }
+
+        .footer-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            font-weight: 900;
+            color: var(--earth-blue);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .footer-desc {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 13px;
+            max-width: 270px
+        }
+
+        .footer-heading {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            margin-bottom: 18px;
+            letter-spacing: 2px
+        }
+
+        .footer-links {
+            list-style: none
+        }
+
+        .footer-links li {
+            margin-bottom: 10px
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color .3s
+        }
+
+        .footer-links a:hover {
+            color: var(--earth-blue)
+        }
+
+        .social-links {
+            display: flex;
+            gap: 10px;
+            margin-top: 18px
+        }
+
+        .social-links a {
+            width: 38px;
+            height: 38px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(74, 144, 226, .06);
+            border: 1px solid rgba(74, 144, 226, .15);
+            color: var(--earth-blue);
+            transition: all .3s;
+            text-decoration: none;
+            font-size: 14px
+        }
+
+        .social-links a:hover {
+            background: var(--earth-blue);
+            color: white;
+            transform: translateY(-3px)
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 12px
+        }
+
+        .footer-bottom span {
+            color: var(--earth-blue)
+        }
+
+        /* TOAST */
+        .toast {
+            position: fixed;
+            bottom: 26px;
+            right: 26px;
+            z-index: 9999;
+            background: var(--bg-card);
+            border-left: 3px solid var(--earth-blue);
+            border-top: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            transform: translateX(200px);
+            opacity: 0;
+            transition: all .4s;
+            pointer-events: none;
+            min-width: 210px
+        }
+
+        .toast.show {
+            transform: translateX(0);
+            opacity: 1
+        }
+
+        .toast.toast-error {
+            border-left-color: var(--mars-red)
+        }
+
+        .toast.toast-error i {
+            color: var(--mars-red)
+        }
+
+        .toast i {
+            color: var(--earth-blue);
+            font-size: 14px
+        }
+
+        /* SCROLL TOP */
+        .scroll-top {
+            position: fixed;
+            bottom: 26px;
+            left: 26px;
+            z-index: 999;
+            width: 40px;
+            height: 40px;
+            background: rgba(74, 144, 226, .12);
+            border: 1px solid rgba(74, 144, 226, .35);
+            color: var(--earth-blue);
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            transition: all .3s
+        }
+
+        .scroll-top.visible {
+            display: flex
+        }
+
+        .scroll-top:hover {
+            background: var(--earth-blue);
+            color: white
+        }
+
+
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 80%;
+            max-width: 320px;
+            height: 100%;
+            background: var(--bg-card);
+            border-right: 1px solid var(--border);
+            z-index: 1500;
+            transition: left .3s;
+            padding: 80px 30px 40px;
+            display: flex;
+            flex-direction: column
+        }
+
+        .mobile-nav.open {
+            left: 0
+        }
+
+        .mobile-nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .6);
+            z-index: 1499;
+            display: none
+        }
+
+        .mobile-nav-overlay.open {
+            display: block
+        }
+
+        .mobile-nav-link {
+            display: block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+            transition: color .2s
+        }
+
+        .mobile-nav-link:hover,
+        .mobile-nav-link.active {
+            color: var(--earth-blue)
+        }
+
+        .mobile-nav-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+            flex-direction: column
+        }
+
+        /* MOBILE FILTER TOGGLE */
+        .btn-mobile-filter {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 16px;
+            background: rgba(74, 144, 226, .08);
+            border: 1px solid rgba(74, 144, 226, .3);
+            color: var(--earth-blue);
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all .2s
+        }
+
+        .btn-mobile-filter:hover {
+            background: rgba(74, 144, 226, .15)
+        }
+
+        /* RESPONSIVE */
+        @media(max-width:1100px) {
+            .shop-layout {
+                grid-template-columns: 220px 1fr
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+        }
+
+        @media(max-width:860px) {
+            .shop-layout {
+                grid-template-columns: 1fr;
+                padding: 0 20px 60px
+            }
+
+            .sidebar {
+                position: relative;
+                top: 0;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                padding: 20px 0 28px;
+                display: none
+            }
+
+            .sidebar.open {
+                display: block
+            }
+
+            .shop-main {
+                padding: 28px 0
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            .products-grid.list-view .product-card {
+                grid-template-columns: 1fr
+            }
+
+            .products-grid.list-view .product-img {
+                height: 200px
+            }
+
+            .page-banner {
+                padding: 120px 30px 40px
+            }
+
+            .page-title {
+                font-size: 30px
+            }
+
+            .footer {
+                padding: 40px 30px 20px
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .navbar {
+                top: 32px
+            }
+
+            .btn-mobile-filter {
+                display: flex !important
+            }
+
+            .cart-drawer {
+                width: 100%;
+                max-width: 420px
+            }
+        }
+
+        @media(max-width:540px) {
+
+            .products-grid,
+            .products-grid.list-view {
+                grid-template-columns: 1fr
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr
+            }
+
+            .page-banner-inner {
+                flex-direction: column;
+                align-items: flex-start
+            }
+
+            .page-stats {
+                display: none
+            }
+
+            .nav-menu {
+                display: none
+            }
+
+            /* .nav-mobile-toggle {
+                display: block
+            } */
+
+            .nav-container {
+                padding: 0 20px
+            }
+
+            .announcement-bar {
+                font-size: 10px;
+                letter-spacing: 1px
+            }
+        }
+
+        /* ── CHECKOUT MODAL ── */
+        @keyframes successPop {
+            0% {
+                transform: scale(0)
+            }
+
+            80% {
+                transform: scale(1.1)
+            }
+
+            100% {
+                transform: scale(1)
+            }
+        }
+
+        .checkout-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .85);
+            backdrop-filter: blur(8px);
+            z-index: 3000;
+            display: none;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 30px 16px;
+            overflow-y: auto
+        }
+
+        .checkout-modal-overlay.open {
+            display: flex
+        }
+
+        .checkout-modal {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            width: 100%;
+            max-width: 860px;
+            position: relative;
+            margin: auto
+        }
+
+        .co-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            width: 34px;
+            height: 34px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all .2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10
+        }
+
+        .co-close:hover {
+            border-color: var(--mars-red);
+            color: var(--mars-red)
+        }
+
+        .co-header {
+            padding: 24px 28px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 16px
+        }
+
+        .co-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 1px
+        }
+
+        .co-secure {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-left: auto;
+            font-size: 11px;
+            color: var(--text-secondary);
+            letter-spacing: 1px
+        }
+
+        .co-secure i {
+            color: #4ade80;
+            font-size: 13px
+        }
+
+        .co-body {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            min-height: 500px
+        }
+
+        .co-left {
+            padding: 28px;
+            border-right: 1px solid var(--border)
+        }
+
+        .co-right {
+            padding: 24px;
+            background: rgba(255, 255, 255, .01)
+        }
+
+        .co-step-head {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 0;
+            border-bottom: 2px solid var(--border);
+            margin-bottom: 22px;
+            transition: all .3s
+        }
+
+        .co-step-num {
+            width: 28px;
+            height: 28px;
+            border: 1px solid var(--earth-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--earth-blue);
+            flex-shrink: 0
+        }
+
+        .co-step-label {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px
+        }
+
+        .co-field-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 14px
+        }
+
+        .co-field-full {
+            margin-bottom: 14px
+        }
+
+        .co-label {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 9px;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            display: block;
+            margin-bottom: 6px;
+            text-transform: uppercase
+        }
+
+        .co-input {
+            width: 100%;
+            padding: 11px 14px;
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid var(--border);
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            outline: none;
+            transition: border-color .3s
+        }
+
+        .co-input:focus {
+            border-color: var(--earth-blue)
+        }
+
+        .co-input::placeholder {
+            color: rgba(255, 255, 255, .2)
+        }
+
+        .co-select {
+            width: 100%;
+            padding: 11px 14px;
+            background: #0d0d18;
+            border: 1px solid var(--border);
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 14px;
+            outline: none;
+            cursor: pointer
+        }
+
+        .co-select option {
+            background: #1a1a24
+        }
+
+        .co-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--earth-blue);
+            border: none;
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all .3s;
+            margin-top: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px
+        }
+
+        .co-btn:hover {
+            background: #6bb6ff;
+            transform: translateY(-1px)
+        }
+
+        .co-btn-back {
+            width: 100%;
+            padding: 11px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all .3s;
+            margin-top: 8px;
+            text-transform: uppercase
+        }
+
+        .co-btn-back:hover {
+            border-color: var(--earth-blue);
+            color: var(--earth-blue)
+        }
+
+        /* pay methods */
+        .pay-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px
+        }
+
+        .pay-method {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 16px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all .25s
+        }
+
+        .pay-method:hover {
+            border-color: rgba(74, 144, 226, .4)
+        }
+
+        .pay-method input[type=radio] {
+            accent-color: var(--earth-blue);
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0
+        }
+
+        .pay-method input[type=radio]:checked~* {
+            color: var(--earth-blue)
+        }
+
+        .pay-method.selected {
+            border-color: var(--earth-blue);
+            background: rgba(74, 144, 226, .04)
+        }
+
+        .pay-method-label {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px
+        }
+
+        .pay-method-sub {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 2px
+        }
+
+        .pay-method-icon {
+            font-size: 20px;
+            color: var(--earth-blue);
+            width: 24px;
+            text-align: center;
+            flex-shrink: 0
+        }
+
+        .card-fields {
+            padding: 14px;
+            background: rgba(255, 255, 255, .02);
+            border: 1px solid var(--border);
+            margin-top: 2px;
+            display: none
+        }
+
+        .card-fields.show {
+            display: block
+        }
+
+        /* summary */
+        .co-summary-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border)
+        }
+
+        /* trust badges */
+        .co-trust {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border)
+        }
+
+        .co-trust-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--text-secondary)
+        }
+
+        .co-trust-item i {
+            color: #4ade80;
+            font-size: 12px;
+            width: 14px
+        }
+
+        @media(max-width:700px) {
+            .co-body {
+                grid-template-columns: 1fr
+            }
+
+            .co-right {
+                border-top: 1px solid var(--border)
+            }
+
+            .co-field-grid {
+                grid-template-columns: 1fr
+            }
+        }
+
+        /* -- CHECKOUT MODAL -- */
+        @keyframes successPop {
+            0% {
+                transform: scale(0)
+            }
+
+            80% {
+                transform: scale(1.1)
+            }
+
+            100% {
+                transform: scale(1)
+            }
+        }
+
+        .checkout-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .85);
+            backdrop-filter: blur(8px);
+            z-index: 3000;
+            display: none;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 30px 16px;
+            overflow-y: auto
+        }
+
+        .checkout-modal-overlay.open {
+            display: flex
+        }
+
+        .checkout-modal {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            width: 100%;
+            max-width: 860px;
+            position: relative;
+            margin: auto
+        }
+
+        .co-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            width: 34px;
+            height: 34px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all .2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10
+        }
+
+        .co-close:hover {
+            border-color: var(--mars-red);
+            color: var(--mars-red)
+        }
+
+        .co-header {
+            padding: 24px 28px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 16px
+        }
+
+        .co-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 1px
+        }
+
+        .co-secure {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-left: auto;
+            font-size: 11px;
+            color: var(--text-secondary);
+            letter-spacing: 1px
+        }
+
+        .co-secure i {
+            color: #4ade80;
+            font-size: 13px
+        }
+
+        .co-body {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            min-height: 500px
+        }
+
+        .co-left {
+            padding: 28px;
+            border-right: 1px solid var(--border)
+        }
+
+        .co-right {
+            padding: 24px;
+            background: rgba(255, 255, 255, .01)
+        }
+
+        .co-step-head {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 0;
+            border-bottom: 2px solid var(--border);
+            margin-bottom: 22px;
+            transition: all .3s
+        }
+
+        .co-step-num {
+            width: 28px;
+            height: 28px;
+            border: 1px solid var(--earth-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--earth-blue);
+            flex-shrink: 0
+        }
+
+        .co-step-label {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px
+        }
+
+        .co-field-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 14px
+        }
+
+        .co-field-full {
+            margin-bottom: 14px
+        }
+
+        .co-label {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 9px;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            display: block;
+            margin-bottom: 6px;
+            text-transform: uppercase
+        }
+
+        .co-input {
+            width: 100%;
+            padding: 11px 14px;
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid var(--border);
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            outline: none;
+            transition: border-color .3s
+        }
+
+        .co-input:focus {
+            border-color: var(--earth-blue)
+        }
+
+        .co-input::placeholder {
+            color: rgba(255, 255, 255, .2)
+        }
+
+        .co-select {
+            width: 100%;
+            padding: 11px 14px;
+            background: #0d0d18;
+            border: 1px solid var(--border);
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 14px;
+            outline: none;
+            cursor: pointer
+        }
+
+        .co-select option {
+            background: #1a1a24
+        }
+
+        .co-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--earth-blue);
+            border: none;
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all .3s;
+            margin-top: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px
+        }
+
+        .co-btn:hover {
+            background: #6bb6ff;
+            transform: translateY(-1px)
+        }
+
+        .co-btn-back {
+            width: 100%;
+            padding: 11px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all .3s;
+            margin-top: 8px;
+            text-transform: uppercase
+        }
+
+        .co-btn-back:hover {
+            border-color: var(--earth-blue);
+            color: var(--earth-blue)
+        }
+
+        .pay-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px
+        }
+
+        .pay-method {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 16px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all .25s
+        }
+
+        .pay-method:hover {
+            border-color: rgba(74, 144, 226, .4)
+        }
+
+        .pay-method input[type=radio] {
+            accent-color: var(--earth-blue);
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0
+        }
+
+        .pay-method.selected {
+            border-color: var(--earth-blue);
+            background: rgba(74, 144, 226, .04)
+        }
+
+        .pay-method-label {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px
+        }
+
+        .pay-method-sub {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 2px
+        }
+
+        .pay-method-icon {
+            font-size: 20px;
+            color: var(--earth-blue);
+            width: 24px;
+            text-align: center;
+            flex-shrink: 0
+        }
+
+        .card-fields {
+            padding: 14px;
+            background: rgba(255, 255, 255, .02);
+            border: 1px solid var(--border);
+            margin-top: 2px;
+            display: none
+        }
+
+        .card-fields.show {
+            display: block
+        }
+
+        .co-summary-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .co-trust {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border)
+        }
+
+        .co-trust-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--text-secondary)
+        }
+
+        .co-trust-item i {
+            color: #4ade80;
+            font-size: 12px;
+            width: 14px
+        }
+
+        @media(max-width:700px) {
+            .co-body {
+                grid-template-columns: 1fr
+            }
+
+            .co-right {
+                border-top: 1px solid var(--border)
+            }
+
+            .co-field-grid {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .product-card {
+            background: transparent;
+            border: 1px solid var(--border);
+            transition: all .3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden
+        }
+
+        .product-card:hover {
+            border-color: rgba(74, 144, 226, .45);
+            transform: translateY(-5px);
+            box-shadow: 0 14px 36px rgba(0, 0, 0, .5)
+        }
+
+        .product-card:hover .product-img-tag {
+            transform: scale(1.06)
+        }
+
+        .product-img {
+            width: 100%;
+            height: 280px;
+            position: relative;
+            overflow: hidden;
+            background: transparent
+        }
+
+        .product-img-tag {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
+            transition: transform .5s ease
+        }
+
+        .product-info {
+            padding: 14px 16px 16px;
+            background: rgba(10, 10, 15, 0.75);
+            backdrop-filter: blur(4px)
+        }
+    </style>
+</head>
+
+<body>
+    <div class="grid-overlay"></div>
+    <div class="stars"></div>
+
+    <!-- SEARCH OVERLAY -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-box">
+            <div class="search-label">Search Products</div>
+            <div class="search-input-wrap">
+                <input class="search-input" id="searchInput" type="text"
+                    placeholder="e.g. galaxy hoodie, mars jacket...">
+                <button class="search-close" onclick="closeSearch()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="search-hints">
+                <button class="search-hint" onclick="applySearch('hoodie')">Hoodies</button>
+                <button class="search-hint" onclick="applySearch('tee')">T-Shirts</button>
+                <button class="search-hint" onclick="applySearch('jacket')">Jackets</button>
+                <button class="search-hint" onclick="applySearch('cargo')">Cargo Pants</button>
+                <button class="search-hint" onclick="applySearch('nebula')">Nebula</button>
+                <button class="search-hint" onclick="applySearch('mars')">Mars</button>
+                <button class="search-hint" onclick="applySearch('galaxy')">Galaxy</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CART OVERLAY -->
+    <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+
+    <!-- CART DRAWER -->
+    <div class="cart-drawer" id="cartDrawer">
+        <div class="cart-header">
+            <div class="cart-title">YOUR CART <span id="cart-item-count"
+                    style="color:var(--earth-blue);font-size:12px">(0)</span></div>
+            <button class="cart-header-close" onclick="closeCart()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-body" id="cartBody">
+            <div class="cart-empty" id="cartEmpty">
+                <i class="fas fa-shopping-bag"></i>
+                <p>Your cart is empty.<br>Add something cosmic!</p>
+                <button class="btn-apply-filter" style="width:auto;padding:10px 24px" onclick="closeCart()">Continue
+                    Shopping</button>
+            </div>
+        </div>
+        <div class="cart-footer" id="cartFooter" style="display:none">
+            <div class="cart-subtotal"><span>Subtotal</span><span id="cart-subtotal">&#8377;0</span></div>
+            <div class="cart-subtotal"><span>Shipping</span><span id="cartShipping" style="color:#4ade80">FREE</span>
+            </div>
+            <div class="cart-total"><span>Total</span><span id="cart-total">&#8377;0</span></div>
+            <button class="btn-checkout" onclick="showToast('Checkout coming soon!','info')">Proceed to
+                Checkout</button>
+            <button class="btn-continue" onclick="closeCart()">Continue Shopping</button>
+        </div>
+    </div>
+
+
+    <!-- MOBILE NAV -->
+    <div class="mobile-nav-overlay" id="mobileNavOverlay" onclick="closeMobileNav()"></div>
+    <div class="mobile-nav" id="mobileNav">
+        <a href="index.html" class="mobile-nav-link">Home</a>
+        <a href="shop.html" class="mobile-nav-link active">Shop</a>
+        <a href="collections.html" class="mobile-nav-link">Collections</a>
+        <a href="lookbook.html" class="mobile-nav-link">Lookbook</a>
+        <a href="about.html" class="mobile-nav-link">About</a>
+        <div class="mobile-nav-actions">
+            <a href="login.html" class="btn-nav" style="width:100%" onclick="closeMobileNav()">Login</a>
+            <a href="signup.html" class="btn-nav-primary" style="width:100%" onclick="closeMobileNav()">Sign Up</a>
+        </div>
+    </div>
+
+    <!-- ANNOUNCEMENT -->
+    <div class="announcement-bar">
+        FREE SHIPPING ON ORDERS ABOVE &#8377;999 &nbsp;&bull;&nbsp; USE CODE <strong>COSMIC10</strong> FOR 10% OFF
+        <a href="#">Shop Now</a>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo"><span class="logo-dot"></span> COSMIC GALAXY</a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="shop.html" class="nav-link active">Shop</a></li>
+                <li><a href="collections.html" class="nav-link">Collections</a></li>
+                <li><a href="lookbook.html" class="nav-link">Lookbook</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="nav-icon-btn" onclick="openSearch()" title="Search"><i
+                        class="fas fa-search"></i></button>
+                <button class="nav-icon-btn cart-wrap" onclick="openCart()" title="Cart">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span id="cart-count">0</span>
+                </button>
+                <a href="login.html" class="btn-nav">Login</a>
+                <a href="signup.html" class="btn-nav-primary">Sign Up</a>
+                <!-- <button class="nav-mobile-toggle" onclick="openMobileNav()"><i class="fas fa-bars"></i></button> -->
+            </div>
+        </div>
+    </nav>
+
+    <!-- PAGE BANNER -->
+    <div class="page-banner">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <span class="current">Shop</span>
+        </div>
+        <div class="page-banner-inner">
+            <div>
+                <h1 class="page-title">ALL <span>PRODUCTS</span></h1>
+                <p class="page-subtitle">Explore the full COSMIC GALAXY universe — tees, hoodies, jackets &amp; more.
+                </p>
+            </div>
+            <div class="page-stats">
+                <div>
+                    <div class="page-stat-num" id="showing-count">12</div>
+                    <div class="page-stat-label">Showing</div>
+                </div>
+                <div>
+                    <div class="page-stat-num" id="total-count">48</div>
+                    <div class="page-stat-label">Total Items</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SHOP LAYOUT -->
+    <div class="shop-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">Categories <button class="sidebar-clear"
+                        onclick="clearCategory()">Clear</button></div>
+                <ul class="cat-list" id="catList">
+                    <li class="cat-item active" onclick="filterCat(this,'all')">
+                        <div class="cat-left">
+                            <div class="cat-indicator"></div><span class="cat-name">All Products</span>
+                        </div>
+                        <span class="cat-count">48</span>
+                    </li>
+                    <li class="cat-item" onclick="filterCat(this,'tshirt')">
+                        <div class="cat-left">
+                            <div class="cat-indicator"></div><span class="cat-name">T-Shirts</span>
+                        </div>
+                        <span class="cat-count">18</span>
+                    </li>
+                    <li class="cat-item" onclick="filterCat(this,'hoodie')">
+                        <div class="cat-left">
+                            <div class="cat-indicator"></div><span class="cat-name">Hoodies</span>
+                        </div>
+                        <span class="cat-count">10</span>
+                    </li>
+                    <li class="cat-item" onclick="filterCat(this,'jacket')">
+                        <div class="cat-left">
+                            <div class="cat-indicator"></div><span class="cat-name">Jackets</span>
+                        </div>
+                        <span class="cat-count">8</span>
+                    </li>
+                    <li class="cat-item" onclick="filterCat(this,'cargo')">
+                        <div class="cat-left">
+                            <div class="cat-indicator"></div><span class="cat-name">Cargo Pants</span>
+                        </div>
+                        <span class="cat-count">6</span>
+                    </li>
+                    <li class="cat-item" onclick="filterCat(this,'accessories')">
+                        <div class="cat-left">
+                            <div class="cat-indicator"></div><span class="cat-name">Accessories</span>
+                        </div>
+                        <span class="cat-count">6</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">Price Range</div>
+                <div class="price-range-display">
+                    <span class="price-val">&#8377;199</span>
+                    <span class="price-val" id="priceMaxLabel">&#8377;7,999</span>
+                </div>
+                <input type="range" id="priceRange" min="199" max="7999" value="7999" step="100"
+                    oninput="updatePriceLabel(this.value)">
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">Size <button class="sidebar-clear" onclick="clearSizes()">Clear</button>
+                </div>
+                <div class="size-grid">
+                    <button class="size-btn" onclick="toggleSize(this)">XS</button>
+                    <button class="size-btn" onclick="toggleSize(this)">S</button>
+                    <button class="size-btn" onclick="toggleSize(this)">M</button>
+                    <button class="size-btn" onclick="toggleSize(this)">L</button>
+                    <button class="size-btn" onclick="toggleSize(this)">XL</button>
+                    <button class="size-btn" onclick="toggleSize(this)">XXL</button>
+                    <button class="size-btn" onclick="toggleSize(this)">3XL</button>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">Color <button class="sidebar-clear" onclick="clearColors()">Clear</button>
+                </div>
+                <div class="color-swatches">
+                    <div class="swatch" style="background:#0a0a0f;border:1px solid rgba(255,255,255,.3)" title="Black"
+                        onclick="toggleSwatch(this,'Black')"></div>
+                    <div class="swatch" style="background:#1e3a8a" title="Navy" onclick="toggleSwatch(this,'Navy')">
+                    </div>
+                    <div class="swatch" style="background:#4a90e2" title="Blue" onclick="toggleSwatch(this,'Blue')">
+                    </div>
+                    <div class="swatch" style="background:#e74c3c" title="Mars Red"
+                        onclick="toggleSwatch(this,'Mars Red')"></div>
+                    <div class="swatch" style="background:#4a0080" title="Purple" onclick="toggleSwatch(this,'Purple')">
+                    </div>
+                    <div class="swatch" style="background:#006633" title="Forest" onclick="toggleSwatch(this,'Forest')">
+                    </div>
+                    <div class="swatch" style="background:#888899" title="Grey" onclick="toggleSwatch(this,'Grey')">
+                    </div>
+                    <div class="swatch" style="background:#ffffff" title="White" onclick="toggleSwatch(this,'White')">
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">Rating</div>
+                <div class="rating-list">
+                    <label class="rating-row"><input type="checkbox" name="rating" value="5"> <span
+                            class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span
+                            class="rating-label">&nbsp;5 Stars</span></label>
+                    <label class="rating-row"><input type="checkbox" name="rating" value="4"> <span
+                            class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span><span
+                            class="rating-label">&nbsp;4+ Stars</span></label>
+                    <label class="rating-row"><input type="checkbox" name="rating" value="3"> <span
+                            class="rating-stars">&#9733;&#9733;&#9733;&#9734;&#9734;</span><span
+                            class="rating-label">&nbsp;3+ Stars</span></label>
+                </div>
+            </div>
+
+            <button class="btn-apply-filter" onclick="applyFilters()">Apply Filters</button>
+            <button class="btn-clear-all" onclick="clearAllFilters()">Clear All Filters</button>
+
+        </aside>
+
+        <!-- MAIN -->
+        <main class="shop-main">
+
+            <div class="shop-toolbar">
+                <div class="toolbar-left">
+                    <button class="btn-mobile-filter" onclick="toggleSidebar()">
+                        <i class="fas fa-sliders-h"></i> Filters
+                    </button>
+                    <span class="result-count">Showing <span id="resultSpan">12</span> results</span>
+                    <div class="active-filters" id="activeFilters"></div>
+                </div>
+                <div class="toolbar-right">
+                    <span class="sort-label">Sort:</span>
+                    <select class="sort-select" id="sortSelect" onchange="applySort()">
+                        <option value="featured">Featured</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="newest">Newest First</option>
+                        <option value="rating">Best Rated</option>
+                        <option value="popular">Most Popular</option>
+                    </select>
+                    <div class="view-toggle">
+                        <button class="view-btn active" id="gridBtn" title="Grid" onclick="setView('grid')"><i
+                                class="fas fa-th"></i></button>
+                        <button class="view-btn" id="listBtn" title="List" onclick="setView('list')"><i
+                                class="fas fa-list"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="products-grid" id="productsGrid">
+                <div class="no-results" id="noResults">
+                    <i class="fas fa-satellite-dish"></i>
+                    <h3>No Products Found</h3>
+                    <p>Try adjusting your filters or <a href="#" onclick="clearAllFilters();return false"
+                            style="color:var(--earth-blue)">clear all filters</a>.</p>
+                </div>
+            </div>
+
+            <div class="load-more-wrap" id="loadMoreWrap">
+                <div class="progress-bar-wrap">
+                    <div class="progress-label">
+                        <span id="progressText">Showing 12 of 48</span>
+                        <span id="progressPct">25%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+                <button class="btn-load-more" id="loadMoreBtn" onclick="loadMore()">
+                    <i class="fas fa-sync-alt"></i> Load More Products
+                </button>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div>
+                <div class="footer-logo"><span class="logo-dot"></span> COSMIC GALAXY</div>
+                <p class="footer-desc">Space-inspired clothing for those who dream beyond the horizon. Wear the cosmos.
+                    Own the galaxy.</p>
+                <div class="social-links">
+                    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="#" title="Pinterest"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4 class="footer-heading">SHOP</h4>
+                <ul class="footer-links">
+                    <li><a href="#">New Arrivals</a></li>
+                    <li><a href="#">T-Shirts</a></li>
+                    <li><a href="#">Hoodies</a></li>
+                    <li><a href="#">Jackets</a></li>
+                    <li><a href="#">Accessories</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-heading">HELP</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Size Guide</a></li>
+                    <li><a href="#">Shipping Info</a></li>
+                    <li><a href="#">Returns</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-heading">MISSION CONTROL</h4>
+                <p style="color:var(--text-secondary);font-size:13px;line-height:1.9">Mon – Sat, 10AM – 7PM
+                    IST<br><a href="/cdn-cgi/l/email-protection" class="__cf_email__"
+                        data-cfemail="c6b5b3b6b6a9b4b286a5a9b5abafa5b5aeafb4b2b5e8afa8">[email&#160;protected]</a><br>+91
+                    98765 43210</p>
+            </div>
+        </div>
+        <div class="footer-bottom">&copy; 2025 <span>COSMIC GALAXY</span>. All rights reserved.</div>
+    </footer>
+
+    <div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toastMsg">Done!</span></div>
+    <button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i
+            class="fas fa-chevron-up"></i></button>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script>
+        // ═══════════════════════════════════════════════
+        // DATA — 48 products
+        // ═══════════════════════════════════════════════
+        const ALL_PRODUCTS = [
+            { id: 1, cat: 'tshirt', badge: 'new', name: 'LAUNCH SEQUENCE TEE', category: 'T-Shirts', priceNum: 1299, price: '₹1,299', old: '₹1,799', rating: 5, reviews: 48, desc: 'Countdown artwork on premium 100% cotton. Slim fit, ribbed collar. S–3XL.' },
+            { id: 2, cat: 'hoodie', badge: 'hot', name: 'NEBULA DRIFT HOODIE', category: 'Hoodies', priceNum: 2799, price: '₹2,799', old: '', rating: 5, reviews: 91, desc: 'Oversized galaxy-print hoodie with kangaroo pocket and fleece lining.' },
+            { id: 3, cat: 'jacket', badge: 'new', name: 'MARS ORBIT JACKET', category: 'Jackets', priceNum: 4499, price: '₹4,499', old: '₹5,999', rating: 4, reviews: 36, desc: 'Rust-toned bomber with Mars terrain embroidery. Wind-resistant shell.' },
+            { id: 4, cat: 'cargo', badge: 'sale', name: 'STARDUST CARGO PANTS', category: 'Cargo Pants', priceNum: 3199, price: '₹3,199', old: '₹3,999', rating: 5, reviews: 62, desc: '6-pocket tactical cargo in deep space grey. Relaxed fit, tapered legs.' },
+            { id: 5, cat: 'tshirt', badge: '', name: 'VOID WALKER TEE', category: 'T-Shirts', priceNum: 999, price: '₹999', old: '', rating: 5, reviews: 29, desc: 'Glow-effect galaxy print across the chest. Deep-space minimalist drop.' },
+            { id: 6, cat: 'hoodie', badge: 'new', name: 'PULSAR ZIP HOODIE', category: 'Hoodies', priceNum: 2499, price: '₹2,499', old: '', rating: 4, reviews: 14, desc: 'Full-zip with contrast navy side panels. Metal YKK zipper, ribbed cuffs.' },
+            { id: 7, cat: 'tshirt', badge: 'hot', name: 'EVENT HORIZON TEE', category: 'T-Shirts', priceNum: 1199, price: '₹1,199', old: '₹1,499', rating: 5, reviews: 77, desc: 'Black hole graphic tee — bold, dark, impossible to escape. Best-seller.' },
+            { id: 8, cat: 'accessories', badge: '', name: 'COSMOS CAP', category: 'Accessories', priceNum: 699, price: '₹699', old: '', rating: 5, reviews: 33, desc: '6-panel structured cap, embroidered logo, adjustable strap.' },
+            { id: 9, cat: 'jacket', badge: 'sale', name: 'DARK MATTER WINDBREAKER', category: 'Jackets', priceNum: 3499, price: '₹3,499', old: '₹4,499', rating: 4, reviews: 21, desc: 'Lightweight windbreaker in deep space navy with reflective stripe.' },
+            { id: 10, cat: 'tshirt', badge: 'new', name: 'ORBIT STATION TEE', category: 'T-Shirts', priceNum: 1099, price: '₹1,099', old: '', rating: 5, reviews: 11, desc: 'ISS-inspired technical schematics print. Slim fit, ribbed collar.' },
+            { id: 11, cat: 'accessories', badge: '', name: 'GALAXY TOTE BAG', category: 'Accessories', priceNum: 599, price: '₹599', old: '', rating: 5, reviews: 44, desc: 'Heavy-duty canvas tote with galaxy dye print. Fits 15" laptop.' },
+            { id: 12, cat: 'hoodie', badge: 'sale', name: 'SOLAR FLARE HOODIE', category: 'Hoodies', priceNum: 2299, price: '₹2,299', old: '₹3,199', rating: 4, reviews: 58, desc: 'Burnt orange, solar flare gradient dye, dropped shoulders. 380gsm.' },
+            { id: 13, cat: 'tshirt', badge: 'new', name: 'SUPERNOVA OVERSIZED TEE', category: 'T-Shirts', priceNum: 1399, price: '₹1,399', old: '', rating: 5, reviews: 22, desc: 'Boxy oversized fit with exploding star graphic. Dropped shoulders.' },
+            { id: 14, cat: 'cargo', badge: '', name: 'LUNAR CARGO SHORTS', category: 'Cargo Pants', priceNum: 1999, price: '₹1,999', old: '₹2,499', rating: 4, reviews: 18, desc: 'Knee-length cargo shorts in moonrock grey. 8 pockets, adjustable waist.' },
+            { id: 15, cat: 'jacket', badge: 'hot', name: 'ECLIPSE DENIM JACKET', category: 'Jackets', priceNum: 5499, price: '₹5,499', old: '', rating: 5, reviews: 39, desc: 'Washed denim jacket with galaxy embroidery on the back yoke.' },
+            { id: 16, cat: 'accessories', badge: 'new', name: 'SATELLITE BEANIE', category: 'Accessories', priceNum: 499, price: '₹499', old: '', rating: 5, reviews: 67, desc: 'Ribbed knit beanie with woven COSMIC patch. One size fits all.' },
+            { id: 17, cat: 'tshirt', badge: '', name: 'RED DWARF LONG SLEEVE', category: 'T-Shirts', priceNum: 1499, price: '₹1,499', old: '₹1,799', rating: 4, reviews: 15, desc: 'Thermal-weight long sleeve in deep crimson. Thumbhole cuffs.' },
+            { id: 18, cat: 'hoodie', badge: '', name: 'COMET TAIL HOODIE', category: 'Hoodies', priceNum: 2699, price: '₹2,699', old: '', rating: 5, reviews: 31, desc: 'Tie-dye comet streak on heather grey. Brushed fleece interior.' },
+            { id: 19, cat: 'tshirt', badge: 'sale', name: 'ASTEROID BELT POLO', category: 'T-Shirts', priceNum: 1599, price: '₹1,599', old: '₹1,999', rating: 4, reviews: 9, desc: 'Pique polo with subtle asteroid print collar band. Smart casual.' },
+            { id: 20, cat: 'accessories', badge: '', name: 'COSMOS SOCKS (3-PACK)', category: 'Accessories', priceNum: 349, price: '₹349', old: '', rating: 5, reviews: 88, desc: 'Planet-print crew socks in navy, black and white. Size: 6–11.' },
+            { id: 21, cat: 'cargo', badge: 'new', name: 'ZERO GRAVITY JOGGERS', category: 'Cargo Pants', priceNum: 2599, price: '₹2,599', old: '', rating: 5, reviews: 43, desc: 'Slim tapered joggers with side zip pockets and reflective drawstring.' },
+            { id: 22, cat: 'jacket', badge: '', name: 'SOLAR WIND BOMBER', category: 'Jackets', priceNum: 4999, price: '₹4,999', old: '₹5,999', rating: 4, reviews: 26, desc: 'Satin-finish bomber in midnight blue. Ribbed collar, hem and cuffs.' },
+            { id: 23, cat: 'hoodie', badge: 'hot', name: 'BLACK HOLE CROP HOODIE', category: 'Hoodies', priceNum: 2199, price: '₹2,199', old: '', rating: 5, reviews: 54, desc: 'Cropped hoodie with black hole vortex print across the back.' },
+            { id: 24, cat: 'tshirt', badge: 'new', name: 'INTERSTELLAR GRAPHIC TEE', category: 'T-Shirts', priceNum: 1099, price: '₹1,099', old: '₹1,299', rating: 5, reviews: 19, desc: 'All-over star map print on heavyweight 220gsm cotton. Unisex fit.' },
+            { id: 25, cat: 'accessories', badge: '', name: 'NEBULA PHONE CASE', category: 'Accessories', priceNum: 299, price: '₹299', old: '', rating: 4, reviews: 112, desc: 'Soft TPU case with galaxy nebula print. Fits most major models.' },
+            { id: 26, cat: 'jacket', badge: 'sale', name: 'COSMIC PUFFER VEST', category: 'Jackets', priceNum: 3999, price: '₹3,999', old: '₹4,999', rating: 5, reviews: 17, desc: 'Quilted puffer vest in deep space black. Side pockets, full zip.' },
+            { id: 27, cat: 'tshirt', badge: '', name: 'PULSAR STRIPE TEE', category: 'T-Shirts', priceNum: 899, price: '₹899', old: '', rating: 4, reviews: 34, desc: 'Classic crew neck with thin pulsar stripe detailing. 100% cotton.' },
+            { id: 28, cat: 'hoodie', badge: 'new', name: 'ANDROMEDA FLEECE HOODIE', category: 'Hoodies', priceNum: 3199, price: '₹3,199', old: '', rating: 5, reviews: 27, desc: 'Heavyweight 420gsm fleece in galaxy purple. Oversized kangaroo pocket.' },
+            { id: 29, cat: 'cargo', badge: 'hot', name: 'TITAN TECH PANTS', category: 'Cargo Pants', priceNum: 3499, price: '₹3,499', old: '₹3,999', rating: 5, reviews: 41, desc: 'Technical ripstop fabric with 10 pockets and knee articulation.' },
+            { id: 30, cat: 'tshirt', badge: 'sale', name: 'LIGHT SPEED TEE', category: 'T-Shirts', priceNum: 799, price: '₹799', old: '₹999', rating: 4, reviews: 56, desc: 'Motion-blur graphic tee in warp-speed white and blue. Unisex.' },
+            { id: 31, cat: 'accessories', badge: '', name: 'ORBITAL WATCH STRAP', category: 'Accessories', priceNum: 449, price: '₹449', old: '', rating: 5, reviews: 23, desc: 'NATO strap in galaxy print nylon. Fits 20mm and 22mm lugs.' },
+            { id: 32, cat: 'jacket', badge: 'new', name: 'MOONWALK OVERSHIRT', category: 'Jackets', priceNum: 2999, price: '₹2,999', old: '', rating: 4, reviews: 14, desc: 'Relaxed flannel overshirt in dusty grey with lunar crater print lining.' },
+            { id: 33, cat: 'hoodie', badge: '', name: 'PHOTON RAGLAN HOODIE', category: 'Hoodies', priceNum: 2099, price: '₹2,099', old: '₹2,499', rating: 4, reviews: 38, desc: 'Raglan sleeve hoodie in carbon black and white. Minimal cosmic branding.' },
+            { id: 34, cat: 'tshirt', badge: 'hot', name: 'EARTH FROM ABOVE TEE', category: 'T-Shirts', priceNum: 1299, price: '₹1,299', old: '', rating: 5, reviews: 82, desc: 'NASA-style satellite photo print on ultrasoft ring-spun cotton.' },
+            { id: 35, cat: 'cargo', badge: '', name: 'WARP DRIVE SHORTS', category: 'Cargo Pants', priceNum: 1799, price: '₹1,799', old: '₹1,999', rating: 4, reviews: 29, desc: 'Athletic shorts with side cargo pockets and elastic waistband.' },
+            { id: 36, cat: 'accessories', badge: 'sale', name: 'COSMIC PINS SET (5pc)', category: 'Accessories', priceNum: 249, price: '₹249', old: '₹399', rating: 5, reviews: 71, desc: 'Enamel pin set: Saturn, rocket, astronaut, moon and comet.' },
+            { id: 37, cat: 'tshirt', badge: 'new', name: 'DEEP SPACE POCKET TEE', category: 'T-Shirts', priceNum: 949, price: '₹949', old: '', rating: 4, reviews: 16, desc: 'Minimalist pocket tee with small embroidered galaxy on chest.' },
+            { id: 38, cat: 'jacket', badge: '', name: 'AURORA TRACK JACKET', category: 'Jackets', priceNum: 3299, price: '₹3,299', old: '₹3,999', rating: 5, reviews: 32, desc: 'Aurora borealis colour-block track jacket with contrast zip.' },
+            { id: 39, cat: 'hoodie', badge: 'sale', name: 'GRAVITY PULLOVER HOODIE', category: 'Hoodies', priceNum: 1899, price: '₹1,899', old: '₹2,499', rating: 4, reviews: 45, desc: 'Mid-weight pullover with gravity wave embroidered on the hood.' },
+            { id: 40, cat: 'cargo', badge: 'new', name: 'INTERSTELLAR CARGO PANTS', category: 'Cargo Pants', priceNum: 3799, price: '₹3,799', old: '', rating: 5, reviews: 13, desc: 'Premium slim cargo in matte black with silver detail stitching.' },
+            { id: 41, cat: 'accessories', badge: '', name: 'SPACE STATION BACKPACK', category: 'Accessories', priceNum: 1999, price: '₹1,999', old: '₹2,499', rating: 5, reviews: 61, desc: '30L daypack in cordura with laptop sleeve and hidden zip pocket.' },
+            { id: 42, cat: 'tshirt', badge: '', name: 'COSMIC RAYS RAGLAN', category: 'T-Shirts', priceNum: 1199, price: '₹1,199', old: '', rating: 4, reviews: 8, desc: '3/4 sleeve raglan in heather grey and navy. Subtle rays print.' },
+            { id: 43, cat: 'jacket', badge: 'hot', name: 'STRATOSPHERE PARKA', category: 'Jackets', priceNum: 6999, price: '₹6,999', old: '₹7,999', rating: 5, reviews: 20, desc: 'Longline parka with faux-fur hood and thermal quilted lining.' },
+            { id: 44, cat: 'hoodie', badge: 'new', name: 'WORMHOLE ZIP HOODIE', category: 'Hoodies', priceNum: 2899, price: '₹2,899', old: '', rating: 5, reviews: 7, desc: 'Half-zip hoodie with wormhole graphic on the back. Slim athletic fit.' },
+            { id: 45, cat: 'tshirt', badge: 'sale', name: 'SPACE AGE CROP TEE', category: 'T-Shirts', priceNum: 849, price: '₹849', old: '₹999', rating: 4, reviews: 37, desc: 'Cropped crew neck in space age silver. Metallic foil print.' },
+            { id: 46, cat: 'cargo', badge: '', name: 'NEBULA TRACK PANTS', category: 'Cargo Pants', priceNum: 2299, price: '₹2,299', old: '', rating: 4, reviews: 24, desc: 'Wide-leg track pants with nebula stripe down the leg.' },
+            { id: 47, cat: 'accessories', badge: 'new', name: 'MISSION PATCH KEYCHAIN', category: 'Accessories', priceNum: 199, price: '₹199', old: '', rating: 5, reviews: 93, desc: 'Embroidered mission patch keychain in 5 designs. Collect them all.' },
+            { id: 48, cat: 'tshirt', badge: 'hot', name: 'LAST STAR STANDING TEE', category: 'T-Shirts', priceNum: 1499, price: '₹1,499', old: '', rating: 5, reviews: 104, desc: 'Bold star-burst graphic — our most dramatic tee drop yet.' },
+        ];
+
+        // ── PRODUCT IMAGE MAP ──────────────────────────────────
+        const PRODUCT_IMAGES = {
+            1: 'images/1.png',
+            2: 'images/19.png',
+            3: 'images/30.png',
+            4: 'images/38.png',
+            5: 'images/2.png',
+            6: 'images/20.png',
+            7: 'images/3.png',
+            8: 'images/46.png',
+            9: 'images/31.png',
+            10: 'images/4.png',
+            11: 'images/47.png',
+            12: 'images/21.png',
+            13: 'images/5.png',
+            14: 'images/39.png',
+            15: 'images/32.png',
+            16: 'images/48.png',
+            17: 'images/6.png',
+            18: 'images/22.png',
+            19: 'images/7.png',
+            20: 'images/49.png',
+            21: 'images/40.png',
+            22: 'images/33.png',
+            23: 'images/23.png',
+            24: 'images/8.png',
+            25: 'images/50.png',
+            26: 'images/34.png',
+            27: 'images/9.png',
+            28: 'images/24.png',
+            29: 'images/41.png',
+            30: 'images/10.png',
+            31: 'images/51.png',
+            32: 'images/35.png',
+            33: 'images/25.png',
+            34: 'images/11.png',
+            35: 'images/42.png',
+            36: 'images/52.png',
+            37: 'images/12.png',
+            38: 'images/36.png',
+            39: 'images/26.png',
+            40: 'images/43.png',
+            41: 'images/53.png',
+            42: 'images/13.png',
+            43: 'images/37.png',
+            44: 'images/27.png',
+            45: 'images/14.png',
+            46: 'images/44.png',
+            47: 'images/54.png',
+            48: 'images/15.png'
+        };
+        function getProductImg(id) {
+            return PRODUCT_IMAGES[id] || ('images/' + id + '.png');
+        }
+
+
+        // ═══════════════════════════════════════════════
+        // STATE
+        // ═══════════════════════════════════════════════
+        const state = {
+            category: 'all',
+            maxPrice: 7999,
+            sizes: [],
+            colors: [],
+            ratings: [],
+            sort: 'featured',
+            search: '',
+            visibleCount: 12,
+            cart: [],          // { product, qty }
+            wishlist: new Set()
+        };
+        const PER_PAGE = 12;
+
+        // ═══════════════════════════════════════════════
+        // HELPERS
+        // ═══════════════════════════════════════════════
+        function starsHTML(n) {
+            return '&#9733;'.repeat(n) + '&#9734;'.repeat(5 - n);
+        }
+        function badgeHTML(b) {
+            if (!b) return '';
+            const cls = { new: 'badge-new', hot: 'badge-hot', sale: 'badge-sale' }[b] || '';
+            return `<span class="product-badge ${cls}">${b.toUpperCase()}</span>`;
+        }
+        function buildCard(p) {
+            const wishlisted = state.wishlist.has(p.id) ? 'wishlisted' : '';
+            const heartClass = wishlisted ? 'fas' : 'far';
+            return `
+  <div class="product-card" data-id="${p.id}" style="opacity:0;transform:translateY(14px);transition:opacity .4s,transform .4s">
+    <div class="tech-corner tc-tl"></div><div class="tech-corner tc-tr"></div>
+    <div class="product-img">
+      <div class="product-img-inner">
+        <img class="product-img-tag" src="${getProductImg(p.id)}" alt="${p.name}" loading="lazy" onerror="this.style.opacity=0">
+      </div>
+      ${badgeHTML(p.badge)}
+      <button class="product-wishlist ${wishlisted}" onclick="toggleWishlist(event,${p.id})" title="Wishlist">
+        <i class="${heartClass} fa-heart"></i>
+      </button>
+      <div class="product-overlay">
+        <button class="btn-quick-add" onclick="addToCart(${p.id})">Add to Cart</button>
+      </div>
+    </div>
+    <div class="product-info">
+      <div class="product-category">${p.category}</div>
+      <div class="product-name">${p.name}</div>
+      <div class="product-rating">
+        <span class="stars-display">${starsHTML(p.rating)}</span>
+        <span class="rating-count-sm">(${p.reviews})</span>
+      </div>
+      <div class="list-desc">${p.desc}</div>
+      <div class="product-footer">
+        <div class="price-wrap">
+          <span class="product-price">${p.price}</span>
+          ${p.old ? `<span class="product-price-old">${p.old}</span>` : ''}
+        </div>
+        <button class="btn-add-cart" onclick="addToCart(${p.id})"><i class="fas fa-plus"></i></button>
+      </div>
+    </div>
+  </div>`;
+        }
+
+        // ═══════════════════════════════════════════════
+        // FILTER + SORT LOGIC
+        // ═══════════════════════════════════════════════
+        function getFiltered() {
+            let list = ALL_PRODUCTS.slice();
+
+            // category
+            if (state.category !== 'all') list = list.filter(p => p.cat === state.category);
+
+            // price
+            list = list.filter(p => p.priceNum <= state.maxPrice);
+
+            // rating checkboxes
+            if (state.ratings.length > 0) {
+                const minRating = Math.min(...state.ratings);
+                list = list.filter(p => p.rating >= minRating);
+            }
+
+            // search
+            if (state.search) {
+                const q = state.search.toLowerCase();
+                list = list.filter(p =>
+                    p.name.toLowerCase().includes(q) ||
+                    p.category.toLowerCase().includes(q) ||
+                    p.desc.toLowerCase().includes(q)
+                );
+            }
+
+            // sort
+            if (state.sort === 'price-asc') list.sort((a, b) => a.priceNum - b.priceNum);
+            if (state.sort === 'price-desc') list.sort((a, b) => b.priceNum - a.priceNum);
+            if (state.sort === 'rating') list.sort((a, b) => b.rating - a.rating || b.reviews - a.reviews);
+            if (state.sort === 'popular') list.sort((a, b) => b.reviews - a.reviews);
+            if (state.sort === 'newest') list.sort((a, b) => b.id - a.id);
+
+            return list;
+        }
+
+        function renderGrid(reset) {
+            if (reset) state.visibleCount = PER_PAGE;
+            const filtered = getFiltered();
+            const toShow = filtered.slice(0, state.visibleCount);
+            const grid = document.getElementById('productsGrid');
+            const noRes = document.getElementById('noResults');
+
+            // clear cards
+            grid.querySelectorAll('.product-card').forEach(c => c.remove());
+
+            // inject
+            toShow.forEach(p => noRes.insertAdjacentHTML('beforebegin', buildCard(p)));
+
+            // animate
+            requestAnimationFrame(() => {
+                grid.querySelectorAll('.product-card').forEach((c, i) => {
+                    setTimeout(() => { c.style.opacity = '1'; c.style.transform = 'translateY(0)'; }, i * 40);
+                });
+            });
+
+            noRes.style.display = toShow.length === 0 ? 'block' : 'none';
+
+            // counts
+            const total = filtered.length;
+            const showing = toShow.length;
+            document.getElementById('resultSpan').textContent = showing;
+            document.getElementById('showing-count').textContent = showing;
+            document.getElementById('total-count').textContent = total;
+
+            // progress
+            const pct = total === 0 ? 0 : Math.round((showing / total) * 100);
+            document.getElementById('progressFill').style.width = pct + '%';
+            document.getElementById('progressPct').textContent = pct + '%';
+            document.getElementById('progressText').textContent = 'Showing ' + showing + ' of ' + total;
+
+            // load more
+            const btn = document.getElementById('loadMoreBtn');
+            const wrap = document.getElementById('loadMoreWrap');
+            wrap.style.display = total <= PER_PAGE ? 'none' : 'block';
+            if (showing >= total) {
+                btn.innerHTML = '<i class="fas fa-check"></i> All Products Loaded';
+                btn.disabled = true;
+            } else {
+                btn.innerHTML = '<i class="fas fa-sync-alt"></i> Load More Products';
+                btn.disabled = false;
+            }
+        }
+
+        // ═══════════════════════════════════════════════
+        // ACTIVE FILTER TAGS
+        // ═══════════════════════════════════════════════
+        function renderFilterTags() {
+            const wrap = document.getElementById('activeFilters');
+            wrap.innerHTML = '';
+            if (state.category !== 'all') {
+                const labels = { tshirt: 'T-Shirts', hoodie: 'Hoodies', jacket: 'Jackets', cargo: 'Cargo Pants', accessories: 'Accessories' };
+                wrap.innerHTML += filterTag(labels[state.category] || state.category, () => { state.category = 'all'; syncCatUI(); renderGrid(true); renderFilterTags(); });
+            }
+            if (state.maxPrice < 7999) {
+                wrap.innerHTML += filterTag('Max ₹' + state.maxPrice.toLocaleString('en-IN'), () => { state.maxPrice = 7999; document.getElementById('priceRange').value = 7999; updatePriceLabel(7999); renderGrid(true); renderFilterTags(); });
+            }
+            state.sizes.forEach(sz => {
+                wrap.innerHTML += filterTag('Size: ' + sz, () => { state.sizes = state.sizes.filter(s => s !== sz); document.querySelectorAll('.size-btn').forEach(b => { if (b.textContent === sz) b.classList.remove('active'); }); renderGrid(true); renderFilterTags(); });
+            });
+            state.colors.forEach(cl => {
+                wrap.innerHTML += filterTag('Color: ' + cl, () => { state.colors = state.colors.filter(c => c !== cl); document.querySelectorAll('.swatch').forEach(s => { if (s.title === cl) s.classList.remove('active'); }); renderGrid(true); renderFilterTags(); });
+            });
+            if (state.search) {
+                wrap.innerHTML += filterTag('Search: ' + state.search, () => { state.search = ''; document.getElementById('searchInput').value = ''; renderGrid(true); renderFilterTags(); });
+            }
+        }
+        function filterTag(label, onRemove) {
+            const id = 'ft_' + Math.random().toString(36).slice(2);
+            setTimeout(() => { const b = document.getElementById(id); if (b) b.onclick = () => { onRemove(); }; }, 0);
+            return `<span class="filter-tag">${label} <button id="${id}">&#10005;</button></span>`;
+        }
+
+        // ═══════════════════════════════════════════════
+        // CATEGORY
+        // ═══════════════════════════════════════════════
+        function filterCat(el, cat) {
+            state.category = cat;
+            syncCatUI(el);
+            renderGrid(true);
+            renderFilterTags();
+        }
+        function syncCatUI(activeEl) {
+            document.querySelectorAll('.cat-item').forEach(i => i.classList.remove('active'));
+            if (activeEl) { activeEl.classList.add('active'); return; }
+            // find by value
+            document.querySelectorAll('.cat-item').forEach(i => {
+                if ((state.category === 'all' && i.querySelector('.cat-name').textContent === 'All Products') ||
+                    i.getAttribute('onclick')?.includes("'" + state.category + "'")) {
+                    i.classList.add('active');
+                }
+            });
+        }
+        function clearCategory() {
+            state.category = 'all';
+            document.querySelectorAll('.cat-item').forEach((i, idx) => i.classList.toggle('active', idx === 0));
+            renderGrid(true); renderFilterTags();
+        }
+
+        // ═══════════════════════════════════════════════
+        // PRICE
+        // ═══════════════════════════════════════════════
+        function updatePriceLabel(val) {
+            state.maxPrice = parseInt(val);
+            document.getElementById('priceMaxLabel').textContent = '₹' + parseInt(val).toLocaleString('en-IN');
+        }
+
+        // ═══════════════════════════════════════════════
+        // SIZE
+        // ═══════════════════════════════════════════════
+        function toggleSize(btn) {
+            const sz = btn.textContent.trim();
+            btn.classList.toggle('active');
+            if (btn.classList.contains('active')) {
+                if (!state.sizes.includes(sz)) state.sizes.push(sz);
+            } else {
+                state.sizes = state.sizes.filter(s => s !== sz);
+            }
+        }
+        function clearSizes() {
+            state.sizes = [];
+            document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+        }
+
+        // ═══════════════════════════════════════════════
+        // COLOR
+        // ═══════════════════════════════════════════════
+        function toggleSwatch(el, colorName) {
+            el.classList.toggle('active');
+            if (el.classList.contains('active')) {
+                if (!state.colors.includes(colorName)) state.colors.push(colorName);
+            } else {
+                state.colors = state.colors.filter(c => c !== colorName);
+            }
+        }
+        function clearColors() {
+            state.colors = [];
+            document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
+        }
+
+        // ═══════════════════════════════════════════════
+        // APPLY / CLEAR FILTERS
+        // ═══════════════════════════════════════════════
+        function applyFilters() {
+            // collect rating checkboxes
+            state.ratings = [];
+            document.querySelectorAll('input[name=rating]:checked').forEach(cb => state.ratings.push(parseInt(cb.value)));
+            renderGrid(true);
+            renderFilterTags();
+            showToast('Filters applied!', 'info');
+            // close mobile sidebar
+            document.getElementById('sidebar').classList.remove('open');
+        }
+        function clearAllFilters() {
+            state.category = 'all'; state.maxPrice = 7999; state.sizes = []; state.colors = []; state.ratings = []; state.search = '';
+            document.getElementById('priceRange').value = 7999; updatePriceLabel(7999);
+            document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('input[name=rating]').forEach(cb => cb.checked = false);
+            document.getElementById('searchInput').value = '';
+            document.querySelectorAll('.cat-item').forEach((i, idx) => i.classList.toggle('active', idx === 0));
+            renderGrid(true); renderFilterTags();
+            showToast('All filters cleared', 'info');
+        }
+
+        // ═══════════════════════════════════════════════
+        // SORT
+        // ═══════════════════════════════════════════════
+        function applySort() {
+            state.sort = document.getElementById('sortSelect').value;
+            renderGrid(true);
+        }
+
+        // ═══════════════════════════════════════════════
+        // VIEW TOGGLE
+        // ═══════════════════════════════════════════════
+        function setView(mode) {
+            const grid = document.getElementById('productsGrid');
+            const gb = document.getElementById('gridBtn');
+            const lb = document.getElementById('listBtn');
+            if (mode === 'list') { grid.classList.add('list-view'); lb.classList.add('active'); gb.classList.remove('active'); }
+            else { grid.classList.remove('list-view'); gb.classList.add('active'); lb.classList.remove('active'); }
+        }
+
+        // ═══════════════════════════════════════════════
+        // LOAD MORE
+        // ═══════════════════════════════════════════════
+        function loadMore() {
+            const filtered = getFiltered();
+            if (state.visibleCount >= filtered.length) return;
+            state.visibleCount = Math.min(state.visibleCount + PER_PAGE, filtered.length);
+            renderGrid(false);
+        }
+
+        // ═══════════════════════════════════════════════
+        // WISHLIST
+        // ═══════════════════════════════════════════════
+        function toggleWishlist(e, id) {
+            e.stopPropagation();
+            const btn = e.currentTarget;
+            const icon = btn.querySelector('i');
+            if (state.wishlist.has(id)) {
+                state.wishlist.delete(id);
+                btn.classList.remove('wishlisted');
+                icon.className = 'far fa-heart';
+                showToast('Removed from wishlist', 'info');
+            } else {
+                state.wishlist.add(id);
+                btn.classList.add('wishlisted');
+                icon.className = 'fas fa-heart';
+                // pulse
+                btn.style.transform = 'scale(1.3)';
+                setTimeout(() => btn.style.transform = '', 200);
+                showToast('Added to wishlist!', 'info');
+            }
+        }
+
+        // ═══════════════════════════════════════════════
+        // CART
+        // ═══════════════════════════════════════════════
+
+        // ═══════════════════════════════════════════════
+        // SEARCH
+        // ═══════════════════════════════════════════════
+        function openSearch() {
+            document.getElementById('searchOverlay').classList.add('open');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => document.getElementById('searchInput').focus(), 100);
+        }
+        function closeSearch() {
+            document.getElementById('searchOverlay').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+        function applySearch(term) {
+            state.search = term;
+            closeSearch();
+            renderGrid(true);
+            renderFilterTags();
+        }
+        document.getElementById('searchInput').addEventListener('keydown', e => {
+            if (e.key === 'Enter') {
+                state.search = e.target.value.trim();
+                closeSearch();
+                renderGrid(true);
+                renderFilterTags();
+            }
+            if (e.key === 'Escape') closeSearch();
+        });
+
+        // ═══════════════════════════════════════════════
+        // MOBILE SIDEBAR
+        // ═══════════════════════════════════════════════
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function openMobileNav() { document.getElementById('mobileNav').classList.add('open'); document.getElementById('mobileNavOverlay').classList.add('open'); document.body.style.overflow = 'hidden'; }
+        function closeMobileNav() { document.getElementById('mobileNav').classList.remove('open'); document.getElementById('mobileNavOverlay').classList.remove('open'); document.body.style.overflow = ''; }
+
+        // ═══════════════════════════════════════════════
+        // TOAST
+        // ═══════════════════════════════════════════════
+        let toastTimer;
+        function showToast(msg, type) {
+            const t = document.getElementById('toast');
+            const ico = t.querySelector('i');
+            document.getElementById('toastMsg').textContent = msg;
+            t.className = 'toast' + (type === 'error' ? ' toast-error' : '');
+            ico.className = type === 'error' ? 'fas fa-exclamation-circle' : 'fas fa-check-circle';
+            t.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+        }
+
+        // ═══════════════════════════════════════════════
+        // SCROLL / NAVBAR
+        // ═══════════════════════════════════════════════
+        window.addEventListener('scroll', () => {
+            document.getElementById('scrollTopBtn').classList.toggle('visible', window.scrollY > 400);
+            document.getElementById('navbar').style.boxShadow = window.scrollY > 50 ? '0 4px 30px rgba(0,0,0,.6)' : '';
+        });
+
+        // ══════════════════════════════════════════════�
+        // ══ INIT ══
+        renderGrid(true);
+
+
+        // ═══════════════════════════════════════════════════════
+        // COSMIC GALAXY · UNIVERSAL CART · v3.0
+        // Persists across all pages via localStorage
+        // ═══════════════════════════════════════════════════════
+        const CG_CART_KEY = 'cg_cart_v3';
+
+        // Full product registry — every product on the site
+        const CG_PRODUCTS = {
+            1: { id: 1, name: 'LAUNCH SEQUENCE TEE', cat: 'T-Shirts', price: '₹1,299', num: 1299 },
+            2: { id: 2, name: 'NEBULA DRIFT HOODIE', cat: 'Hoodies', price: '₹2,799', num: 2799 },
+            3: { id: 3, name: 'MARS ORBIT JACKET', cat: 'Jackets', price: '₹4,499', num: 4499 },
+            4: { id: 4, name: 'STARDUST CARGO PANTS', cat: 'Cargo Pants', price: '₹3,199', num: 3199 },
+            5: { id: 5, name: 'GALAXY HOODIE', cat: 'Hoodies', price: '₹2,599', num: 2599 },
+            6: { id: 6, name: 'PULSAR ZIP HOODIE', cat: 'Hoodies', price: '₹2,499', num: 2499 },
+            7: { id: 7, name: 'EVENT HORIZON TEE', cat: 'T-Shirts', price: '₹1,199', num: 1199 },
+            8: { id: 8, name: 'COSMOS CAP', cat: 'Accessories', price: '₹699', num: 699 },
+            9: { id: 9, name: 'DARK MATTER WINDBREAKER', cat: 'Jackets', price: '₹3,499', num: 3499 },
+            10: { id: 10, name: 'ORBIT STATION TEE', cat: 'T-Shirts', price: '₹1,099', num: 1099 },
+            11: { id: 11, name: 'GALAXY TOTE BAG', cat: 'Accessories', price: '₹599', num: 599 },
+            12: { id: 12, name: 'NEBULA CROP TEE', cat: 'T-Shirts', price: '₹999', num: 999 },
+            13: { id: 13, name: 'SATELLITE BEANIE', cat: 'Accessories', price: '₹499', num: 499 },
+            14: { id: 14, name: 'WARP DRIVE SHORTS', cat: 'Cargo Pants', price: '₹1,799', num: 1799 },
+            15: { id: 15, name: 'ECLIPSE DENIM JACKET', cat: 'Jackets', price: '₹5,499', num: 5499 },
+            16: { id: 16, name: 'SOLAR FLARE HOODIE', cat: 'Hoodies', price: '₹2,299', num: 2299 },
+            17: { id: 17, name: 'SUPERNOVA GRAPHIC TEE', cat: 'T-Shirts', price: '₹1,399', num: 1399 },
+            18: { id: 18, name: 'ASTEROID CARGO PANTS', cat: 'Cargo Pants', price: '₹2,999', num: 2999 },
+            19: { id: 19, name: 'COMET TAIL HOODIE', cat: 'Hoodies', price: '₹2,699', num: 2699 },
+            20: { id: 20, name: 'VOYAGER JACKET', cat: 'Jackets', price: '₹4,999', num: 4999 },
+            21: { id: 21, name: 'ZERO GRAVITY JOGGERS', cat: 'Cargo Pants', price: '₹2,599', num: 2599 },
+            22: { id: 22, name: 'COSMIC CREW NECK', cat: 'Hoodies', price: '₹2,199', num: 2199 },
+            23: { id: 23, name: 'BLACK HOLE CROP HOODIE', cat: 'Hoodies', price: '₹2,199', num: 2199 },
+            24: { id: 24, name: 'INTERSTELLAR TEE', cat: 'T-Shirts', price: '₹1,299', num: 1299 },
+            25: { id: 25, name: 'LUNAR CARGO PANTS', cat: 'Cargo Pants', price: '₹3,499', num: 3499 },
+            26: { id: 26, name: 'DEEP SPACE JACKET', cat: 'Jackets', price: '₹5,999', num: 5999 },
+            27: { id: 27, name: 'NOVA BURST TEE', cat: 'T-Shirts', price: '₹1,199', num: 1199 },
+            28: { id: 28, name: 'ORBIT RING KEYCHAIN', cat: 'Accessories', price: '₹399', num: 399 },
+            29: { id: 29, name: 'TITAN TECH PANTS', cat: 'Cargo Pants', price: '₹3,499', num: 3499 },
+            30: { id: 30, name: 'AURORA TRACK JACKET', cat: 'Jackets', price: '₹4,299', num: 4299 },
+            36: { id: 36, name: 'COSMIC PINS SET (5pc)', cat: 'Accessories', price: '₹249', num: 249 },
+            43: { id: 43, name: 'STRATOSPHERE PARKA', cat: 'Jackets', price: '₹6,999', num: 6999 },
+            48: { id: 48, name: 'COSMOS SOCKS (3-PACK)', cat: 'Accessories', price: '₹349', num: 349 },
+        };
+
+        // ─── STORAGE ──────────────────────────────────────────
+        function cgCartGet() {
+            try { return JSON.parse(localStorage.getItem(CG_CART_KEY)) || []; }
+            catch (e) { return []; }
+        }
+        function cgCartSet(cart) {
+            try { localStorage.setItem(CG_CART_KEY, JSON.stringify(cart)); } catch (e) { }
+        }
+
+        // ─── ADD ──────────────────────────────────────────────
+        function addToCart(id, e) {
+            if (e) { e.stopPropagation(); e.preventDefault(); }
+            const pid = parseInt(id);
+            const p = CG_PRODUCTS[pid];
+            if (!p) return;
+            const cart = cgCartGet();
+            const existing = cart.find(i => i.id === pid);
+            if (existing) existing.qty++;
+            else cart.push({ id: pid, qty: 1 });
+            cgCartSet(cart);
+            cgUpdateUI();
+            cgBadgePop();
+            showToast(p.name.split(' ').slice(0, 3).join(' ') + ' added to cart!');
+        }
+
+        // ─── REMOVE ───────────────────────────────────────────
+        function removeFromCart(id) {
+            cgCartSet(cgCartGet().filter(i => i.id !== parseInt(id)));
+            cgUpdateUI();
+        }
+
+        // ─── QTY ──────────────────────────────────────────────
+        function changeQty(id, delta) {
+            const cart = cgCartGet();
+            const item = cart.find(i => i.id === parseInt(id));
+            if (!item) return;
+            item.qty = Math.max(1, item.qty + delta);
+            cgCartSet(cart);
+            cgUpdateUI();
+        }
+
+        // ─── BADGE POP ANIMATION ──────────────────────────────
+        function cgBadgePop() {
+            ['cartCount', 'cart-count'].forEach(id => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                el.style.transform = 'scale(1.7)';
+                el.style.transition = 'transform .12s ease';
+                setTimeout(() => { el.style.transform = 'scale(1)'; }, 200);
+            });
+        }
+
+        // ─── RENDER CART ──────────────────────────────────────
+        function cgUpdateUI() {
+            const cart = cgCartGet();
+            const total = cart.reduce((s, i) => s + i.qty, 0);
+            const fmt = n => '\u20b9' + n.toLocaleString('en-IN');
+
+            // Update badge(s) — support multiple ID variants
+            ['cartCount', 'cart-count'].forEach(bid => {
+                const el = document.getElementById(bid);
+                if (el) el.textContent = total;
+            });
+            ['cartItemCount', 'cart-item-count'].forEach(bid => {
+                const el = document.getElementById(bid);
+                if (el) el.textContent = '(' + total + ')';
+            });
+
+            const body = document.getElementById('cartBody');
+            const footer = document.getElementById('cartFooter');
+            if (!body) return;
+
+            // ── EMPTY STATE ──
+            if (cart.length === 0) {
+                body.innerHTML = `
+                    <div style="text-align:center;padding:60px 20px">
+                        <i class="fas fa-shopping-bag" style="font-size:44px;color:rgba(74,144,226,.15);display:block;margin-bottom:18px"></i>
+                        <p style="font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:2px;color:var(--text-secondary);margin-bottom:8px">CART IS EMPTY</p>
+                        <p style="color:var(--text-secondary);font-size:13px;margin-bottom:24px;line-height:1.6">Add some cosmic gear<br>to get started.</p>
+                        <button onclick="closeCart();window.location='shop.html'"
+                            style="padding:11px 28px;background:var(--earth-blue);border:none;color:white;font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:background .3s"
+                            onmouseover="this.style.background='#6bb6ff'" onmouseout="this.style.background='var(--earth-blue)'">
+                            BROWSE SHOP
+                        </button>
+                    </div>`;
+                if (footer) footer.style.display = 'none';
+                return;
+            }
+
+            // ── ITEMS ──
+            if (footer) footer.style.display = 'block';
+            let html = '', subtotal = 0;
+
+            cart.forEach(item => {
+                const p = CG_PRODUCTS[item.id];
+                if (!p) return;
+                subtotal += p.num * item.qty;
+                html += `
+                <div style="display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--border)">
+                    <div style="width:68px;height:68px;background:linear-gradient(135deg,#0c0e18,#111320);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:rgba(74,144,226,.25);font-size:22px">
+                        <i class="fas fa-tshirt"></i>
+                    </div>
+                    <div style="flex:1;min-width:0">
+                        <div style="font-size:9px;color:var(--earth-blue);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:3px">${p.cat}</div>
+                        <div style="font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.name}</div>
+                        <div style="font-family:'Orbitron',sans-serif;font-size:13px;color:var(--earth-blue);font-weight:700;margin-bottom:10px">${p.price}</div>
+                        <div style="display:flex;align-items:center;justify-content:space-between">
+                            <div style="display:flex;align-items:center;border:1px solid var(--border)">
+                                <button onclick="changeQty(${item.id},-1)"
+                                    style="width:28px;height:28px;background:none;border:none;color:var(--text-secondary);cursor:pointer;font-size:11px;transition:all .2s;display:flex;align-items:center;justify-content:center"
+                                    onmouseover="this.style.background='rgba(74,144,226,.1)';this.style.color='var(--earth-blue)'"
+                                    onmouseout="this.style.background='none';this.style.color='var(--text-secondary)'">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <span style="width:34px;text-align:center;font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;border-left:1px solid var(--border);border-right:1px solid var(--border);height:28px;line-height:28px;display:inline-block">
+                                    ${item.qty}
+                                </span>
+                                <button onclick="changeQty(${item.id},1)"
+                                    style="width:28px;height:28px;background:none;border:none;color:var(--text-secondary);cursor:pointer;font-size:11px;transition:all .2s;display:flex;align-items:center;justify-content:center"
+                                    onmouseover="this.style.background='rgba(74,144,226,.1)';this.style.color='var(--earth-blue)'"
+                                    onmouseout="this.style.background='none';this.style.color='var(--text-secondary)'">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                            <button onclick="removeFromCart(${item.id})"
+                                style="background:none;border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.3);cursor:pointer;font-size:11px;padding:5px 9px;transition:all .2s;display:flex;align-items:center;gap:5px"
+                                onmouseover="this.style.borderColor='#e74c3c';this.style.color='#e74c3c'"
+                                onmouseout="this.style.borderColor='rgba(255,255,255,.1)';this.style.color='rgba(255,255,255,.3)'">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>`;
+            });
+
+            body.innerHTML = html;
+
+            // Update totals
+            const ship = subtotal >= 999 ? 0 : 99;
+            const total_amt = subtotal + ship;
+            const sub_el = document.getElementById('cartSubtotal');
+            const ship_el = document.getElementById('cartShipping');
+            const tot_el = document.getElementById('cartTotal');
+            const cnt_el = document.getElementById('cartItemsLabel');
+            if (sub_el) sub_el.textContent = fmt(subtotal);
+            if (ship_el) ship_el.textContent = ship === 0 ? 'FREE' : fmt(ship);
+            if (tot_el) tot_el.textContent = fmt(total_amt);
+            if (cnt_el) cnt_el.textContent = total + (total === 1 ? ' item' : ' items');
+        }
+
+        // ─── OPEN / CLOSE ─────────────────────────────────────
+        function openCart() {
+            cgUpdateUI(); // always refresh on open
+            const d = document.getElementById('cartDrawer');
+            const o = document.getElementById('cartOverlay');
+            if (d) d.classList.add('open');
+            if (o) o.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeCart() {
+            const d = document.getElementById('cartDrawer');
+            const o = document.getElementById('cartOverlay');
+            if (d) d.classList.remove('open');
+            if (o) o.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        // ─── CHECKOUT FLOW ────────────────────────────────────
+        function openCheckout() {
+            const cart = cgCartGet();
+            if (cart.length === 0) { showToast('Your cart is empty!'); return; }
+            closeCart();
+            const modal = document.getElementById('checkoutModal');
+            if (modal) {
+                cgRenderCheckoutSummary();
+                modal.classList.add('open');
+                document.body.style.overflow = 'hidden';
+                showStep(1);
+            }
+        }
+        function closeCheckout() {
+            const modal = document.getElementById('checkoutModal');
+            if (modal) modal.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+        function showStep(n) {
+            [1, 2, 3].forEach(i => {
+                const s = document.getElementById('step' + i);
+                const h = document.getElementById('stepHead' + i);
+                if (s) s.style.display = i === n ? 'block' : 'none';
+                if (h) {
+                    h.style.opacity = i <= n ? '1' : '0.4';
+                    h.style.borderColor = i === n ? 'var(--earth-blue)' : (i < n ? 'rgba(74,144,226,.3)' : 'var(--border)');
+                }
+            });
+            document.getElementById('checkoutModal').scrollTop = 0;
+        }
+        function cgRenderCheckoutSummary() {
+            const cart = cgCartGet();
+            const fmt = n => '\u20b9' + n.toLocaleString('en-IN');
+            let subtotal = 0, rows = '';
+            cart.forEach(item => {
+                const p = CG_PRODUCTS[item.id];
+                if (!p) return;
+                subtotal += p.num * item.qty;
+                rows += `<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px">
+                    <span style="color:var(--text-secondary)">${p.name} <span style="color:var(--earth-blue)">×${item.qty}</span></span>
+                    <span style="font-family:'Orbitron',sans-serif;font-size:12px">${fmt(p.num * item.qty)}</span>
+                </div>`;
+            });
+            const ship = subtotal >= 999 ? 0 : 99;
+            const total = subtotal + ship;
+            const el = document.getElementById('coSummary');
+            if (el) el.innerHTML = rows +
+                `<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--text-secondary)"><span>Subtotal</span><span>${fmt(subtotal)}</span></div>` +
+                `<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--text-secondary)"><span>Shipping</span><span style="color:${ship === 0 ? '#4ade80' : 'white'}">${ship === 0 ? 'FREE' : fmt(ship)}</span></div>` +
+                `<div style="display:flex;justify-content:space-between;padding:14px 0;font-family:'Orbitron',sans-serif;font-size:16px;font-weight:700"><span>TOTAL</span><span style="color:var(--earth-blue)">${fmt(total)}</span></div>`;
+        }
+        function coNext(from) {
+            if (from === 1) {
+                const name = document.getElementById('coName')?.value.trim();
+                const email = document.getElementById('coEmail')?.value.trim();
+                const phone = document.getElementById('coPhone')?.value.trim();
+                const addr = document.getElementById('coAddress')?.value.trim();
+                const city = document.getElementById('coCity')?.value.trim();
+                const pin = document.getElementById('coPin')?.value.trim();
+                if (!name || !email || !email.includes('@') || !phone || !addr || !city || !pin) {
+                    showToast('Please fill all required fields!'); return;
+                }
+                showStep(2);
+            } else if (from === 2) {
+                const method = document.querySelector('input[name="payMethod"]:checked');
+                if (!method) { showToast('Please select a payment method!'); return; }
+                if (method.value === 'card') {
+                    const cn = document.getElementById('coCardNum')?.value.trim();
+                    const ce = document.getElementById('coCardExp')?.value.trim();
+                    const cc = document.getElementById('coCardCvv')?.value.trim();
+                    if (!cn || !ce || !cc) { showToast('Please fill card details!'); return; }
+                }
+                showStep(3);
+                cgRenderConfirmation();
+            }
+        }
+        function cgRenderConfirmation() {
+            const name = document.getElementById('coName')?.value.trim() || 'Crew Member';
+            const email = document.getElementById('coEmail')?.value.trim() || '';
+            const orderId = 'CG' + Date.now().toString().slice(-6);
+            const confEl = document.getElementById('coConfirm');
+            if (confEl) confEl.innerHTML = `
+                <div style="text-align:center;padding:20px 0">
+                    <div style="width:72px;height:72px;background:rgba(74,144,226,.1);border:1px solid rgba(74,144,226,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;color:var(--earth-blue);margin:0 auto 20px;animation:successPop .4s ease">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <p style="font-family:'Orbitron',sans-serif;font-size:18px;font-weight:700;margin-bottom:10px">ORDER PLACED!</p>
+                    <p style="color:var(--text-secondary);font-size:14px;margin-bottom:6px">Thank you, <strong style="color:white">${name}</strong>!</p>
+                    <p style="color:var(--text-secondary);font-size:13px;margin-bottom:18px">Confirmation sent to <strong style="color:var(--earth-blue)">${email}</strong></p>
+                    <div style="background:rgba(74,144,226,.06);border:1px solid rgba(74,144,226,.2);padding:14px 20px;margin-bottom:24px">
+                        <p style="font-size:10px;color:var(--text-secondary);letter-spacing:2px;margin-bottom:4px">ORDER ID</p>
+                        <p style="font-family:'Orbitron',sans-serif;font-size:16px;color:var(--earth-blue);font-weight:700">#${orderId}</p>
+                    </div>
+                    <p style="color:var(--text-secondary);font-size:13px;margin-bottom:24px;line-height:1.6">Your cosmic gear is being packed.<br>Estimated delivery: <strong style="color:white">3–5 business days</strong></p>
+                    <button onclick="cgClearAndClose()"
+                        style="padding:13px 36px;background:var(--earth-blue);border:none;color:white;font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:background .3s"
+                        onmouseover="this.style.background='#6bb6ff'" onmouseout="this.style.background='var(--earth-blue)'">
+                        CONTINUE SHOPPING
+                    </button>
+                </div>`;
+        }
+        function cgClearAndClose() {
+            cgCartSet([]);
+            cgUpdateUI();
+            closeCheckout();
+            showToast('Order placed! Welcome to the crew 🚀');
+        }
+
+        // Auto-format card number input
+        document.addEventListener('DOMContentLoaded', function () {
+            const cn = document.getElementById('coCardNum');
+            if (cn) cn.addEventListener('input', function () {
+                let v = this.value.replace(/\D/g, '').slice(0, 16);
+                this.value = v.match(/.{1,4}/g)?.join(' ') || v;
+            });
+            const ce = document.getElementById('coCardExp');
+            if (ce) ce.addEventListener('input', function () {
+                let v = this.value.replace(/\D/g, '').slice(0, 4);
+                if (v.length >= 3) v = v.slice(0, 2) + '/' + v.slice(2);
+                this.value = v;
+            });
+            const cc = document.getElementById('coCardCvv');
+            if (cc) cc.addEventListener('input', function () {
+                this.value = this.value.replace(/\D/g, '').slice(0, 3);
+            });
+        });
+
+        // ─── INIT: render badge count on every page load ──────
+        cgUpdateUI();
+
+        function selectPay(el, method) {
+            document.querySelectorAll('.pay-method').forEach(m => m.classList.remove('selected'));
+            el.classList.add('selected');
+            const cf = document.getElementById('cardFields');
+            if (cf) cf.className = 'card-fields' + (method === 'card' ? ' show' : '');
+        }
+
+    </script>
+    <!-- CHECKOUT MODAL -->
+    <div class="checkout-modal-overlay" id="checkoutModal" onclick="if(event.target===this)closeCheckout()">
+        <div class="checkout-modal">
+            <button class="co-close" onclick="closeCheckout()"><i class="fas fa-times"></i></button>
+            <div class="co-header">
+                <i class="fas fa-rocket" style="color:var(--earth-blue);font-size:18px"></i>
+                <span class="co-title">CHECKOUT</span>
+                <div class="co-secure"><i class="fas fa-lock"></i> SECURE</div>
+            </div>
+            <div class="co-body">
+                <div class="co-left">
+                    <div id="step1">
+                        <div class="co-step-head" id="stepHead1">
+                            <div class="co-step-num">1</div>
+                            <div class="co-step-label">DELIVERY DETAILS</div>
+                        </div>
+                        <div class="co-field-grid">
+                            <div><label class="co-label">Full Name *</label><input class="co-input" id="coName"
+                                    type="text" placeholder="Arjun Sharma"></div>
+                            <div><label class="co-label">Phone *</label><input class="co-input" id="coPhone" type="tel"
+                                    placeholder="98765 43210"></div>
+                        </div>
+                        <div class="co-field-full"><label class="co-label">Email Address *</label><input
+                                class="co-input" id="coEmail" type="email" placeholder="you@example.com"></div>
+                        <div class="co-field-full"><label class="co-label">Full Address *</label><input class="co-input"
+                                id="coAddress" type="text" placeholder="House no, Street, Area, Landmark"></div>
+                        <div class="co-field-grid">
+                            <div><label class="co-label">City *</label><input class="co-input" id="coCity" type="text"
+                                    placeholder="Chandigarh"></div>
+                            <div><label class="co-label">State</label><select class="co-select" id="coState">
+                                    <option value="">Select state</option>
+                                    <option>Punjab</option>
+                                    <option>Haryana</option>
+                                    <option>Delhi</option>
+                                    <option>Maharashtra</option>
+                                    <option>Karnataka</option>
+                                    <option>Tamil Nadu</option>
+                                    <option>Rajasthan</option>
+                                    <option>Gujarat</option>
+                                    <option>Uttar Pradesh</option>
+                                    <option>West Bengal</option>
+                                    <option>Telangana</option>
+                                    <option>Other</option>
+                                </select></div>
+                        </div>
+                        <div class="co-field-grid">
+                            <div><label class="co-label">PIN Code *</label><input class="co-input" id="coPin"
+                                    type="text" placeholder="160017" maxlength="6"></div>
+                            <div><label class="co-label">Coupon Code</label><input class="co-input" id="coCoupon"
+                                    type="text" placeholder="COSMIC10"></div>
+                        </div>
+                        <button class="co-btn" onclick="coNext(1)">CONTINUE TO PAYMENT <i
+                                class="fas fa-arrow-right"></i></button>
+                    </div>
+                    <div id="step2" style="display:none">
+                        <div class="co-step-head" id="stepHead2">
+                            <div class="co-step-num">2</div>
+                            <div class="co-step-label">PAYMENT METHOD</div>
+                        </div>
+                        <div class="pay-methods">
+                            <label class="pay-method" onclick="selectPay(this,'upi')"><input type="radio"
+                                    name="payMethod" value="upi">
+                                <div class="pay-method-icon"><i class="fas fa-mobile-alt"></i></div>
+                                <div>
+                                    <div class="pay-method-label">UPI / BHIM</div>
+                                    <div class="pay-method-sub">GPay, PhonePe, Paytm, BHIM</div>
+                                </div>
+                            </label>
+                            <label class="pay-method" onclick="selectPay(this,'card')"><input type="radio"
+                                    name="payMethod" value="card">
+                                <div class="pay-method-icon"><i class="fas fa-credit-card"></i></div>
+                                <div>
+                                    <div class="pay-method-label">CREDIT / DEBIT CARD</div>
+                                    <div class="pay-method-sub">Visa, Mastercard, RuPay</div>
+                                </div>
+                            </label>
+                            <div class="card-fields" id="cardFields">
+                                <label class="co-label">Card Number</label>
+                                <input class="co-input" id="coCardNum" type="text" placeholder="1234 5678 9012 3456"
+                                    style="margin-bottom:10px">
+                                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                                    <div><label class="co-label">Expiry</label><input class="co-input" id="coCardExp"
+                                            type="text" placeholder="MM/YY"></div>
+                                    <div><label class="co-label">CVV</label><input class="co-input" id="coCardCvv"
+                                            type="password" placeholder="***"></div>
+                                </div>
+                            </div>
+                            <label class="pay-method" onclick="selectPay(this,'netbank')"><input type="radio"
+                                    name="payMethod" value="netbank">
+                                <div class="pay-method-icon"><i class="fas fa-university"></i></div>
+                                <div>
+                                    <div class="pay-method-label">NET BANKING</div>
+                                    <div class="pay-method-sub">All major Indian banks</div>
+                                </div>
+                            </label>
+                            <label class="pay-method" onclick="selectPay(this,'cod')"><input type="radio"
+                                    name="payMethod" value="cod">
+                                <div class="pay-method-icon"><i class="fas fa-hand-holding-usd"></i></div>
+                                <div>
+                                    <div class="pay-method-label">CASH ON DELIVERY</div>
+                                    <div class="pay-method-sub">Pay when order arrives</div>
+                                </div>
+                            </label>
+                        </div>
+                        <button class="co-btn" onclick="coNext(2)">PLACE ORDER <i class="fas fa-rocket"></i></button>
+                        <button class="co-btn-back" onclick="showStep(1)"><i class="fas fa-arrow-left"></i> Back to
+                            Delivery</button>
+                    </div>
+                    <div id="step3" style="display:none">
+                        <div class="co-step-head" id="stepHead3">
+                            <div class="co-step-num"><i class="fas fa-check" style="font-size:10px"></i></div>
+                            <div class="co-step-label">ORDER CONFIRMED</div>
+                        </div>
+                        <div id="coConfirm"></div>
+                    </div>
+                </div>
+                <div class="co-right">
+                    <div class="co-summary-title">ORDER SUMMARY</div>
+                    <div id="coSummary"></div>
+                    <div class="co-trust">
+                        <div class="co-trust-item"><i class="fas fa-shield-alt"></i> 100% secure payments</div>
+                        <div class="co-trust-item"><i class="fas fa-undo"></i> Easy 7-day returns</div>
+                        <div class="co-trust-item"><i class="fas fa-truck"></i> Free shipping above Rs 999</div>
+                        <div class="co-trust-item"><i class="fas fa-headset"></i> 24hr customer support</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

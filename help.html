@@ -1,0 +1,3126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Center — COSMIC GALAXY</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --earth-blue: #4a90e2;
+            --mars-red: #e74c3c;
+            --bg-dark: #0a0a0f;
+            --bg-card: #1a1a24;
+            --text-primary: #fff;
+            --text-secondary: #888899;
+            --border: rgba(255, 255, 255, 0.1);
+            --grid-color: rgba(255, 255, 255, 0.03);
+            --green: #4ade80
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            min-height: 100vh
+        }
+
+        /* BG */
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(var(--grid-color) 1px, transparent 1px), linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0
+        }
+
+        .stars::before,
+        .stars::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            box-shadow: 120px 80px white, 240px 160px white, 360px 60px white, 480px 210px white, 590px 110px white, 720px 260px white, 840px 140px white, 960px 70px white, 1080px 220px white, 1180px 90px white, 1300px 170px white, 70px 340px white, 190px 460px white, 310px 530px white, 430px 390px white, 550px 480px white, 670px 310px white, 1380px 210px white, 790px 95px white, 910px 345px white, 1030px 470px white, 220px 590px white, 1110px 400px white, 1440px 290px white, 1500px 150px white;
+            animation: twinkle 5s infinite
+        }
+
+        .stars::after {
+            animation-delay: 2.5s
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: .3
+            }
+
+            50% {
+                opacity: 1
+            }
+        }
+
+        /* ANNOUNCEMENT */
+        .announcement-bar {
+            background: var(--earth-blue);
+            text-align: center;
+            padding: 8px 20px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1001;
+            color: white
+        }
+
+        .announcement-bar a {
+            color: white;
+            text-decoration: underline;
+            margin-left: 10px
+        }
+
+        /* NAVBAR */
+        .navbar {
+            position: fixed;
+            top: 36px;
+            width: 100%;
+            background: rgba(10, 10, 15, .97);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            transition: all .3s
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 19px;
+            font-weight: 900;
+            color: var(--earth-blue);
+            text-decoration: none;
+            letter-spacing: 1px
+        }
+
+        .logo-dot {
+            width: 7px;
+            height: 7px;
+            background: var(--earth-blue);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+            display: inline-block
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1)
+            }
+
+            50% {
+                opacity: .5;
+                transform: scale(1.5)
+            }
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 34px;
+            list-style: none
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: color .3s;
+            position: relative
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--earth-blue);
+            transition: width .3s
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary)
+        }
+
+        .nav-link:hover::after {
+            width: 100%
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center
+        }
+
+        .btn-nav {
+            padding: 8px 20px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .3s;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 1px;
+            text-decoration: none;
+            display: inline-block
+        }
+
+        .btn-nav:hover {
+            border-color: var(--earth-blue);
+            color: var(--earth-blue)
+        }
+
+        .btn-nav-primary {
+            padding: 8px 20px;
+            background: var(--earth-blue);
+            border: 1px solid var(--earth-blue);
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .3s;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 1px;
+            text-decoration: none;
+            display: inline-block
+        }
+
+        .btn-nav-primary:hover {
+            background: #6bb6ff;
+            border-color: #6bb6ff
+        }
+
+        .nav-icon-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 16px;
+            cursor: pointer;
+            transition: color .3s;
+            padding: 6px 8px;
+            position: relative
+        }
+
+        .nav-icon-btn:hover {
+            color: var(--earth-blue)
+        }
+
+        .cart-wrap span {
+            position: absolute;
+            top: -7px;
+            right: -9px;
+            background: var(--mars-red);
+            color: white;
+            font-size: 9px;
+            font-weight: 700;
+            width: 17px;
+            height: 17px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif
+        }
+
+        .nav-mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 22px;
+            cursor: pointer;
+            padding: 4px
+        }
+
+        /* MOBILE NAV */
+        .mobile-nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .6);
+            z-index: 1499;
+            display: none
+        }
+
+        .mobile-nav-overlay.open {
+            display: block
+        }
+
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 80%;
+            max-width: 320px;
+            height: 100%;
+            background: var(--bg-card);
+            border-right: 1px solid var(--border);
+            z-index: 1500;
+            transition: left .3s;
+            padding: 80px 30px 40px;
+            display: flex;
+            flex-direction: column
+        }
+
+        .mobile-nav.open {
+            left: 0
+        }
+
+        .mobile-nav-link {
+            display: block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+            transition: color .2s
+        }
+
+        .mobile-nav-link:hover {
+            color: var(--earth-blue)
+        }
+
+        .mobile-nav-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+            flex-direction: column
+        }
+
+        /* SEARCH */
+        .search-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .92);
+            backdrop-filter: blur(16px);
+            z-index: 2000;
+            display: none;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 120px
+        }
+
+        .search-overlay.open {
+            display: flex
+        }
+
+        .search-box {
+            width: 100%;
+            max-width: 680px;
+            padding: 0 30px
+        }
+
+        .search-label {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            letter-spacing: 3px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            display: block
+        }
+
+        .search-input-wrap {
+            display: flex;
+            border-bottom: 2px solid var(--earth-blue)
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 14px 0;
+            background: transparent;
+            border: none;
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 22px;
+            font-weight: 600;
+            outline: none
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, .2)
+        }
+
+        .search-close-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 22px;
+            cursor: pointer;
+            padding: 0 8px;
+            transition: color .2s
+        }
+
+        .search-close-btn:hover {
+            color: white
+        }
+
+        /* CART DRAWER */
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .6);
+            z-index: 1999;
+            display: none
+        }
+
+        .cart-overlay.open {
+            display: block
+        }
+
+        .cart-drawer {
+            position: fixed;
+            top: 0;
+            right: -440px;
+            width: 420px;
+            height: 100%;
+            background: var(--bg-card);
+            border-left: 1px solid var(--border);
+            z-index: 2000;
+            transition: right .35s cubic-bezier(.4, 0, .2, 1);
+            display: flex;
+            flex-direction: column
+        }
+
+        .cart-drawer.open {
+            right: 0
+        }
+
+        .cart-header {
+            padding: 22px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center
+        }
+
+        .cart-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 1px
+        }
+
+        .cart-close-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 18px;
+            cursor: pointer;
+            transition: color .2s
+        }
+
+        .cart-close-btn:hover {
+            color: white
+        }
+
+        .cart-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px
+        }
+
+        .cart-footer {
+            padding: 18px 24px;
+            border-top: 1px solid var(--border)
+        }
+
+        .cart-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 7px;
+            font-size: 13px;
+            color: var(--text-secondary)
+        }
+
+        .cart-total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 18px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 15px;
+            font-weight: 700
+        }
+
+        .cart-total-row span:last-child {
+            color: var(--earth-blue)
+        }
+
+        .btn-checkout {
+            width: 100%;
+            padding: 13px;
+            background: var(--earth-blue);
+            border: none;
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: background .3s;
+            margin-bottom: 7px
+        }
+
+        .btn-checkout:hover {
+            background: #6bb6ff
+        }
+
+        .btn-keep-shopping {
+            width: 100%;
+            padding: 10px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all .3s
+        }
+
+        .btn-keep-shopping:hover {
+            border-color: var(--earth-blue);
+            color: var(--earth-blue)
+        }
+
+        /* TOAST */
+        .toast {
+            position: fixed;
+            bottom: 26px;
+            right: 26px;
+            z-index: 9999;
+            background: var(--bg-card);
+            border-left: 3px solid var(--earth-blue);
+            border-top: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            transform: translateX(200px);
+            opacity: 0;
+            transition: all .4s;
+            pointer-events: none;
+            min-width: 220px
+        }
+
+        .toast.show {
+            transform: translateX(0);
+            opacity: 1
+        }
+
+        .toast i {
+            color: var(--earth-blue);
+            font-size: 14px
+        }
+
+        /* ── PAGE LAYOUT ─────────────────────────────────── */
+        .page-wrap {
+            position: relative;
+            z-index: 1;
+            padding-top: 106px;
+            min-height: 100vh
+        }
+
+        /* HERO BANNER */
+        .help-hero {
+            padding: 60px 60px 50px;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(74, 144, 226, .05) 0%, transparent 60%)
+        }
+
+        .help-hero-glow {
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(74, 144, 226, .08) 0%, transparent 70%);
+            pointer-events: none
+        }
+
+        .help-breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-secondary);
+            margin-bottom: 20px
+        }
+
+        .help-breadcrumb a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color .2s
+        }
+
+        .help-breadcrumb a:hover {
+            color: var(--earth-blue)
+        }
+
+        .help-breadcrumb i {
+            font-size: 9px
+        }
+
+        .help-hero-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 42px;
+            font-weight: 900;
+            margin-bottom: 12px
+        }
+
+        .help-hero-title span {
+            color: var(--earth-blue)
+        }
+
+        .help-hero-sub {
+            color: var(--text-secondary);
+            font-size: 16px;
+            margin-bottom: 32px;
+            line-height: 1.65;
+            max-width: 520px
+        }
+
+        /* SEARCH BAR IN HERO */
+        .help-search-wrap {
+            display: flex;
+            max-width: 540px;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, .02);
+            transition: border-color .3s
+        }
+
+        .help-search-wrap:focus-within {
+            border-color: var(--earth-blue)
+        }
+
+        .help-search-inp {
+            flex: 1;
+            padding: 13px 18px;
+            background: transparent;
+            border: none;
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 15px;
+            outline: none
+        }
+
+        .help-search-inp::placeholder {
+            color: rgba(255, 255, 255, .2)
+        }
+
+        .help-search-btn {
+            padding: 13px 20px;
+            background: var(--earth-blue);
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background .2s;
+            flex-shrink: 0
+        }
+
+        .help-search-btn:hover {
+            background: #6bb6ff
+        }
+
+        /* MAIN CONTENT */
+        .help-main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 48px 60px 80px;
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 40px;
+            align-items: start
+        }
+
+        /* SIDEBAR */
+        .help-sidebar {
+            position: sticky;
+            top: 120px
+        }
+
+        .help-sidebar-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 9px;
+            letter-spacing: 3px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .help-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: all .25s;
+            border: 1px solid transparent;
+            margin-bottom: 4px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative
+        }
+
+        .help-nav-item:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, .02);
+            border-color: var(--border)
+        }
+
+        .help-nav-item.active {
+            color: var(--earth-blue);
+            background: rgba(74, 144, 226, .06);
+            border-color: rgba(74, 144, 226, .25)
+        }
+
+        .help-nav-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--earth-blue)
+        }
+
+        .help-nav-icon {
+            width: 18px;
+            text-align: center;
+            flex-shrink: 0;
+            font-size: 13px
+        }
+
+        .help-sidebar-cta {
+            margin-top: 24px;
+            padding: 20px;
+            background: rgba(74, 144, 226, .06);
+            border: 1px solid rgba(74, 144, 226, .2);
+            text-align: center
+        }
+
+        .help-sidebar-cta p {
+            color: var(--text-secondary);
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 14px
+        }
+
+        .help-sidebar-cta a {
+            display: block;
+            padding: 10px;
+            background: var(--earth-blue);
+            color: white;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            transition: background .2s
+        }
+
+        .help-sidebar-cta a:hover {
+            background: #6bb6ff
+        }
+
+        /* CONTENT SECTIONS */
+        .help-content-section {
+            display: none
+        }
+
+        .help-content-section.active {
+            display: block
+        }
+
+        /* Section header */
+        .section-eyebrow {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10px;
+            letter-spacing: 3px;
+            color: var(--earth-blue);
+            text-transform: uppercase;
+            margin-bottom: 10px
+        }
+
+        .section-h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 30px;
+            font-weight: 900;
+            margin-bottom: 14px;
+            line-height: 1.1
+        }
+
+        .section-intro {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.75;
+            margin-bottom: 36px;
+            padding-bottom: 28px;
+            border-bottom: 1px solid var(--border)
+        }
+
+        /* Info cards grid */
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 36px
+        }
+
+        .info-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 24px 20px;
+            transition: border-color .3s
+        }
+
+        .info-card:hover {
+            border-color: rgba(74, 144, 226, .35)
+        }
+
+        .info-card-icon {
+            width: 44px;
+            height: 44px;
+            background: rgba(74, 144, 226, .08);
+            border: 1px solid rgba(74, 144, 226, .2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: var(--earth-blue);
+            margin-bottom: 14px
+        }
+
+        .info-card-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: .5px
+        }
+
+        .info-card-text {
+            color: var(--text-secondary);
+            font-size: 13px;
+            line-height: 1.65
+        }
+
+        /* Content blocks */
+        .content-block {
+            margin-bottom: 36px
+        }
+
+        .content-block h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            letter-spacing: .5px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .content-block h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--earth-blue)
+        }
+
+        .content-block p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 12px
+        }
+
+        .content-block p:last-child {
+            margin-bottom: 0
+        }
+
+        .content-block ul,
+        .content-block ol {
+            padding-left: 20px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.8
+        }
+
+        .content-block li {
+            margin-bottom: 8px
+        }
+
+        .content-block strong {
+            color: var(--text-primary)
+        }
+
+        /* ── SIZE GUIDE TABLES ── */
+        .size-tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 24px;
+            flex-wrap: wrap
+        }
+
+        .size-tab {
+            padding: 8px 20px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: all .25s
+        }
+
+        .size-tab:hover {
+            border-color: rgba(74, 144, 226, .4);
+            color: var(--earth-blue)
+        }
+
+        .size-tab.active {
+            background: var(--earth-blue);
+            border-color: var(--earth-blue);
+            color: white
+        }
+
+        .size-table-wrap {
+            display: none;
+            overflow-x: auto
+        }
+
+        .size-table-wrap.active {
+            display: block
+        }
+
+        table.size-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin-bottom: 20px
+        }
+
+        table.size-table th {
+            background: rgba(74, 144, 226, .1);
+            border: 1px solid var(--border);
+            padding: 10px 14px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: var(--earth-blue);
+            text-align: center
+        }
+
+        table.size-table td {
+            border: 1px solid var(--border);
+            padding: 10px 14px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 13px;
+            transition: background .2s
+        }
+
+        table.size-table tr:hover td {
+            background: rgba(255, 255, 255, .02);
+            color: var(--text-primary)
+        }
+
+        .size-tip {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px 16px;
+            background: rgba(74, 144, 226, .05);
+            border: 1px solid rgba(74, 144, 226, .2);
+            margin-bottom: 20px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6
+        }
+
+        .size-tip i {
+            color: var(--earth-blue);
+            font-size: 14px;
+            margin-top: 2px;
+            flex-shrink: 0
+        }
+
+        .size-fit-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 14px;
+            margin-top: 20px
+        }
+
+        .size-fit-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 18px 16px;
+            text-align: center
+        }
+
+        .size-fit-card .fit-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--earth-blue)
+        }
+
+        .size-fit-card .fit-desc {
+            color: var(--text-secondary);
+            font-size: 12px;
+            line-height: 1.5
+        }
+
+        /* ── SHIPPING CARDS ── */
+        .ship-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 28px
+        }
+
+        .ship-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+            transition: border-color .3s
+        }
+
+        .ship-card:hover {
+            border-color: rgba(74, 144, 226, .35)
+        }
+
+        .ship-card.featured {
+            border-color: rgba(74, 144, 226, .4);
+            background: rgba(74, 144, 226, .04)
+        }
+
+        .ship-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: var(--earth-blue);
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 9px;
+            font-weight: 700;
+            padding: 3px 8px;
+            letter-spacing: 1px
+        }
+
+        .ship-icon {
+            font-size: 28px;
+            color: var(--earth-blue);
+            margin-bottom: 14px
+        }
+
+        .ship-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 6px
+        }
+
+        .ship-time {
+            color: var(--green);
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 8px
+        }
+
+        .ship-price {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            font-weight: 900;
+            color: var(--earth-blue);
+            margin-bottom: 10px
+        }
+
+        .ship-desc {
+            color: var(--text-secondary);
+            font-size: 13px;
+            line-height: 1.6
+        }
+
+        .ship-timeline {
+            margin-bottom: 28px
+        }
+
+        .ship-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, .04)
+        }
+
+        .ship-step:last-child {
+            border-bottom: none
+        }
+
+        .ship-step-num {
+            width: 32px;
+            height: 32px;
+            background: rgba(74, 144, 226, .1);
+            border: 1px solid rgba(74, 144, 226, .25);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--earth-blue);
+            flex-shrink: 0
+        }
+
+        .ship-step-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 4px
+        }
+
+        .ship-step-desc {
+            color: var(--text-secondary);
+            font-size: 13px;
+            line-height: 1.55
+        }
+
+        /* ── RETURNS ── */
+        .returns-steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 28px
+        }
+
+        .return-step {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 24px 20px;
+            text-align: center;
+            position: relative
+        }
+
+        .return-step-arrow {
+            position: absolute;
+            right: -9px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(74, 144, 226, .4);
+            font-size: 16px;
+            z-index: 1
+        }
+
+        .return-step:last-child .return-step-arrow {
+            display: none
+        }
+
+        .return-step-num {
+            width: 40px;
+            height: 40px;
+            background: rgba(74, 144, 226, .1);
+            border: 1px solid rgba(74, 144, 226, .25);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--earth-blue);
+            margin: 0 auto 14px
+        }
+
+        .return-step-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 8px
+        }
+
+        .return-step-desc {
+            color: var(--text-secondary);
+            font-size: 12px;
+            line-height: 1.6
+        }
+
+        .return-eligible {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px
+        }
+
+        .eligible-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 20px
+        }
+
+        .eligible-box.yes {
+            border-color: rgba(74, 222, 128, .2)
+        }
+
+        .eligible-box.no {
+            border-color: rgba(231, 76, 60, .15)
+        }
+
+        .eligible-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .eligible-title.yes {
+            color: var(--green)
+        }
+
+        .eligible-title.no {
+            color: var(--mars-red)
+        }
+
+        .eligible-list {
+            list-style: none;
+            padding: 0
+        }
+
+        .eligible-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            line-height: 1.5
+        }
+
+        .eligible-list.yes li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: var(--green);
+            font-size: 11px;
+            margin-top: 2px;
+            flex-shrink: 0
+        }
+
+        .eligible-list.no li::before {
+            content: '\f00d';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: var(--mars-red);
+            font-size: 11px;
+            margin-top: 2px;
+            flex-shrink: 0
+        }
+
+        /* ── FAQ ── */
+        .faq-categories {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 28px
+        }
+
+        .faq-cat {
+            padding: 7px 18px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: all .25s
+        }
+
+        .faq-cat.active {
+            background: var(--earth-blue);
+            border-color: var(--earth-blue);
+            color: white
+        }
+
+        .faq-cat:hover:not(.active) {
+            border-color: rgba(74, 144, 226, .4);
+            color: var(--earth-blue)
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border)
+        }
+
+        .faq-item:first-of-type {
+            border-top: 1px solid var(--border)
+        }
+
+        .faq-q {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 0;
+            cursor: pointer;
+            gap: 16px;
+            transition: color .2s
+        }
+
+        .faq-q:hover {
+            color: var(--earth-blue)
+        }
+
+        .faq-q-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: .3px;
+            line-height: 1.4;
+            flex: 1
+        }
+
+        .faq-q-icon {
+            color: var(--text-secondary);
+            font-size: 12px;
+            transition: transform .3s;
+            flex-shrink: 0
+        }
+
+        .faq-item.open .faq-q-icon {
+            transform: rotate(45deg);
+            color: var(--earth-blue)
+        }
+
+        .faq-item.open .faq-q {
+            color: var(--earth-blue)
+        }
+
+        .faq-a {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height .4s ease
+        }
+
+        .faq-item.open .faq-a {
+            max-height: 300px
+        }
+
+        .faq-a-inner {
+            padding: 0 0 18px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.8
+        }
+
+        .faq-a-inner a {
+            color: var(--earth-blue);
+            text-decoration: none
+        }
+
+        .faq-a-inner a:hover {
+            text-decoration: underline
+        }
+
+        /* ── CONTACT ── */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+            margin-bottom: 36px
+        }
+
+        .contact-method {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 28px 24px;
+            transition: border-color .3s;
+            text-decoration: none;
+            display: block;
+            color: inherit
+        }
+
+        .contact-method:hover {
+            border-color: rgba(74, 144, 226, .4);
+            transform: translateY(-2px)
+        }
+
+        .contact-method-icon {
+            width: 52px;
+            height: 52px;
+            background: rgba(74, 144, 226, .08);
+            border: 1px solid rgba(74, 144, 226, .2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--earth-blue);
+            margin-bottom: 16px
+        }
+
+        .contact-method-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            letter-spacing: .5px
+        }
+
+        .contact-method-detail {
+            color: var(--earth-blue);
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 6px
+        }
+
+        .contact-method-sub {
+            color: var(--text-secondary);
+            font-size: 13px;
+            line-height: 1.5
+        }
+
+        /* Contact form */
+        .contact-form-wrap {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 32px
+        }
+
+        .contact-form-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            letter-spacing: .5px
+        }
+
+        .cf-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px
+        }
+
+        .cf-field {
+            margin-bottom: 16px
+        }
+
+        .cf-label {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 9px;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            display: block;
+            margin-bottom: 7px;
+            text-transform: uppercase
+        }
+
+        .cf-input {
+            width: 100%;
+            padding: 11px 16px;
+            background: rgba(255, 255, 255, .03);
+            border: 1px solid var(--border);
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 14px;
+            outline: none;
+            transition: border-color .3s
+        }
+
+        .cf-input:focus {
+            border-color: var(--earth-blue);
+            background: rgba(74, 144, 226, .03)
+        }
+
+        .cf-input::placeholder {
+            color: rgba(255, 255, 255, .2)
+        }
+
+        .cf-select {
+            width: 100%;
+            padding: 11px 16px;
+            background: #0c0c16;
+            border: 1px solid var(--border);
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 14px;
+            outline: none;
+            cursor: pointer;
+            transition: border-color .3s
+        }
+
+        .cf-select:focus {
+            border-color: var(--earth-blue)
+        }
+
+        .cf-select option {
+            background: var(--bg-card)
+        }
+
+        textarea.cf-input {
+            resize: vertical;
+            min-height: 130px
+        }
+
+        .btn-send {
+            padding: 13px 32px;
+            background: var(--earth-blue);
+            border: none;
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all .3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .btn-send:hover {
+            background: #6bb6ff;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(74, 144, 226, .3)
+        }
+
+        /* ── NOTICE BOXES ── */
+        .notice {
+            display: flex;
+            gap: 14px;
+            padding: 16px 18px;
+            border: 1px solid;
+            margin-bottom: 20px;
+            align-items: flex-start
+        }
+
+        .notice.info {
+            border-color: rgba(74, 144, 226, .3);
+            background: rgba(74, 144, 226, .05)
+        }
+
+        .notice.warn {
+            border-color: rgba(240, 165, 0, .3);
+            background: rgba(240, 165, 0, .05)
+        }
+
+        .notice.success {
+            border-color: rgba(74, 222, 128, .3);
+            background: rgba(74, 222, 128, .05)
+        }
+
+        .notice i {
+            font-size: 16px;
+            flex-shrink: 0;
+            margin-top: 1px
+        }
+
+        .notice.info i {
+            color: var(--earth-blue)
+        }
+
+        .notice.warn i {
+            color: #f0a500
+        }
+
+        .notice.success i {
+            color: var(--green)
+        }
+
+        .notice p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.65
+        }
+
+        .notice p strong {
+            color: var(--text-primary)
+        }
+
+        /* FOOTER */
+        .footer {
+            background: var(--bg-card);
+            border-top: 1px solid var(--border);
+            padding: 50px 60px 24px;
+            position: relative;
+            z-index: 1
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 48px;
+            margin-bottom: 36px
+        }
+
+        .footer-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            font-weight: 900;
+            color: var(--earth-blue);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .footer-desc {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 13px;
+            max-width: 270px
+        }
+
+        .footer-heading {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            margin-bottom: 18px;
+            letter-spacing: 2px
+        }
+
+        .footer-links {
+            list-style: none
+        }
+
+        .footer-links li {
+            margin-bottom: 10px
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color .3s
+        }
+
+        .footer-links a:hover {
+            color: var(--earth-blue)
+        }
+
+        .social-links {
+            display: flex;
+            gap: 10px;
+            margin-top: 18px
+        }
+
+        .social-links a {
+            width: 38px;
+            height: 38px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(74, 144, 226, .06);
+            border: 1px solid rgba(74, 144, 226, .15);
+            color: var(--earth-blue);
+            transition: all .3s;
+            text-decoration: none;
+            font-size: 14px
+        }
+
+        .social-links a:hover {
+            background: var(--earth-blue);
+            color: white;
+            transform: translateY(-3px)
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 12px
+        }
+
+        .footer-bottom span {
+            color: var(--earth-blue)
+        }
+
+        /* RESPONSIVE */
+        @media(max-width:1000px) {
+            .help-main {
+                grid-template-columns: 1fr;
+                padding: 32px 30px 60px
+            }
+
+            .help-sidebar {
+                position: static;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px
+            }
+
+            .help-sidebar-title {
+                display: none
+            }
+
+            .help-sidebar-cta {
+                display: none
+            }
+
+            .help-nav-item {
+                padding: 8px 14px;
+                font-size: 11px;
+                flex: 0
+            }
+
+            .info-cards {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .ship-grid {
+                grid-template-columns: 1fr
+            }
+
+            .size-fit-cards {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .returns-steps {
+                grid-template-columns: 1fr
+            }
+
+            .return-step-arrow {
+                display: none
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr
+            }
+
+            .cf-grid {
+                grid-template-columns: 1fr
+            }
+
+            .footer {
+                padding: 40px 30px 20px
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr
+            }
+        }
+
+        @media(max-width:768px) {
+            .help-hero {
+                padding: 40px 30px 36px
+            }
+
+            .help-hero-title {
+                font-size: 28px
+            }
+
+            .navbar {
+                top: 32px
+            }
+
+            .nav-menu {
+                display: none
+            }
+
+            .nav-mobile-toggle {
+                display: block
+            }
+
+            .info-cards {
+                grid-template-columns: 1fr
+            }
+
+            .return-eligible {
+                grid-template-columns: 1fr
+            }
+
+            .size-fit-cards {
+                grid-template-columns: 1fr
+            }
+        }
+
+        @media(max-width:540px) {
+            .nav-container {
+                padding: 0 20px
+            }
+
+            .announcement-bar {
+                font-size: 10px;
+                letter-spacing: 1px
+            }
+
+            .help-hero {
+                padding: 30px 20px 28px
+            }
+
+            .help-hero-title {
+                font-size: 22px
+            }
+
+            .help-main {
+                padding: 24px 16px 50px
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr
+            }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="cosmic-galaxy-backend.js"></script>
+</head>
+
+<body>
+    <div class="grid-overlay"></div>
+    <div class="stars"></div>
+
+    <!-- SEARCH -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-box">
+            <span class="search-label">Search Products</span>
+            <div class="search-input-wrap">
+                <input class="search-input" id="searchInput" type="text"
+                    placeholder="e.g. galaxy hoodie, mars jacket...">
+                <button class="search-close-btn" onclick="closeSearch()"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CART DRAWER -->
+    <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+    <div class="cart-drawer" id="cartDrawer">
+        <div class="cart-header">
+            <div class="cart-title">YOUR CART <span id="cartItemCount"
+                    style="color:var(--earth-blue);font-size:12px">(0)</span></div>
+            <button class="cart-close-btn" onclick="closeCart()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-body" id="cartBody"></div>
+        <div class="cart-footer" id="cartFooter" style="display:none">
+            <div class="cart-row"><span>Subtotal</span><span id="cartSubtotal">₹0</span></div>
+            <div class="cart-row"><span>Shipping</span><span id="cartShipping" style="color:var(--green)">FREE</span>
+            </div>
+            <div class="cart-total-row"><span>Total</span><span id="cartTotal">₹0</span></div>
+            <button class="btn-checkout" onclick="window.location='checkout.html'">Proceed to Checkout</button>
+            <button class="btn-keep-shopping" onclick="closeCart()">Continue Shopping</button>
+        </div>
+    </div>
+
+    <!-- MOBILE NAV -->
+    <div class="mobile-nav-overlay" id="mobileNavOverlay" onclick="closeMobileNav()"></div>
+    <div class="mobile-nav" id="mobileNav">
+        <a href="index.html" class="mobile-nav-link">Home</a>
+        <a href="shop.html" class="mobile-nav-link">Shop</a>
+        <a href="collections.html" class="mobile-nav-link">Collections</a>
+        <a href="lookbook.html" class="mobile-nav-link">Lookbook</a>
+        <a href="about.html" class="mobile-nav-link">About</a>
+        <div class="mobile-nav-actions">
+            <a href="login.html" class="btn-nav"
+                style="text-align:center;text-decoration:none;display:block;padding:10px">Login</a>
+            <a href="signup.html" class="btn-nav-primary"
+                style="text-align:center;text-decoration:none;display:block;padding:10px">Sign Up</a>
+        </div>
+    </div>
+
+    <!-- ANNOUNCEMENT -->
+    <div class="announcement-bar">
+        FREE SHIPPING ON ORDERS ABOVE &#8377;999 &nbsp;&bull;&nbsp; USE CODE <strong>COSMIC10</strong> FOR 10% OFF
+        <a href="shop.html">Shop Now</a>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo"><span class="logo-dot"></span> COSMIC GALAXY</a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="shop.html" class="nav-link">Shop</a></li>
+                <li><a href="collections.html" class="nav-link">Collections</a></li>
+                <li><a href="lookbook.html" class="nav-link">Lookbook</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="nav-icon-btn" onclick="openSearch()"><i class="fas fa-search"></i></button>
+                <button class="nav-icon-btn cart-wrap" onclick="openCart()" style="position:relative">
+                    <i class="fas fa-shopping-bag"></i><span id="cartCount">0</span>
+                </button>
+                <a href="login.html" class="btn-nav">Login</a>
+                <a href="signup.html" class="btn-nav-primary">Sign Up</a>
+                <button class="nav-mobile-toggle" onclick="openMobileNav()"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-wrap">
+
+        <!-- HERO BANNER -->
+        <div class="help-hero">
+            <div class="help-hero-glow"></div>
+            <div class="help-breadcrumb">
+                <a href="index.html">Home</a>
+                <i class="fas fa-chevron-right"></i>
+                <span style="color:var(--earth-blue)">Help Center</span>
+            </div>
+            <h1 class="help-hero-title">HELP <span>CENTER</span></h1>
+            <p class="help-hero-sub">Everything you need to know about sizing, shipping, returns and more. We're here to
+                help your cosmic journey go smoothly.</p>
+            <div class="help-search-wrap">
+                <input class="help-search-inp" id="helpSearch" type="text"
+                    placeholder="Search for answers... e.g. return policy, size chart">
+                <button class="help-search-btn" onclick="handleHelpSearch()"><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+
+        <!-- MAIN -->
+        <div class="help-main">
+
+            <!-- SIDEBAR NAV -->
+            <div class="help-sidebar">
+                <div class="help-sidebar-title">HELP TOPICS</div>
+                <a class="help-nav-item active" onclick="showSection('size',this)" href="#">
+                    <i class="fas fa-ruler-combined help-nav-icon"></i> Size Guide
+                </a>
+                <a class="help-nav-item" onclick="showSection('shipping',this)" href="#">
+                    <i class="fas fa-shipping-fast help-nav-icon"></i> Shipping Info
+                </a>
+                <a class="help-nav-item" onclick="showSection('returns',this)" href="#">
+                    <i class="fas fa-undo-alt help-nav-icon"></i> Returns
+                </a>
+                <a class="help-nav-item" onclick="showSection('faq',this)" href="#">
+                    <i class="fas fa-question-circle help-nav-icon"></i> FAQ
+                </a>
+                <a class="help-nav-item" onclick="showSection('contact',this)" href="#">
+                    <i class="fas fa-headset help-nav-icon"></i> Contact Us
+                </a>
+                <div class="help-sidebar-cta">
+                    <p>Can't find your answer? Our crew is ready to help.</p>
+                    <a href="#" onclick="showSection('contact',null);return false">Talk to Support</a>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════════════ -->
+            <!-- SECTION 1: SIZE GUIDE                      -->
+            <!-- ═══════════════════════════════════════════ -->
+            <div class="help-content-section active" id="sec-size">
+                <div class="section-eyebrow">SIZE GUIDE</div>
+                <h1 class="section-h1">FIND YOUR PERFECT FIT</h1>
+                <p class="section-intro">Our garments are designed with a modern streetwear fit. Use the charts below to
+                    find your size. If you're between sizes, we recommend sizing up for a more relaxed look or sizing
+                    down for a more fitted feel.</p>
+
+                <div class="notice info">
+                    <i class="fas fa-info-circle"></i>
+                    <p>All measurements are in <strong>centimetres (cm)</strong>. Measure yourself and compare to the
+                        garment measurements below, not your body measurements directly.</p>
+                </div>
+
+                <!-- FIT TYPES -->
+                <div class="content-block">
+                    <h2>FIT TYPES</h2>
+                    <div class="size-fit-cards">
+                        <div class="size-fit-card">
+                            <div class="fit-name"><i class="fas fa-tshirt" style="margin-right:6px"></i>OVERSIZED FIT
+                            </div>
+                            <div class="fit-desc">Dropped shoulders, extended body. Our hoodies and some tees use this
+                                fit. Size down for a relaxed fit, keep your size for a true oversized look.</div>
+                        </div>
+                        <div class="size-fit-card">
+                            <div class="fit-name"><i class="fas fa-tshirt" style="margin-right:6px"></i>REGULAR FIT
+                            </div>
+                            <div class="fit-desc">Comfortable through the chest and shoulders. True to size. Most of our
+                                T-shirts and jackets use this fit.</div>
+                        </div>
+                        <div class="size-fit-card">
+                            <div class="fit-name"><i class="fas fa-tshirt" style="margin-right:6px"></i>SLIM FIT</div>
+                            <div class="fit-desc">Tailored through the body. If you have a broader chest or arms, size
+                                up. Featured in select tees and jackets.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SIZE TABS -->
+                <div class="content-block">
+                    <h2>SIZE CHARTS</h2>
+                    <div class="size-tabs">
+                        <button class="size-tab active" onclick="showSizeTab('tshirt',this)">T-SHIRTS</button>
+                        <button class="size-tab" onclick="showSizeTab('hoodie',this)">HOODIES</button>
+                        <button class="size-tab" onclick="showSizeTab('jacket',this)">JACKETS</button>
+                        <button class="size-tab" onclick="showSizeTab('cargo',this)">CARGO PANTS</button>
+                    </div>
+
+                    <!-- T-SHIRTS -->
+                    <div class="size-table-wrap active" id="tab-tshirt">
+                        <div class="size-tip"><i class="fas fa-lightbulb"></i><span>Measure your <strong>chest</strong>
+                                at its widest point and <strong>body length</strong> from the high point of the shoulder
+                                to the hem.</span></div>
+                        <table class="size-table">
+                            <tr>
+                                <th>SIZE</th>
+                                <th>CHEST (cm)</th>
+                                <th>BODY LENGTH (cm)</th>
+                                <th>SHOULDER (cm)</th>
+                                <th>SUITABLE FOR HEIGHT</th>
+                            </tr>
+                            <tr>
+                                <td>XS</td>
+                                <td>84–88</td>
+                                <td>66</td>
+                                <td>41</td>
+                                <td>155–162 cm</td>
+                            </tr>
+                            <tr>
+                                <td>S</td>
+                                <td>88–92</td>
+                                <td>68</td>
+                                <td>43</td>
+                                <td>160–168 cm</td>
+                            </tr>
+                            <tr>
+                                <td>M</td>
+                                <td>96–100</td>
+                                <td>71</td>
+                                <td>45</td>
+                                <td>167–174 cm</td>
+                            </tr>
+                            <tr>
+                                <td>L</td>
+                                <td>104–108</td>
+                                <td>73</td>
+                                <td>47</td>
+                                <td>172–180 cm</td>
+                            </tr>
+                            <tr>
+                                <td>XL</td>
+                                <td>112–116</td>
+                                <td>75</td>
+                                <td>49</td>
+                                <td>178–185 cm</td>
+                            </tr>
+                            <tr>
+                                <td>2XL</td>
+                                <td>120–124</td>
+                                <td>77</td>
+                                <td>51</td>
+                                <td>183–190 cm</td>
+                            </tr>
+                            <tr>
+                                <td>3XL</td>
+                                <td>128–132</td>
+                                <td>79</td>
+                                <td>53</td>
+                                <td>188+ cm</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- HOODIES -->
+                    <div class="size-table-wrap" id="tab-hoodie">
+                        <div class="size-tip"><i class="fas fa-lightbulb"></i><span>Our hoodies have an
+                                <strong>oversized fit</strong>. If you want a true oversized look, go with your regular
+                                size. If you prefer it more fitted, size down.</span></div>
+                        <table class="size-table">
+                            <tr>
+                                <th>SIZE</th>
+                                <th>CHEST (cm)</th>
+                                <th>BODY LENGTH (cm)</th>
+                                <th>SLEEVE (cm)</th>
+                                <th>SUITABLE FOR HEIGHT</th>
+                            </tr>
+                            <tr>
+                                <td>XS</td>
+                                <td>96–100</td>
+                                <td>62</td>
+                                <td>57</td>
+                                <td>155–162 cm</td>
+                            </tr>
+                            <tr>
+                                <td>S</td>
+                                <td>100–106</td>
+                                <td>65</td>
+                                <td>59</td>
+                                <td>160–168 cm</td>
+                            </tr>
+                            <tr>
+                                <td>M</td>
+                                <td>108–114</td>
+                                <td>68</td>
+                                <td>62</td>
+                                <td>167–174 cm</td>
+                            </tr>
+                            <tr>
+                                <td>L</td>
+                                <td>116–122</td>
+                                <td>71</td>
+                                <td>64</td>
+                                <td>172–180 cm</td>
+                            </tr>
+                            <tr>
+                                <td>XL</td>
+                                <td>124–130</td>
+                                <td>73</td>
+                                <td>66</td>
+                                <td>178–185 cm</td>
+                            </tr>
+                            <tr>
+                                <td>2XL</td>
+                                <td>132–138</td>
+                                <td>75</td>
+                                <td>68</td>
+                                <td>183–190 cm</td>
+                            </tr>
+                            <tr>
+                                <td>3XL</td>
+                                <td>140–146</td>
+                                <td>77</td>
+                                <td>70</td>
+                                <td>188+ cm</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- JACKETS -->
+                    <div class="size-table-wrap" id="tab-jacket">
+                        <div class="size-tip"><i class="fas fa-lightbulb"></i><span>Jackets are cut for <strong>regular
+                                    fit</strong>. Measure over a light layer as you'd wear them. Measure
+                                <strong>chest</strong> under your arms at the widest point.</span></div>
+                        <table class="size-table">
+                            <tr>
+                                <th>SIZE</th>
+                                <th>CHEST (cm)</th>
+                                <th>BODY LENGTH (cm)</th>
+                                <th>SLEEVE (cm)</th>
+                                <th>SHOULDER (cm)</th>
+                            </tr>
+                            <tr>
+                                <td>XS</td>
+                                <td>90–94</td>
+                                <td>66</td>
+                                <td>60</td>
+                                <td>42</td>
+                            </tr>
+                            <tr>
+                                <td>S</td>
+                                <td>94–98</td>
+                                <td>68</td>
+                                <td>62</td>
+                                <td>44</td>
+                            </tr>
+                            <tr>
+                                <td>M</td>
+                                <td>100–104</td>
+                                <td>70</td>
+                                <td>64</td>
+                                <td>46</td>
+                            </tr>
+                            <tr>
+                                <td>L</td>
+                                <td>108–112</td>
+                                <td>72</td>
+                                <td>66</td>
+                                <td>48</td>
+                            </tr>
+                            <tr>
+                                <td>XL</td>
+                                <td>116–120</td>
+                                <td>74</td>
+                                <td>68</td>
+                                <td>50</td>
+                            </tr>
+                            <tr>
+                                <td>2XL</td>
+                                <td>124–128</td>
+                                <td>76</td>
+                                <td>70</td>
+                                <td>52</td>
+                            </tr>
+                            <tr>
+                                <td>3XL</td>
+                                <td>132–136</td>
+                                <td>78</td>
+                                <td>72</td>
+                                <td>54</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- CARGO -->
+                    <div class="size-table-wrap" id="tab-cargo">
+                        <div class="size-tip"><i class="fas fa-lightbulb"></i><span>Measure your <strong>natural
+                                    waist</strong> (around the belly button area) and your <strong>hips</strong> at the
+                                fullest point. Our cargos have an adjustable drawstring waist.</span></div>
+                        <table class="size-table">
+                            <tr>
+                                <th>SIZE</th>
+                                <th>WAIST (cm)</th>
+                                <th>HIPS (cm)</th>
+                                <th>INSEAM (cm)</th>
+                                <th>OUTSEAM (cm)</th>
+                            </tr>
+                            <tr>
+                                <td>XS / 28</td>
+                                <td>70–74</td>
+                                <td>88–92</td>
+                                <td>74</td>
+                                <td>100</td>
+                            </tr>
+                            <tr>
+                                <td>S / 30</td>
+                                <td>76–80</td>
+                                <td>94–98</td>
+                                <td>76</td>
+                                <td>102</td>
+                            </tr>
+                            <tr>
+                                <td>M / 32</td>
+                                <td>82–86</td>
+                                <td>100–104</td>
+                                <td>78</td>
+                                <td>104</td>
+                            </tr>
+                            <tr>
+                                <td>L / 34</td>
+                                <td>88–92</td>
+                                <td>106–110</td>
+                                <td>79</td>
+                                <td>106</td>
+                            </tr>
+                            <tr>
+                                <td>XL / 36</td>
+                                <td>94–98</td>
+                                <td>112–116</td>
+                                <td>80</td>
+                                <td>108</td>
+                            </tr>
+                            <tr>
+                                <td>2XL / 38</td>
+                                <td>100–104</td>
+                                <td>118–122</td>
+                                <td>81</td>
+                                <td>109</td>
+                            </tr>
+                            <tr>
+                                <td>3XL / 40</td>
+                                <td>106–110</td>
+                                <td>124–128</td>
+                                <td>82</td>
+                                <td>110</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="content-block">
+                    <h2>HOW TO MEASURE</h2>
+                    <div class="info-cards">
+                        <div class="info-card">
+                            <div class="info-card-icon"><i class="fas fa-arrows-alt-h"></i></div>
+                            <div class="info-card-title">CHEST</div>
+                            <div class="info-card-text">Wrap the tape measure around the fullest part of your chest,
+                                keeping it parallel to the ground and under your arms.</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-card-icon"><i class="fas fa-circle-notch"></i></div>
+                            <div class="info-card-title">WAIST</div>
+                            <div class="info-card-text">Measure around your natural waist — typically 2–3 cm above your
+                                belly button. Keep the tape comfortably snug but not tight.</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-card-icon"><i class="fas fa-arrows-alt-v"></i></div>
+                            <div class="info-card-title">INSEAM</div>
+                            <div class="info-card-text">Measure from the crotch seam down to the ankle bone on the
+                                inside of the leg. Best measured from a pair of well-fitting trousers.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="notice warn">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p>Still unsure? <strong>DM us on Instagram @cosmicgalaxy</strong> with your measurements and the
+                        product name — our team will personally recommend the right size for you.</p>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════════════ -->
+            <!-- SECTION 2: SHIPPING INFO                   -->
+            <!-- ═══════════════════════════════════════════ -->
+            <div class="help-content-section" id="sec-shipping">
+                <div class="section-eyebrow">SHIPPING INFO</div>
+                <h1 class="section-h1">DELIVERY INFORMATION</h1>
+                <p class="section-intro">We ship pan-India with trusted courier partners. Every order is carefully
+                    packed to reach you in perfect condition. Track your order in real time once it's shipped.</p>
+
+                <div class="notice success">
+                    <i class="fas fa-check-circle"></i>
+                    <p><strong>Free shipping on all orders above ₹999!</strong> Use code <strong>COSMIC10</strong> to
+                        save 10% on your first order.</p>
+                </div>
+
+                <!-- SHIPPING OPTIONS -->
+                <div class="content-block">
+                    <h2>SHIPPING OPTIONS</h2>
+                    <div class="ship-grid">
+                        <div class="ship-card featured">
+                            <div class="ship-badge">RECOMMENDED</div>
+                            <div class="ship-icon"><i class="fas fa-shipping-fast"></i></div>
+                            <div class="ship-name">STANDARD DELIVERY</div>
+                            <div class="ship-time"><i class="fas fa-clock" style="margin-right:6px"></i>3–5 Business
+                                Days</div>
+                            <div class="ship-price">FREE <span
+                                    style="font-size:13px;font-weight:400;color:var(--text-secondary)">on orders
+                                    ₹999+</span></div>
+                            <div class="ship-price"
+                                style="font-size:14px;color:var(--text-secondary);margin-bottom:10px">₹99 on orders
+                                below ₹999</div>
+                            <div class="ship-desc">Delivered by Delhivery, Blue Dart, or DTDC depending on your
+                                location. Tracking link sent via SMS and email.</div>
+                        </div>
+                        <div class="ship-card">
+                            <div class="ship-icon"><i class="fas fa-bolt"></i></div>
+                            <div class="ship-name">EXPRESS DELIVERY</div>
+                            <div class="ship-time"><i class="fas fa-clock" style="margin-right:6px"></i>1–2 Business
+                                Days</div>
+                            <div class="ship-price">₹199</div>
+                            <div class="ship-desc">Available in select metro cities — Delhi, Mumbai, Bangalore,
+                                Hyderabad, Chennai, Pune, Kolkata. Available at checkout if your PIN is eligible.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ORDER TIMELINE -->
+                <div class="content-block">
+                    <h2>ORDER TIMELINE</h2>
+                    <div class="ship-timeline">
+                        <div class="ship-step">
+                            <div class="ship-step-num">1</div>
+                            <div>
+                                <div class="ship-step-title">ORDER PLACED</div>
+                                <div class="ship-step-desc">You receive an order confirmation email immediately. Your
+                                    order ID will begin with <strong style="color:var(--earth-blue)">#CG</strong>.</div>
+                            </div>
+                        </div>
+                        <div class="ship-step">
+                            <div class="ship-step-num">2</div>
+                            <div>
+                                <div class="ship-step-title">PROCESSING (Same day – 1 day)</div>
+                                <div class="ship-step-desc">Our team picks, packs and quality-checks your order. Orders
+                                    placed before <strong style="color:white">2 PM IST</strong> on business days are
+                                    processed the same day.</div>
+                            </div>
+                        </div>
+                        <div class="ship-step">
+                            <div class="ship-step-num">3</div>
+                            <div>
+                                <div class="ship-step-title">DISPATCHED</div>
+                                <div class="ship-step-desc">Your order is handed to the courier. You receive a tracking
+                                    number via SMS and email. Track in real time on our courier partner's website.</div>
+                            </div>
+                        </div>
+                        <div class="ship-step">
+                            <div class="ship-step-num">4</div>
+                            <div>
+                                <div class="ship-step-title">OUT FOR DELIVERY</div>
+                                <div class="ship-step-desc">Your courier partner will attempt delivery. They will call
+                                    or SMS you. Ensure someone is available to receive the parcel.</div>
+                            </div>
+                        </div>
+                        <div class="ship-step">
+                            <div class="ship-step-num"
+                                style="background:rgba(74,144,226,.15);border-color:var(--earth-blue)"><i
+                                    class="fas fa-check" style="font-size:11px;color:var(--earth-blue)"></i></div>
+                            <div>
+                                <div class="ship-step-title">DELIVERED!</div>
+                                <div class="ship-step-desc">Your cosmic gear has landed. Unbox, wear, and don't forget
+                                    to tag us on Instagram <strong
+                                        style="color:var(--earth-blue)">@cosmicgalaxy</strong>!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-block">
+                    <h2>IMPORTANT NOTES</h2>
+                    <ul>
+                        <li>Business days are <strong>Monday – Saturday</strong>, excluding public holidays.</li>
+                        <li>Delivery times may be extended by 1–3 days during festive seasons (Diwali, Holi, etc.) or
+                            extreme weather conditions.</li>
+                        <li>Remote PIN codes (North East, J&K, Andaman &amp; Nicobar, Lakshadweep) may take an
+                            additional 2–4 business days.</li>
+                        <li>We currently ship <strong>within India only</strong>. International shipping is coming soon.
+                        </li>
+                        <li>If delivery fails after 3 attempts, the order will be returned to us. We'll contact you for
+                            re-delivery (additional charges may apply).</li>
+                        <li>COD (Cash on Delivery) orders may have a slightly longer processing time of 1 additional
+                            business day.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════════════ -->
+            <!-- SECTION 3: RETURNS                         -->
+            <!-- ═══════════════════════════════════════════ -->
+            <div class="help-content-section" id="sec-returns">
+                <div class="section-eyebrow">RETURNS &amp; EXCHANGES</div>
+                <h1 class="section-h1">HASSLE-FREE RETURNS</h1>
+                <p class="section-intro">Not happy with your order? No problem. We offer a 7-day return and exchange
+                    policy from the date of delivery. Your satisfaction is our mission priority.</p>
+
+                <div class="notice info">
+                    <i class="fas fa-info-circle"></i>
+                    <p>Return window: <strong>7 days from delivery date.</strong> Items must be unworn, unwashed, and
+                        with all original tags intact.</p>
+                </div>
+
+                <!-- HOW IT WORKS -->
+                <div class="content-block">
+                    <h2>HOW TO RETURN — 3 SIMPLE STEPS</h2>
+                    <div class="returns-steps">
+                        <div class="return-step">
+                            <div class="return-step-arrow"><i class="fas fa-chevron-right"></i></div>
+                            <div class="return-step-num">1</div>
+                            <div class="return-step-title">INITIATE RETURN</div>
+                            <div class="return-step-desc">Email us at <strong style="color:var(--earth-blue)"><a
+                                        href="/cdn-cgi/l/email-protection" class="__cf_email__"
+                                        data-cfemail="2456415051564a5764474b57494d47434548455c5d0a4d4a">[email&#160;protected]</a></strong>
+                                with your Order ID
+                                and reason. Or fill the contact form below.</div>
+                        </div>
+                        <div class="return-step">
+                            <div class="return-step-arrow"><i class="fas fa-chevron-right"></i></div>
+                            <div class="return-step-num">2</div>
+                            <div class="return-step-title">PACK &amp; SHIP</div>
+                            <div class="return-step-desc">Pack the item securely in its original packaging. We'll send
+                                you a pickup request or a return shipping label within 24 hours.</div>
+                        </div>
+                        <div class="return-step">
+                            <div class="return-step-num"><i class="fas fa-check" style="font-size:14px"></i></div>
+                            <div class="return-step-title">REFUND / EXCHANGE</div>
+                            <div class="return-step-desc">Once we receive and inspect the item, your refund is processed
+                                in 5–7 business days to your original payment method.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ELIGIBLE / NOT ELIGIBLE -->
+                <div class="content-block">
+                    <h2>WHAT CAN BE RETURNED?</h2>
+                    <div class="return-eligible">
+                        <div class="eligible-box yes">
+                            <div class="eligible-title yes"><i class="fas fa-check-circle"></i> ELIGIBLE FOR RETURN
+                            </div>
+                            <ul class="eligible-list yes">
+                                <li>Item received in wrong size or wrong product</li>
+                                <li>Item is defective, damaged, or has a manufacturing fault</li>
+                                <li>Item significantly different from product description</li>
+                                <li>Unused, unworn items within 7 days with tags intact</li>
+                                <li>Incorrect colour from what was ordered</li>
+                            </ul>
+                        </div>
+                        <div class="eligible-box no">
+                            <div class="eligible-title no"><i class="fas fa-times-circle"></i> NOT ELIGIBLE</div>
+                            <ul class="eligible-list no">
+                                <li>Items worn, washed, or damaged by the customer</li>
+                                <li>Tags removed or missing original packaging</li>
+                                <li>Items returned after 7 days from delivery</li>
+                                <li>Sale or clearance items (marked as final sale)</li>
+                                <li>Accessories (caps, socks, bags) for hygiene reasons</li>
+                                <li>Custom or personalised items</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-block">
+                    <h2>REFUND TIMELINE</h2>
+                    <table class="size-table">
+                        <tr>
+                            <th>PAYMENT METHOD</th>
+                            <th>REFUND TIMELINE</th>
+                            <th>REFUND TO</th>
+                        </tr>
+                        <tr>
+                            <td>UPI / Net Banking</td>
+                            <td>3–5 business days</td>
+                            <td>Original account</td>
+                        </tr>
+                        <tr>
+                            <td>Credit / Debit Card</td>
+                            <td>5–7 business days</td>
+                            <td>Original card</td>
+                        </tr>
+                        <tr>
+                            <td>Cash on Delivery</td>
+                            <td>5–7 business days</td>
+                            <td>Bank transfer (NEFT)</td>
+                        </tr>
+                        <tr>
+                            <td>Store Credit</td>
+                            <td>Instant</td>
+                            <td>COSMIC GALAXY wallet</td>
+                        </tr>
+                    </table>
+
+                    <div class="notice warn" style="margin-top:16px">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p>Refund timelines depend on your bank's processing time. We initiate the refund within 2
+                            business days of receiving the returned item.</p>
+                    </div>
+                </div>
+
+                <div class="content-block">
+                    <h2>EXCHANGES</h2>
+                    <p>Want a different size? We offer <strong>free size exchanges</strong> within 7 days. Simply
+                        initiate a return with "Exchange" as the reason and specify the size you need. If the new size
+                        is available, we'll dispatch it once we receive your return.</p>
+                    <p>For a different product, we treat it as a return + new purchase.</p>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════════════ -->
+            <!-- SECTION 4: FAQ                             -->
+            <!-- ═══════════════════════════════════════════ -->
+            <div class="help-content-section" id="sec-faq">
+                <div class="section-eyebrow">FAQ</div>
+                <h1 class="section-h1">FREQUENTLY ASKED QUESTIONS</h1>
+                <p class="section-intro">Quick answers to the questions we get asked the most. Can't find what you're
+                    looking for? Contact our support team directly.</p>
+
+                <div class="faq-categories">
+                    <button class="faq-cat active" onclick="filterFAQ('all',this)">ALL</button>
+                    <button class="faq-cat" onclick="filterFAQ('orders',this)">ORDERS</button>
+                    <button class="faq-cat" onclick="filterFAQ('shipping',this)">SHIPPING</button>
+                    <button class="faq-cat" onclick="filterFAQ('products',this)">PRODUCTS</button>
+                    <button class="faq-cat" onclick="filterFAQ('returns',this)">RETURNS</button>
+                    <button class="faq-cat" onclick="filterFAQ('payments',this)">PAYMENTS</button>
+                </div>
+
+                <!-- FAQ ITEMS -->
+                <div id="faqList">
+                    <!-- ORDERS -->
+                    <div class="faq-item" data-cat="orders" onclick="toggleFAQ(this)">
+                        <div class="faq-q"><span class="faq-q-text">How do I track my order?</span><i
+                                class="fas fa-plus faq-q-icon"></i></div>
+                        <div class="faq-a">
+                            <div class="faq-a-inner">Once your order is dispatched, you'll receive an SMS and email with
+                                your tracking number and a link to our courier partner's website. You can track your
+                                order in real time. If you haven't received a tracking link within 2 business days of
+                                placing your order, <a href="#"
+                                    onclick="showSection('contact',null);return false">contact us</a>.</div>
+                        </div>
+                    </div>
+                    <div class="faq-item" data-cat="orders" onclick="toggleFAQ(this)">
+                        <div class="faq-q"><span class="faq-q-text">Can I modify or cancel my order after placing
+                                it?</span><i class="fas fa-plus faq-q-icon"></i></div>
+                        <div class="faq-a">
+                            <div class="faq-a-inner">You can cancel or modify your order within <strong>2 hours of
+                                    placing it</strong>, before it enters processing. After that, we're unable to make
+                                changes as the order has already been packed. Contact us immediately at <a
+                                    href="/cdn-cgi/l/email-protection#7c0f090c0c130e083c1f130f11151f1b1d101d0405521512"><span
+                                        class="__cf_email__"
+                                        data-cfemail="d0a3a5a0a0bfa2a490b3bfa3bdb9b3b7b1bcb1a8a9feb9be">[email&#160;protected]</span></a>
+                                with your Order
+                                ID.</div>
+                        </div>
+                    </div>
+                    <div class="faq-item" data-cat="orders" onclick="toggleFAQ(this)">
+                        <div class="faq-q"><span class="faq-q-text">I placed an order but haven't received a
+                                confirmation email. What should I do?</span><i class="fas fa-plus faq-q-icon"></i></div>
+                        <div class="faq-a">
+                            <div class="faq-a-inner">First, check your spam/junk folder. If it's not there, the email
+                                address entered may have been incorrect. Contact us with your name, phone number and
+                                approximate order time and we'll locate your order.</div>
+                        </div>
+                    </div>
+                    <div class="faq-item" data-cat="orders" onclick="toggleFAQ(this)">
+                        <div class="faq-q"><span class="faq-q-text">Can I place a bulk or wholesale order?</span><i
+                                class="fas fa-plus faq-q-icon"></i></div>
+                        <div class="faq-a">
+                            <div class="faq-a-inner">Yes! For orders of 10+ pieces, we offer wholesale pricing. Email us
+                                at <a
+                                    href="/cdn-cgi/l/email-protection#2c5b444340495f4d40496c4f435f41454f4b4d404d5455024542"><span
+                                        class="__cf_email__"
+                                        data-cfemail="8ef9e6e1e2ebfdefe2ebceede1fde3e7ede9efe2eff6f7a0e7e0">[email&#160;protected]</span></a>
+                                with the
+                                products, quantities, and sizes you need and we'll send you a custom quote within 24
+                                hours.</div>
+                        </div>
+                    </div>
+
+                    <!-- SHIPPING -->
+                    <div class="faq-item" data-cat="shipping" onclick="toggleFAQ(this)">
+                        <div class="faq-q"><span class="faq-q-text">How long does delivery take?</span><i
+                                class="fas fa-plus faq-q-icon"></i></div>
+                        <div class="faq-a">
+                            <div class="faq-a-inner">Standard delivery takes <strong>3–5 business days</strong> across
+                                India. Express delivery (1–2 days) is available in major metros. Remote areas (NE
+                                states, J&K, islands) may take up to 7–8 business days.</div>
+                        </div>
+                    </div>
+                    <div class="faq-item" data-cat="shipping" onclick="toggleFAQ(this)">
+                        <div class="faq-q"><span class="faq-q-text">Is there free shipping?</span><i
+                                class="fas fa-plus faq-q-icon"></i></div>
+                        <div class="faq-a">
+                            <div class="faq-a-inner">Yes! All orders above <strong>₹999</strong> qualify for free
+                                standard shipping. Orders below ₹999 incur a flat ₹99 shipping fee. Use code
+                                <strong>COSMIC10</strong> for 10% off your first order — this may also push you above
+                                the free shipping threshold!
+                            </div>
+                        </div>
+                    </div>
+                    <div class="faq-item" data-cat="shipping" onclick="toggleFAQ(this)">
+                        <div class="faq-q"><span class="faq-q-text">Do you ship internationally?</span><i
+                                class="fas fa-plus faq-q-icon"></i></div>
+                        <div class="faq-a">
+                            <div class="faq-a-inner">We currently ship within India only. International shipping is in
+                                our roadmap — follow us on Instagram <strong
+                                    style="color:var(--earth-blue)">@cosmicgalaxy</strong> to be the first to know when
+                                it launches!</div>
+                        </div>
+                    </div>
+                    <div class="faq-item" data-cat="shipping" onclick="toggleFAQ(this)">
+                        <div class="faq-q"><span class="faq-q-text">My order hasn't arrived yet. What do I do?</span><i
+                                class="fas fa-plus faq-q-icon"></i></div>
+                        <div class="faq-a">
+                            <div class="faq-a-inner">First, check your tracking link. If the tracking shows "delivered"
+                                but you haven't received it, check with neighbours and your building security. If the
+                                tracking hasn't updated for more than 3 business days, <a href="#"
+                                    onclick="showSection('contact',null);return false">contact us</a> and we'll
+                                investigate immediately.</div>
+                        </div>
+                    </div>
+
+                    <!-- PRODUCTS -->
+                    <div class="faq-item" data-cat="products" onclick="toggleFAQ(this)">
+                        <div class="faq-q"><span class="faq-q-text">What fabric/material are your products made
+                                from?</span><i class="fas fa-plus faq-q-icon"></i></div>
+                        <div class="faq-a">
+                            <div class="faq-a-inner">We use premium quality materials across our range. T-shirts are
+                                100% combed cotton (180–200 GSM), hoodies are 80% cotton / 20% polyester fleece (320–380
+                                GSM), jackets are 100% polyester or denim depending on the style, and cargo pants are
+                                100% cotton twill (280 GSM). Full material details are listed on each product page.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="faq-item" data-cat="products" onclick="toggleFAQ(this)">
+                        <div class="faq-q"><span class="faq-q-text">How should I wash and care for my COSMIC GALAXY
+                                products?</span><i class="fas fa-plus faq-q-icon"></i></div>
+                        <div class="faq-a">
+                            <div class="faq-a-inner"><strong>T-shirts:</strong> Machine wash cold, inside out, gentle
+                                cycle. Tumble dry low. Do not bleach or dry clean.<br><br><strong>Hoodies:</strong>
+                                Machine wash cold, inside out. Air dry or tumble dry low. Avoid high heat — it can
+                                shrink the fabric.<br><br><strong>Jackets:</strong> Follow the care label — most are
+                                hand wash or dry clean only.<br><br><strong>General tip:</strong> Washing inside out
+                                preserves print quality significantly longer.</div>
+                        </div>
+                    </div>
+                    <div class="faq-item" data-cat="products" onclick="toggleFAQ(this)">
+                        <div class="faq-q"><span class="faq-q-text">Will the prints fade after washing?</span><i
+                                class="fas fa-plus faq-q-icon"></i></div>
+                        <div class="faq-a">
+                            <div class="faq-a-inner">Our prints use DTG (Direct to Garment) or screen printing with
+                                water-based inks. When washed inside out in cold water, the prints are extremely durable
+                                and will not fade significantly for at least 50+ washes. Avoid washing in hot water or
+                                drying on high heat.</div>
+                        </div>
+                    </div>
+                    <div class="faq-item" data-cat="products" onclick="toggleFAQ(this)">
+                        <div class="faq-q"><span class="faq-q-text">A product I want is out of stock. Will it come
+                                back?</span><i class="fas fa-plus faq-q-icon"></i></div>
+                        <div class="faq-a">
+                            <div class="faq-a-inner">We do restock popular items! Join our newsletter or follow us on
+                                Instagram to be notified of restocks. You can also email us with the product name and
+                                your size — we track demand and prioritise restocks accordingly.</div>
+                        </div>
+                    </div>
+
+                    <!-- RETURNS -->
+                    <div class="faq-item" data-cat="returns" onclick="toggleFAQ(this)">
+                        <div class="faq-q"><span class="faq-q-text">What is your return policy?</span><i
+                                class="fas fa-plus faq-q-icon"></i></div>
+                        <div class="faq-a">
+                            <div class="faq-a-inner">We offer a 7-day return policy from the date of delivery. Items
+                                must be unworn, unwashed, and with original tags attached. See our full <a href="#"
+                                    onclick="showSection('returns',null);return false">Returns page</a> for details.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="faq-item" data-cat="returns" onclick="toggleFAQ(this)">
+                        <div class="faq-q"><span class="faq-q-text">How do I get a refund?</span><i
+                                class="fas fa-plus faq-q-icon"></i></div>
+                        <div class="faq-a">
+                            <div class="faq-a-inner">Once we receive your returned item and inspect it (usually 1
+                                business day), we initiate the refund immediately. It reaches your account in 3–7
+                                business days depending on your bank. You'll receive a confirmation email when the
+                                refund is processed.</div>
+                        </div>
+                    </div>
+                    <div class="faq-item" data-cat="returns" onclick="toggleFAQ(this)">
+                        <div class="faq-q"><span class="faq-q-text">Can I exchange for a different size?</span><i
+                                class="fas fa-plus faq-q-icon"></i></div>
+                        <div class="faq-a">
+                            <div class="faq-a-inner">Yes! We offer free size exchanges within 7 days. Email us with your
+                                Order ID, current size, and the size you want. We'll arrange a pickup and dispatch the
+                                new size once we receive your return. Subject to availability.</div>
+                        </div>
+                    </div>
+
+                    <!-- PAYMENTS -->
+                    <div class="faq-item" data-cat="payments" onclick="toggleFAQ(this)">
+                        <div class="faq-q"><span class="faq-q-text">What payment methods do you accept?</span><i
+                                class="fas fa-plus faq-q-icon"></i></div>
+                        <div class="faq-a">
+                            <div class="faq-a-inner">We accept UPI (Google Pay, PhonePe, Paytm, BHIM), Credit/Debit
+                                cards (Visa, Mastercard, RuPay, Amex), Net Banking (all major Indian banks), and Cash on
+                                Delivery. All online payments are 100% encrypted and secure.</div>
+                        </div>
+                    </div>
+                    <div class="faq-item" data-cat="payments" onclick="toggleFAQ(this)">
+                        <div class="faq-q"><span class="faq-q-text">Is it safe to use my card on your website?</span><i
+                                class="fas fa-plus faq-q-icon"></i></div>
+                        <div class="faq-a">
+                            <div class="faq-a-inner">Absolutely. Our payment gateway is PCI-DSS compliant and uses
+                                256-bit SSL encryption. We never store your card details on our servers. All
+                                transactions are secured and processed by trusted payment partners.</div>
+                        </div>
+                    </div>
+                    <div class="faq-item" data-cat="payments" onclick="toggleFAQ(this)">
+                        <div class="faq-q"><span class="faq-q-text">My payment failed but money was deducted. What
+                                happens?</span><i class="fas fa-plus faq-q-icon"></i></div>
+                        <div class="faq-a">
+                            <div class="faq-a-inner">If your payment failed but the amount was deducted, it is typically
+                                a bank hold and will be automatically reversed within 5–7 business days. If it's not
+                                reversed, email us at <a
+                                    href="/cdn-cgi/l/email-protection#0f7c7a7f7f607d7b4f6c607c62666c686e636e7776216661"><span
+                                        class="__cf_email__"
+                                        data-cfemail="cdbeb8bdbda2bfb98daea2bea0a4aeaaaca1acb5b4e3a4a3">[email&#160;protected]</span></a>
+                                with your
+                                transaction reference and we'll resolve it immediately.</div>
+                        </div>
+                    </div>
+                    <div class="faq-item" data-cat="payments" onclick="toggleFAQ(this)">
+                        <div class="faq-q"><span class="faq-q-text">Do you offer EMI?</span><i
+                                class="fas fa-plus faq-q-icon"></i></div>
+                        <div class="faq-a">
+                            <div class="faq-a-inner">EMI is available on select credit cards for orders above ₹2,000.
+                                EMI options (3, 6, 12 months) will appear during checkout if your card is eligible.
+                                No-cost EMI is available on select cards — standard bank processing fees may apply.
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /faqList -->
+
+            </div>
+
+            <!-- ═══════════════════════════════════════════ -->
+            <!-- SECTION 5: CONTACT US                      -->
+            <!-- ═══════════════════════════════════════════ -->
+            <div class="help-content-section" id="sec-contact">
+                <div class="section-eyebrow">CONTACT US</div>
+                <h1 class="section-h1">GET IN TOUCH</h1>
+                <p class="section-intro">Our support crew is ready to help. Choose the best way to reach us below — we
+                    typically respond within a few hours during business hours.</p>
+
+                <!-- CONTACT METHODS -->
+                <div class="contact-grid">
+                    <a href="/cdn-cgi/l/email-protection#a9dadcd9d9c6dbdde9cac6dac4c0cacec8c5c8d1d087c0c7"
+                        class="contact-method">
+                        <div class="contact-method-icon"><i class="fas fa-envelope"></i></div>
+                        <div class="contact-method-name">EMAIL SUPPORT</div>
+                        <div class="contact-method-detail"><span class="__cf_email__"
+                                data-cfemail="7a090f0a0a15080e3a1915091713191d1b161b0203541314">[email&#160;protected]</span>
+                        </div>
+                        <div class="contact-method-sub">For orders, returns, product queries. Response within 24 hours
+                            on business days.</div>
+                    </a>
+                    <a href="https://wa.me/919876543210" target="_blank" class="contact-method">
+                        <div class="contact-method-icon"><i class="fab fa-whatsapp"
+                                style="color:#25D366;font-size:22px"></i></div>
+                        <div class="contact-method-name">WHATSAPP</div>
+                        <div class="contact-method-detail">+91 98765 43210</div>
+                        <div class="contact-method-sub">Quick support via WhatsApp. Mon–Sat, 10AM–7PM IST. Usually
+                            responds within 1 hour.</div>
+                    </a>
+                    <a href="https://instagram.com/cosmicgalaxy" target="_blank" class="contact-method">
+                        <div class="contact-method-icon"><i class="fab fa-instagram"
+                                style="color:#E1306C;font-size:22px"></i></div>
+                        <div class="contact-method-name">INSTAGRAM DM</div>
+                        <div class="contact-method-detail">@cosmicgalaxy</div>
+                        <div class="contact-method-sub">DM us for size advice, product questions, and to be featured in
+                            our lookbook.</div>
+                    </a>
+                    <div class="contact-method" style="cursor:default">
+                        <div class="contact-method-icon"><i class="fas fa-clock"></i></div>
+                        <div class="contact-method-name">SUPPORT HOURS</div>
+                        <div class="contact-method-detail" style="color:var(--green)">Mon – Sat, 10AM – 7PM IST</div>
+                        <div class="contact-method-sub">
+                            Sunday: Closed<br>
+                            Response time: &lt;24 hours on email<br>
+                            &lt;1 hour on WhatsApp during hours
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONTACT FORM -->
+                <div class="contact-form-wrap">
+                    <div class="contact-form-title">SEND US A MESSAGE</div>
+                    <div class="cf-grid">
+                        <div>
+                            <label class="cf-label">First Name</label>
+                            <input class="cf-input" id="cfFirst" type="text" placeholder="Arjun">
+                        </div>
+                        <div>
+                            <label class="cf-label">Last Name</label>
+                            <input class="cf-input" id="cfLast" type="text" placeholder="Sharma">
+                        </div>
+                    </div>
+                    <div class="cf-field">
+                        <label class="cf-label">Email Address</label>
+                        <input class="cf-input" id="cfEmail" type="email" placeholder="you@example.com">
+                    </div>
+                    <div class="cf-field">
+                        <label class="cf-label">Order ID <span
+                                style="font-size:9px;color:rgba(136,136,153,.6);text-transform:lowercase;letter-spacing:1px">(if
+                                applicable)</span></label>
+                        <input class="cf-input" id="cfOrder" type="text" placeholder="#CG1234567"
+                            style="text-transform:uppercase">
+                    </div>
+                    <div class="cf-field">
+                        <label class="cf-label">Subject</label>
+                        <select class="cf-select" id="cfSubject">
+                            <option value="">Select a topic...</option>
+                            <option>Order Tracking</option>
+                            <option>Return / Exchange Request</option>
+                            <option>Wrong / Damaged Item Received</option>
+                            <option>Size Query</option>
+                            <option>Payment Issue</option>
+                            <option>Wholesale / Bulk Order</option>
+                            <option>Press / Collaboration</option>
+                            <option>Product Feedback</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div class="cf-field">
+                        <label class="cf-label">Message</label>
+                        <textarea class="cf-input" id="cfMessage"
+                            placeholder="Tell us how we can help you..."></textarea>
+                    </div>
+                    <div id="cfSuccess"
+                        style="display:none;margin-bottom:16px;padding:14px 16px;background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.3);color:var(--green);font-size:13px;display:none;align-items:center;gap:10px">
+                        <i class="fas fa-check-circle"></i> Message sent! We'll get back to you within 24 hours.
+                    </div>
+                    <button class="btn-send" onclick="submitContactForm()">
+                        <i class="fas fa-paper-plane"></i> SEND MESSAGE
+                    </button>
+                </div>
+
+                <div class="content-block" style="margin-top:28px">
+                    <h2>VISIT US</h2>
+                    <p><strong>COSMIC GALAXY HQ</strong><br>SCO 142, Sector 17-C<br>Chandigarh — 160017<br>Punjab, India
+                    </p>
+                    <p>Walk-ins are welcome <strong>Monday – Saturday, 11AM – 6PM</strong>. Please call ahead for order
+                        pickups.</p>
+                    <p><strong>Phone:</strong> <a href="tel:+919876543210" style="color:var(--earth-blue)">+91 98765
+                            43210</a></p>
+                </div>
+            </div>
+
+        </div><!-- /help-main -->
+    </div><!-- /page-wrap -->
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div>
+                <div class="footer-logo"><span class="logo-dot"></span> COSMIC GALAXY</div>
+                <p class="footer-desc">Space-inspired clothing for those who dream beyond the horizon. Wear the cosmos.
+                    Own the galaxy.</p>
+                <div class="social-links">
+                    <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+                    <a href="https://pinterest.com" target="_blank"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4 class="footer-heading">SHOP</h4>
+                <ul class="footer-links">
+                    <li><a href="shop.html">New Arrivals</a></li>
+                    <li><a href="shop.html?cat=tshirt">T-Shirts</a></li>
+                    <li><a href="shop.html?cat=hoodie">Hoodies</a></li>
+                    <li><a href="shop.html?cat=jacket">Jackets</a></li>
+                    <li><a href="shop.html?cat=accessories">Accessories</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-heading">HELP</h4>
+                <ul class="footer-links">
+                    <li><a href="help.html?s=size">Size Guide</a></li>
+                    <li><a href="help.html?s=shipping">Shipping Info</a></li>
+                    <li><a href="help.html?s=returns">Returns</a></li>
+                    <li><a href="help.html?s=faq">FAQ</a></li>
+                    <li><a href="help.html?s=contact">Contact Us</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-heading">MISSION CONTROL</h4>
+                <p style="color:var(--text-secondary);font-size:13px;line-height:1.9">
+                    Mon – Sat, 10AM – 7PM IST<br>
+                    <a href="/cdn-cgi/l/email-protection" class="__cf_email__"
+                        data-cfemail="25565055554a575165464a56484c46424449445d5c0b4c4b">[email&#160;protected]</a><br>
+                    +91 98765 43210
+                </p>
+                <div style="display:flex;align-items:center;gap:8px;margin-top:14px">
+                    <i class="fas fa-map-marker-alt" style="color:var(--earth-blue);font-size:12px"></i>
+                    <span style="color:var(--text-secondary);font-size:13px">Chandigarh, India</span>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">&copy; 2025 <span>COSMIC GALAXY</span>. All rights reserved. Designed for explorers.
+        </div>
+    </footer>
+
+    <div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toastMsg">Done!</span></div>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script>
+        // ── CART (localStorage) ───────────────────────────────────
+        const CG_KEY = 'cg_cart';
+        const CG_DB = { 1: { id: 1, name: 'LAUNCH SEQUENCE TEE', category: 'T-Shirts', price: '₹1,299', priceNum: 1299 }, 2: { id: 2, name: 'NEBULA DRIFT HOODIE', category: 'Hoodies', price: '₹2,799', priceNum: 2799 }, 3: { id: 3, name: 'MARS ORBIT JACKET', category: 'Jackets', price: '₹4,499', priceNum: 4499 }, 4: { id: 4, name: 'STARDUST CARGO PANTS', category: 'Cargo Pants', price: '₹3,199', priceNum: 3199 } };
+        function cartLoad() { try { return JSON.parse(localStorage.getItem(CG_KEY)) || []; } catch (e) { return []; } }
+        function cartSave(c) { try { localStorage.setItem(CG_KEY, JSON.stringify(c)); } catch (e) { } }
+        let toastTimer;
+
+        function updateCartBadge() {
+            const cart = cartLoad(), total = cart.reduce((s, i) => s + i.qty, 0);
+            const el = document.getElementById('cartCount');
+            if (el) el.textContent = total;
+            const ic = document.getElementById('cartItemCount');
+            if (ic) ic.textContent = '(' + total + ')';
+        }
+
+        function openCart() {
+            const cart = cartLoad(), total = cart.reduce((s, i) => s + i.qty, 0);
+            const body = document.getElementById('cartBody');
+            const footer = document.getElementById('cartFooter');
+            if (!body) return;
+            if (cart.length === 0) {
+                body.innerHTML = '<div style="text-align:center;padding:60px 20px"><i class="fas fa-shopping-bag" style="font-size:44px;color:rgba(74,144,226,.15);display:block;margin-bottom:18px"></i><p style="font-family:\'Orbitron\',sans-serif;font-size:12px;letter-spacing:2px;color:var(--text-secondary);margin-bottom:8px">CART IS EMPTY</p><p style="color:var(--text-secondary);font-size:13px;margin-bottom:24px;line-height:1.6">Add some cosmic gear.</p><button onclick="closeCart();window.location=\'shop.html\'" style="padding:11px 28px;background:var(--earth-blue);border:none;color:white;font-family:\'Orbitron\',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;cursor:pointer">BROWSE SHOP</button></div>';
+                if (footer) footer.style.display = 'none';
+            } else {
+                let html = '', subtotal = 0;
+                cart.forEach(item => { const p = CG_DB[item.id]; if (!p) return; subtotal += p.priceNum * item.qty; html += '<div style="display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)"><div style="width:60px;height:60px;background:#0c0e18;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fas fa-tshirt" style="color:rgba(74,144,226,.3);font-size:20px"></i></div><div style="flex:1;min-width:0"><div style="font-size:9px;color:var(--earth-blue);text-transform:uppercase;letter-spacing:1.5px">' + p.category + '</div><div style="font-family:\'Orbitron\',sans-serif;font-size:11px;font-weight:700;margin:4px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + p.name + '</div><div style="font-family:\'Orbitron\',sans-serif;font-size:13px;color:var(--earth-blue);font-weight:700">' + p.price + ' × ' + item.qty + '</div></div></div>'; });
+                body.innerHTML = html;
+                if (footer) { footer.style.display = 'block'; const fmt = n => '₹' + n.toLocaleString('en-IN'); const sh = subtotal >= 999 ? 0 : 99; document.getElementById('cartSubtotal').textContent = fmt(subtotal); document.getElementById('cartShipping').textContent = sh === 0 ? 'FREE' : fmt(sh); document.getElementById('cartShipping').style.color = sh === 0 ? 'var(--green)' : 'white'; document.getElementById('cartTotal').textContent = fmt(subtotal + sh); }
+            }
+            document.getElementById('cartDrawer').classList.add('open');
+            document.getElementById('cartOverlay').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeCart() { document.getElementById('cartDrawer').classList.remove('open'); document.getElementById('cartOverlay').classList.remove('open'); document.body.style.overflow = ''; }
+
+        // ── SECTION SWITCHING ─────────────────────────────────────
+        const sectionMap = { size: 'sec-size', shipping: 'sec-shipping', returns: 'sec-returns', faq: 'sec-faq', contact: 'sec-contact' };
+        function showSection(key, navEl) {
+            document.querySelectorAll('.help-content-section').forEach(s => s.classList.remove('active'));
+            document.getElementById(sectionMap[key]).classList.add('active');
+            if (navEl) {
+                document.querySelectorAll('.help-nav-item').forEach(n => n.classList.remove('active'));
+                navEl.classList.add('active');
+            } else {
+                // update sidebar without navEl reference
+                const idx = Object.keys(sectionMap).indexOf(key);
+                const items = document.querySelectorAll('.help-nav-item');
+                items.forEach(n => n.classList.remove('active'));
+                if (items[idx]) items[idx].classList.add('active');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            return false;
+        }
+
+        // ── SIZE TABS ─────────────────────────────────────────────
+        function showSizeTab(tab, btn) {
+            document.querySelectorAll('.size-table-wrap').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.size-tab').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + tab).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        // ── FAQ ───────────────────────────────────────────────────
+        function toggleFAQ(el) {
+            const isOpen = el.classList.contains('open');
+            document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('open'));
+            if (!isOpen) el.classList.add('open');
+        }
+        function filterFAQ(cat, btn) {
+            document.querySelectorAll('.faq-cat').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelectorAll('.faq-item').forEach(item => {
+                const show = cat === 'all' || item.dataset.cat === cat;
+                item.style.display = show ? '' : 'none';
+                item.classList.remove('open');
+            });
+        }
+
+        // ── CONTACT FORM ──────────────────────────────────────────
+        async function submitContactForm() {
+            const first = (document.getElementById('cfFirst') || { value: '' }).value.trim();
+            const last = (document.getElementById('cfLast') || { value: '' }).value.trim();
+            const email = (document.getElementById('cfEmail') || { value: '' }).value.trim();
+            const orderId = (document.getElementById('cfOrder') || { value: '' }).value.trim();
+            const subject = (document.getElementById('cfSubject') || { value: '' }).value;
+            const message = (document.getElementById('cfMessage') || { value: '' }).value.trim();
+
+            // Validate
+            if (!email || !email.includes('@')) { showToast('Please enter a valid email!'); return; }
+            if (!subject) { showToast('Please select a subject!'); return; }
+            if (!message || message.length < 10) { showToast('Please write a message (at least 10 characters)!'); return; }
+
+            // Loading state
+            const btn = document.querySelector('.btn-send');
+            const origHtml = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> SENDING...';
+            btn.disabled = true;
+
+            // Save to Supabase
+            const result = await CG_Contact.sendMessage({
+                firstName: first || 'Anonymous',
+                lastName: last || '',
+                email: email,
+                orderId: orderId || null,
+                subject: subject,
+                message: message
+            });
+
+            btn.innerHTML = origHtml;
+            btn.disabled = false;
+
+            if (result.success) {
+                // Clear all fields
+                ['cfFirst', 'cfLast', 'cfEmail', 'cfOrder', 'cfMessage'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.value = '';
+                });
+                document.getElementById('cfSubject').value = '';
+
+                // Show success banner
+                const succ = document.getElementById('cfSuccess');
+                if (succ) {
+                    succ.style.display = 'flex';
+                    setTimeout(() => { succ.style.display = 'none'; }, 5000);
+                }
+                showToast("Message sent! We'll reply within 24 hours.");
+            } else {
+                showToast('Failed to send message. Please try again.', true);
+                console.error('Contact form error:', result.error);
+            }
+        }
+
+        document.getElementById('searchInput').addEventListener('keydown', e => { if (e.key === 'Enter') { const q = e.target.value.trim(); if (q) window.location = 'shop.html?q=' + encodeURIComponent(q); } if (e.key === 'Escape') closeSearch(); });
+        window.addEventListener('scroll', () => { document.getElementById('navbar').style.boxShadow = window.scrollY > 50 ? '0 4px 30px rgba(0,0,0,.6)' : ''; });
+
+        // ── URL PARAM: ?s=section ─────────────────────────────────
+        const urlP = new URLSearchParams(window.location.search);
+        const urlSec = urlP.get('s');
+        if (urlSec && sectionMap[urlSec]) showSection(urlSec, null);
+
+        // ── INIT ──────────────────────────────────────────────────
+        updateCartBadge();
+    </script>
+</body>
+
+</html>

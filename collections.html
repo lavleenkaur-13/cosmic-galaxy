@@ -1,0 +1,4077 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collections — COSMIC GALAXY</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --earth-blue: #4a90e2;
+            --mars-red: #e74c3c;
+            --bg-dark: #0a0a0f;
+            --bg-card: #1a1a24;
+            --text-primary: #fff;
+            --text-secondary: #888899;
+            --border: rgba(255, 255, 255, 0.1);
+            --grid-color: rgba(255, 255, 255, 0.03)
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            overflow-x: hidden
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(var(--grid-color) 1px, transparent 1px), linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0
+        }
+
+        .stars::before,
+        .stars::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            box-shadow: 100px 100px white, 200px 150px white, 300px 50px white, 400px 200px white, 500px 100px white, 600px 250px white, 700px 150px white, 800px 50px white, 900px 200px white, 1000px 100px white, 1100px 150px white, 1200px 250px white, 50px 300px white, 150px 400px white, 250px 500px white, 350px 350px white, 450px 450px white, 550px 300px white, 1300px 200px white, 1400px 100px white, 720px 80px white, 840px 320px white, 960px 440px white, 180px 560px white, 1050px 380px white;
+            animation: twinkle 5s infinite
+        }
+
+        .stars::after {
+            animation-delay: 2.5s
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: .3
+            }
+
+            50% {
+                opacity: 1
+            }
+        }
+
+        /* ── ANNOUNCEMENT ── */
+        .announcement-bar {
+            background: var(--earth-blue);
+            text-align: center;
+            padding: 8px 20px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1001;
+            color: white
+        }
+
+        .announcement-bar a {
+            color: white;
+            text-decoration: underline;
+            margin-left: 10px
+        }
+
+        /* ── SEARCH OVERLAY ── */
+        .search-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .92);
+            backdrop-filter: blur(16px);
+            z-index: 2000;
+            display: none;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 120px
+        }
+
+        .search-overlay.open {
+            display: flex
+        }
+
+        .search-box {
+            width: 100%;
+            max-width: 680px;
+            padding: 0 30px
+        }
+
+        .search-label {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            letter-spacing: 3px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            text-transform: uppercase
+        }
+
+        .search-input-wrap {
+            display: flex;
+            border-bottom: 2px solid var(--earth-blue)
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 14px 0;
+            background: transparent;
+            border: none;
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 22px;
+            font-weight: 600;
+            outline: none
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, .2)
+        }
+
+        .search-close-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 22px;
+            cursor: pointer;
+            padding: 0 8px;
+            transition: color .2s
+        }
+
+        .search-close-btn:hover {
+            color: white
+        }
+
+        .search-hints {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 20px
+        }
+
+        .search-hint {
+            padding: 6px 14px;
+            background: rgba(74, 144, 226, .1);
+            border: 1px solid rgba(74, 144, 226, .25);
+            color: var(--earth-blue);
+            font-size: 12px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all .2s
+        }
+
+        .search-hint:hover {
+            background: var(--earth-blue);
+            color: white
+        }
+
+        /* ── CART DRAWER ── */
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .6);
+            z-index: 1999;
+            display: none
+        }
+
+        .cart-overlay.open {
+            display: block
+        }
+
+        .cart-drawer {
+            position: fixed;
+            top: 0;
+            right: -440px;
+            width: 420px;
+            height: 100%;
+            background: var(--bg-card);
+            border-left: 1px solid var(--border);
+            z-index: 2000;
+            transition: right .35s cubic-bezier(.4, 0, .2, 1);
+            display: flex;
+            flex-direction: column
+        }
+
+        .cart-drawer.open {
+            right: 0
+        }
+
+        .cart-header {
+            padding: 22px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center
+        }
+
+        .cart-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 1px
+        }
+
+        .cart-close-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 18px;
+            cursor: pointer;
+            transition: color .2s
+        }
+
+        .cart-close-btn:hover {
+            color: white
+        }
+
+        .cart-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px
+        }
+
+        .cart-empty-state {
+            text-align: center;
+            padding: 60px 20px
+        }
+
+        .cart-empty-state i {
+            font-size: 40px;
+            color: rgba(74, 144, 226, .2);
+            margin-bottom: 14px;
+            display: block
+        }
+
+        .cart-empty-state p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 18px;
+            line-height: 1.6
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 14px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .cart-item-img {
+            width: 66px;
+            height: 66px;
+            background: #0c0e18;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: rgba(74, 144, 226, .2);
+            font-size: 18px
+        }
+
+        .cart-item-details {
+            flex: 1;
+            min-width: 0
+        }
+
+        .cart-item-cat {
+            font-size: 9px;
+            color: var(--earth-blue);
+            text-transform: uppercase;
+            letter-spacing: 1.5px
+        }
+
+        .cart-item-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            margin: 3px 0 5px;
+            line-height: 1.3;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+
+        .cart-item-price {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 13px;
+            color: var(--earth-blue);
+            font-weight: 700
+        }
+
+        .cart-item-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 8px
+        }
+
+        .qty-controls {
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--border)
+        }
+
+        .qty-btn {
+            width: 26px;
+            height: 26px;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            transition: all .2s
+        }
+
+        .qty-btn:hover {
+            background: rgba(74, 144, 226, .1);
+            color: var(--earth-blue)
+        }
+
+        .qty-num {
+            width: 30px;
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            border-left: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            height: 26px;
+            line-height: 26px
+        }
+
+        .cart-remove-btn {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, .2);
+            cursor: pointer;
+            font-size: 12px;
+            transition: color .2s;
+            padding: 2px
+        }
+
+        .cart-remove-btn:hover {
+            color: var(--mars-red)
+        }
+
+        .cart-footer {
+            padding: 18px 24px;
+            border-top: 1px solid var(--border)
+        }
+
+        .cart-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 7px;
+            font-size: 13px;
+            color: var(--text-secondary)
+        }
+
+        .cart-total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 15px;
+            font-weight: 700
+        }
+
+        .cart-total-row span:last-child {
+            color: var(--earth-blue)
+        }
+
+        .btn-checkout {
+            width: 100%;
+            padding: 13px;
+            background: var(--earth-blue);
+            border: none;
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: background .3s;
+            margin-bottom: 7px
+        }
+
+        .btn-checkout:hover {
+            background: #6bb6ff
+        }
+
+        .btn-keep-shopping {
+            width: 100%;
+            padding: 10px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all .3s
+        }
+
+        .btn-keep-shopping:hover {
+            border-color: var(--earth-blue);
+            color: var(--earth-blue)
+        }
+
+        /* ── MOBILE NAV ── */
+        .mobile-nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .6);
+            z-index: 1499;
+            display: none
+        }
+
+        .mobile-nav-overlay.open {
+            display: block
+        }
+
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 80%;
+            max-width: 320px;
+            height: 100%;
+            background: var(--bg-card);
+            border-right: 1px solid var(--border);
+            z-index: 1500;
+            transition: left .3s;
+            padding: 80px 30px 40px;
+            display: flex;
+            flex-direction: column
+        }
+
+        .mobile-nav.open {
+            left: 0
+        }
+
+        .mobile-nav-link {
+            display: block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+            transition: color .2s
+        }
+
+        .mobile-nav-link:hover,
+        .mobile-nav-link.active {
+            color: var(--earth-blue)
+        }
+
+        .mobile-nav-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+            flex-direction: column
+        }
+
+        /* ── NAVBAR ── */
+        .navbar {
+            position: fixed;
+            top: 36px;
+            width: 100%;
+            background: rgba(10, 10, 15, .97);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            transition: all .3s
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 19px;
+            font-weight: 900;
+            color: var(--earth-blue);
+            text-decoration: none;
+            letter-spacing: 1px
+        }
+
+        .logo-dot {
+            width: 7px;
+            height: 7px;
+            background: var(--earth-blue);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+            display: inline-block
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1)
+            }
+
+            50% {
+                opacity: .5;
+                transform: scale(1.5)
+            }
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 34px;
+            list-style: none
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: color .3s;
+            position: relative
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--earth-blue);
+            transition: width .3s
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary)
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%
+        }
+
+        .nav-link.active {
+            color: var(--text-primary)
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center
+        }
+
+        .btn-nav {
+            padding: 8px 20px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .3s;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 1px
+        }
+
+        .btn-nav:hover {
+            border-color: var(--earth-blue);
+            color: var(--earth-blue)
+        }
+
+        .btn-nav-primary {
+            padding: 8px 20px;
+            background: var(--earth-blue);
+            border: 1px solid var(--earth-blue);
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .3s;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 1px
+        }
+
+        .btn-nav-primary:hover {
+            background: #6bb6ff;
+            border-color: #6bb6ff
+        }
+
+        .nav-icon-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 16px;
+            cursor: pointer;
+            transition: color .3s;
+            padding: 6px 8px
+        }
+
+        .nav-icon-btn:hover {
+            color: var(--earth-blue)
+        }
+
+        .cart-wrap {
+            position: relative;
+            display: inline-block
+        }
+
+        .cart-wrap span {
+            position: absolute;
+            top: -7px;
+            right: -9px;
+            background: var(--mars-red);
+            color: white;
+            font-size: 9px;
+            font-weight: 700;
+            width: 17px;
+            height: 17px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif
+        }
+
+        .nav-mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 22px;
+            cursor: pointer;
+            padding: 4px
+        }
+
+        /* ── PAGE BANNER ── */
+        .page-banner {
+            padding: 140px 60px 60px;
+            position: relative;
+            z-index: 1;
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(to bottom, rgba(74, 144, 226, .04) 0%, transparent 100%)
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-secondary);
+            margin-bottom: 20px
+        }
+
+        .breadcrumb a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color .2s
+        }
+
+        .breadcrumb a:hover {
+            color: var(--earth-blue)
+        }
+
+        .breadcrumb i {
+            font-size: 9px
+        }
+
+        .breadcrumb .crumb-current {
+            color: var(--earth-blue)
+        }
+
+        .page-banner-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 20px
+        }
+
+        .page-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 46px;
+            font-weight: 900;
+            line-height: 1.1
+        }
+
+        .page-title span {
+            color: var(--earth-blue)
+        }
+
+        .page-subtitle {
+            color: var(--text-secondary);
+            font-size: 15px;
+            margin-top: 10px
+        }
+
+        .page-stats {
+            display: flex;
+            gap: 32px
+        }
+
+        .page-stat-num {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--earth-blue);
+            text-align: right
+        }
+
+        .page-stat-label {
+            color: var(--text-secondary);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            text-align: right
+        }
+
+        /* ── UNIVERSE TABS ── */
+        .universe-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            position: relative;
+            z-index: 1;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .universe-tab {
+            padding: 18px 40px;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all .3s;
+            position: relative;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -1px
+        }
+
+        .universe-tab:hover {
+            color: var(--text-primary)
+        }
+
+        .universe-tab.active {
+            color: var(--text-primary);
+            border-bottom-color: var(--earth-blue)
+        }
+
+        .universe-tab.mars-tab.active {
+            border-bottom-color: var(--mars-red)
+        }
+
+        .universe-tab .tab-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+            vertical-align: middle
+        }
+
+        /* ── COLLECTION HERO ── */
+        .collection-hero {
+            position: relative;
+            z-index: 1;
+            overflow: hidden
+        }
+
+        .coll-hero-inner {
+            display: none;
+            min-height: 480px;
+            align-items: center;
+            justify-content: space-between;
+            padding: 60px;
+            gap: 40px;
+            position: relative
+        }
+
+        .coll-hero-inner.active {
+            display: flex
+        }
+
+        .coll-hero-text {
+            max-width: 520px;
+            position: relative;
+            z-index: 2
+        }
+
+        .coll-series-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 14px;
+            border: 1px solid;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            margin-bottom: 22px
+        }
+
+        .coll-hero-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 52px;
+            font-weight: 900;
+            line-height: 1.05;
+            margin-bottom: 16px
+        }
+
+        .coll-hero-desc {
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 1.75;
+            margin-bottom: 32px;
+            max-width: 440px
+        }
+
+        .coll-hero-actions {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap
+        }
+
+        .btn-coll-primary {
+            padding: 13px 32px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all .3s;
+            text-decoration: none;
+            border: 1px solid
+        }
+
+        .btn-coll-secondary {
+            padding: 13px 32px;
+            background: transparent;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all .3s;
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, .2);
+            color: var(--text-primary)
+        }
+
+        .btn-coll-secondary:hover {
+            border-color: var(--earth-blue);
+            color: var(--earth-blue)
+        }
+
+        .coll-hero-stats {
+            display: flex;
+            gap: 36px;
+            margin-top: 40px;
+            padding-top: 28px;
+            border-top: 1px solid var(--border)
+        }
+
+        .coll-stat-num {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 22px;
+            font-weight: 700
+        }
+
+        .coll-stat-label {
+            color: var(--text-secondary);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-top: 2px
+        }
+
+        .coll-hero-visual {
+            flex-shrink: 0;
+            position: relative;
+            width: 360px;
+            height: 360px
+        }
+
+        .coll-planet {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            animation: floatPlanet 8s ease-in-out infinite;
+            position: relative;
+            overflow: hidden
+        }
+
+        .coll-planet .planet-surface {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: repeating-linear-gradient(20deg, transparent, transparent 18px, rgba(255, 255, 255, .025) 18px, rgba(255, 255, 255, .025) 20px)
+        }
+
+        .coll-planet .planet-highlight {
+            position: absolute;
+            top: 14%;
+            left: 18%;
+            width: 32%;
+            height: 22%;
+            background: radial-gradient(ellipse, rgba(255, 255, 255, .18), transparent);
+            border-radius: 50%
+        }
+
+        .coll-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            animation: orbitSpin 28s linear infinite
+        }
+
+        .coll-ring-2 {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            animation: orbitSpin 45s linear infinite reverse
+        }
+
+        .coll-orbit-dot {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            margin-top: -3.5px
+        }
+
+        @keyframes floatPlanet {
+
+            0%,
+            100% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-18px)
+            }
+        }
+
+        @keyframes orbitSpin {
+            from {
+                transform: translate(-50%, -50%) rotate(0deg)
+            }
+
+            to {
+                transform: translate(-50%, -50%) rotate(360deg)
+            }
+        }
+
+        /* earth hero bg */
+        .earth-hero-bg {
+            background: linear-gradient(135deg, rgba(30, 58, 138, .3) 0%, transparent 60%)
+        }
+
+        /* mars hero bg */
+        .mars-hero-bg {
+            background: linear-gradient(135deg, rgba(139, 0, 0, .3) 0%, transparent 60%)
+        }
+
+        /* ── SECTION SHARED ── */
+        .section-badge {
+            display: inline-block;
+            padding: 5px 16px;
+            background: rgba(74, 144, 226, .08);
+            border: 1px solid rgba(74, 144, 226, .3);
+            color: var(--earth-blue);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            letter-spacing: 3px
+        }
+
+        .section-badge.red {
+            background: rgba(231, 76, 60, .08);
+            border-color: rgba(231, 76, 60, .3);
+            color: var(--mars-red)
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px
+        }
+
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 15px
+        }
+
+        .section-header {
+            margin-bottom: 40px
+        }
+
+        /* ── COLLECTION PANELS ── */
+        .collection-panel {
+            display: none;
+            position: relative;
+            z-index: 1
+        }
+
+        .collection-panel.active {
+            display: block
+        }
+
+        /* ── FEATURED BANNER STRIP ── */
+        .banner-strip {
+            padding: 50px 60px 0;
+            position: relative;
+            z-index: 1
+        }
+
+        .banner-inner {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            padding: 0 50px;
+            gap: 40px
+        }
+
+        .banner-bg-earth {
+            background: linear-gradient(135deg, #0d1b3e 0%, #1e3a8a 50%, #0a0a0f 100%)
+        }
+
+        .banner-bg-mars {
+            background: linear-gradient(135deg, #3d0a0a 0%, #8b0000 50%, #0a0a0f 100%)
+        }
+
+        .banner-planet-sm {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            opacity: .7
+        }
+
+        .banner-planet-earth {
+            background: radial-gradient(circle at 35% 30%, #87CEEB, #4a90e2 35%, #1e3a8a 70%, #0d1b3e);
+            box-shadow: 0 0 40px rgba(74, 144, 226, .4)
+        }
+
+        .banner-planet-mars {
+            background: radial-gradient(circle at 35% 30%, #ff8080, #e74c3c 35%, #8b0000 70%, #3d0a0a);
+            box-shadow: 0 0 40px rgba(231, 76, 60, .4)
+        }
+
+        .banner-text h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 22px;
+            font-weight: 900;
+            margin-bottom: 6px
+        }
+
+        .banner-text p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+            max-width: 500px
+        }
+
+        .banner-cta {
+            margin-left: auto;
+            flex-shrink: 0
+        }
+
+        .tech-corner {
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            border: 1px solid rgba(74, 144, 226, .3);
+            pointer-events: none
+        }
+
+        .tc-tl {
+            top: 10px;
+            left: 10px;
+            border-right: none;
+            border-bottom: none
+        }
+
+        .tc-tr {
+            top: 10px;
+            right: 10px;
+            border-left: none;
+            border-bottom: none
+        }
+
+        .tc-bl {
+            bottom: 10px;
+            left: 10px;
+            border-right: none;
+            border-top: none
+        }
+
+        .tc-br {
+            bottom: 10px;
+            right: 10px;
+            border-left: none;
+            border-top: none
+        }
+
+        /* ── PRODUCTS GRID ── */
+        .products-section {
+            padding: 50px 60px 80px
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px
+        }
+
+        .product-card:hover .product-overlay {
+            opacity: 1
+        }
+
+        .product-img-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border: 1px dashed rgba(74, 144, 226, .15);
+            position: absolute;
+            top: 0;
+            left: 0
+        }
+
+        .product-img-placeholder i {
+            font-size: 26px;
+            color: rgba(74, 144, 226, .22)
+        }
+
+        .product-img-placeholder span {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 9px;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, .1);
+            text-transform: uppercase
+        }
+
+        .product-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(to top, rgba(0, 0, 0, .88) 0%, transparent 100%);
+            display: flex;
+            justify-content: center;
+            opacity: 0;
+            transition: .3s;
+            z-index: 3
+        }
+
+        .btn-quick-add {
+            padding: 9px 0;
+            background: var(--earth-blue);
+            border: none;
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            width: 100%;
+            transition: background .2s
+        }
+
+        .btn-quick-add:hover {
+            background: #6bb6ff
+        }
+
+        .btn-quick-add.red {
+            background: var(--mars-red)
+        }
+
+        .btn-quick-add.red:hover {
+            background: #ff6b5b
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 4;
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 9px;
+            padding: 3px 10px;
+            letter-spacing: 1.5px
+        }
+
+        .badge-new {
+            background: var(--earth-blue)
+        }
+
+        .badge-hot {
+            background: var(--mars-red)
+        }
+
+        .badge-sale {
+            background: #e67e22
+        }
+
+        .product-wishlist {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 4;
+            width: 30px;
+            height: 30px;
+            background: rgba(10, 10, 15, .7);
+            border: 1px solid rgba(255, 255, 255, .12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all .2s;
+            font-size: 12px;
+            color: var(--text-secondary);
+            outline: none
+        }
+
+        .product-wishlist:hover,
+        .product-wishlist.wishlisted {
+            color: var(--mars-red);
+            border-color: var(--mars-red)
+        }
+
+        .product-category {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 4px
+        }
+
+        .cat-blue {
+            color: var(--earth-blue)
+        }
+
+        .cat-red {
+            color: var(--mars-red)
+        }
+
+        .product-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            line-height: 1.4
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 10px
+        }
+
+        .stars-display {
+            color: #f0a500;
+            font-size: 11px;
+            letter-spacing: 1px
+        }
+
+        .rating-count {
+            color: var(--text-secondary);
+            font-size: 11px
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center
+        }
+
+        .price-wrap {
+            display: flex;
+            align-items: baseline;
+            gap: 6px
+        }
+
+        .product-price {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            color: var(--earth-blue);
+            font-weight: 700
+        }
+
+        .product-price.red {
+            color: var(--mars-red)
+        }
+
+        .product-price-old {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-decoration: line-through
+        }
+
+        .btn-add-cart {
+            width: 32px;
+            height: 32px;
+            background: rgba(74, 144, 226, .08);
+            border: 1px solid rgba(74, 144, 226, .3);
+            color: var(--earth-blue);
+            cursor: pointer;
+            transition: all .25s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px
+        }
+
+        .btn-add-cart:hover {
+            background: var(--earth-blue);
+            color: white;
+            border-color: var(--earth-blue)
+        }
+
+        .btn-add-cart.red {
+            background: rgba(231, 76, 60, .08);
+            border-color: rgba(231, 76, 60, .3);
+            color: var(--mars-red)
+        }
+
+        .btn-add-cart.red:hover {
+            background: var(--mars-red);
+            color: white;
+            border-color: var(--mars-red)
+        }
+
+        /* ── LOOKBOOK GRID ── */
+        .lookbook-section {
+            padding: 0 60px 80px;
+            position: relative;
+            z-index: 1
+        }
+
+        .lookbook-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            grid-template-rows: 240px 240px;
+            gap: 16px
+        }
+
+        .lookbook-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: border-color .3s
+        }
+
+        .lookbook-item:hover {
+            border-color: rgba(74, 144, 226, .4)
+        }
+
+        .lookbook-item:hover .lookbook-overlay {
+            opacity: 1
+        }
+
+        .lookbook-item.tall {
+            grid-row: span 2
+        }
+
+        .lookbook-bg {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative
+        }
+
+        .lookbook-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            height: 100%;
+            border: 1px dashed rgba(74, 144, 226, .12)
+        }
+
+        .lookbook-placeholder i {
+            font-size: 32px;
+            color: rgba(74, 144, 226, .2)
+        }
+
+        .lookbook-placeholder span {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 9px;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, .1);
+            text-transform: uppercase
+        }
+
+        .lookbook-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, .7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: .3s;
+            gap: 8px
+        }
+
+        .lookbook-overlay span {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: white;
+            text-transform: uppercase
+        }
+
+        .lookbook-overlay i {
+            font-size: 24px;
+            color: var(--earth-blue)
+        }
+
+        /* Mars lookbook accent */
+        .lookbook-item.mars-accent:hover {
+            border-color: rgba(231, 76, 60, .4)
+        }
+
+        .lookbook-item.mars-accent .lookbook-overlay i {
+            color: var(--mars-red)
+        }
+
+        /* ── COLOUR PALETTE ── */
+        .palette-section {
+            padding: 0 60px 80px;
+            position: relative;
+            z-index: 1
+        }
+
+        .palette-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 12px;
+            margin-top: 36px
+        }
+
+        .palette-swatch {
+            border: 1px solid var(--border);
+            padding: 20px 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all .3s;
+            position: relative
+        }
+
+        .palette-swatch:hover {
+            border-color: rgba(74, 144, 226, .4);
+            transform: translateY(-3px)
+        }
+
+        .palette-swatch.mars-palette:hover {
+            border-color: rgba(231, 76, 60, .4)
+        }
+
+        .palette-color {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            margin: 0 auto 12px;
+            border: 2px solid rgba(255, 255, 255, .1)
+        }
+
+        .palette-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            letter-spacing: .5px
+        }
+
+        .palette-desc {
+            color: var(--text-secondary);
+            font-size: 11px
+        }
+
+        .palette-check {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--earth-blue);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: white
+        }
+
+        .palette-swatch.selected .palette-check {
+            display: flex
+        }
+
+        .palette-swatch.selected {
+            border-color: var(--earth-blue)
+        }
+
+        .palette-swatch.mars-palette.selected {
+            border-color: var(--mars-red)
+        }
+
+        .palette-swatch.mars-palette.selected .palette-check {
+            background: var(--mars-red)
+        }
+
+        /* ── VIEW ALL CTA ── */
+        .cta-section {
+            padding: 0 60px 80px;
+            position: relative;
+            z-index: 1
+        }
+
+        .cta-inner {
+            border: 1px solid var(--border);
+            padding: 50px;
+            text-align: center;
+            position: relative;
+            overflow: hidden
+        }
+
+        .cta-bg-glow-earth {
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(74, 144, 226, .12) 0%, transparent 70%);
+            pointer-events: none
+        }
+
+        .cta-bg-glow-mars {
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(231, 76, 60, .12) 0%, transparent 70%);
+            pointer-events: none
+        }
+
+        .cta-badge {
+            display: inline-block;
+            padding: 5px 16px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            margin-bottom: 16px;
+            border: 1px solid
+        }
+
+        .cta-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px
+        }
+
+        .cta-subtitle {
+            color: var(--text-secondary);
+            font-size: 15px;
+            margin-bottom: 28px;
+            line-height: 1.6
+        }
+
+        .cta-actions {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap
+        }
+
+        /* ── FOOTER ── */
+        .footer {
+            background: var(--bg-card);
+            border-top: 1px solid var(--border);
+            padding: 50px 60px 24px;
+            position: relative;
+            z-index: 1
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 48px;
+            margin-bottom: 36px
+        }
+
+        .footer-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            font-weight: 900;
+            color: var(--earth-blue);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .footer-desc {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 13px;
+            max-width: 270px
+        }
+
+        .footer-heading {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            margin-bottom: 18px;
+            letter-spacing: 2px
+        }
+
+        .footer-links {
+            list-style: none
+        }
+
+        .footer-links li {
+            margin-bottom: 10px
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color .3s
+        }
+
+        .footer-links a:hover {
+            color: var(--earth-blue)
+        }
+
+        .social-links {
+            display: flex;
+            gap: 10px;
+            margin-top: 18px
+        }
+
+        .social-links a {
+            width: 38px;
+            height: 38px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(74, 144, 226, .06);
+            border: 1px solid rgba(74, 144, 226, .15);
+            color: var(--earth-blue);
+            transition: all .3s;
+            text-decoration: none;
+            font-size: 14px
+        }
+
+        .social-links a:hover {
+            background: var(--earth-blue);
+            color: white;
+            transform: translateY(-3px)
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 12px
+        }
+
+        .footer-bottom span {
+            color: var(--earth-blue)
+        }
+
+        /* ── TOAST + SCROLL ── */
+        .toast {
+            position: fixed;
+            bottom: 26px;
+            right: 26px;
+            z-index: 9999;
+            background: var(--bg-card);
+            border-left: 3px solid var(--earth-blue);
+            border-top: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            transform: translateX(200px);
+            opacity: 0;
+            transition: all .4s;
+            pointer-events: none;
+            min-width: 210px
+        }
+
+        .toast.show {
+            transform: translateX(0);
+            opacity: 1
+        }
+
+        .toast i {
+            color: var(--earth-blue);
+            font-size: 14px
+        }
+
+        .scroll-top {
+            position: fixed;
+            bottom: 26px;
+            left: 26px;
+            z-index: 999;
+            width: 40px;
+            height: 40px;
+            background: rgba(74, 144, 226, .12);
+            border: 1px solid rgba(74, 144, 226, .35);
+            color: var(--earth-blue);
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            transition: all .3s
+        }
+
+        .scroll-top.visible {
+            display: flex
+        }
+
+        .scroll-top:hover {
+            background: var(--earth-blue);
+            color: white
+        }
+
+        /* ── RESPONSIVE ── */
+        @media(max-width:1100px) {
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr)
+            }
+
+            .palette-grid {
+                grid-template-columns: repeat(3, 1fr)
+            }
+        }
+
+        @media(max-width:900px) {
+            .page-banner {
+                padding: 120px 30px 40px
+            }
+
+            .page-title {
+                font-size: 30px
+            }
+
+            .coll-hero-inner {
+                flex-direction: column;
+                text-align: center;
+                padding: 40px 30px
+            }
+
+            .coll-hero-title {
+                font-size: 36px
+            }
+
+            .coll-hero-actions {
+                justify-content: center
+            }
+
+            .coll-hero-stats {
+                justify-content: center
+            }
+
+            .coll-hero-visual {
+                width: 240px;
+                height: 240px;
+                margin-top: 20px
+            }
+
+            .coll-ring {
+                width: 300px !important;
+                height: 300px !important
+            }
+
+            .coll-ring-2 {
+                width: 340px !important;
+                height: 340px !important
+            }
+
+            .universe-tab {
+                padding: 14px 24px;
+                font-size: 11px
+            }
+
+            .banner-strip,
+            .products-section,
+            .lookbook-section,
+            .palette-section,
+            .cta-section {
+                padding-left: 30px;
+                padding-right: 30px
+            }
+
+            .banner-inner {
+                padding: 0 30px;
+                gap: 24px
+            }
+
+            .banner-planet-sm {
+                width: 110px;
+                height: 110px
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            .lookbook-grid {
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: auto
+            }
+
+            .lookbook-item.tall {
+                grid-row: span 1
+            }
+
+            .footer {
+                padding: 40px 30px 20px
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .navbar {
+                top: 32px
+            }
+
+            .nav-menu {
+                display: none
+            }
+
+            .nav-mobile-toggle {
+                display: block
+            }
+
+            .palette-grid {
+                grid-template-columns: repeat(3, 1fr)
+            }
+
+            .page-stats {
+                display: none
+            }
+        }
+
+        @media(max-width:600px) {
+            .products-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr
+            }
+
+            .cta-title {
+                font-size: 22px
+            }
+
+            .banner-cta {
+                display: none
+            }
+
+            .nav-container {
+                padding: 0 20px
+            }
+
+            .announcement-bar {
+                font-size: 10px;
+                letter-spacing: 1px
+            }
+
+            .palette-grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            .lookbook-grid {
+                grid-template-columns: 1fr
+            }
+        }
+
+        @media(max-width:400px) {
+            .products-grid {
+                grid-template-columns: 1fr
+            }
+        }
+
+        /* ── CHECKOUT MODAL ── */
+        @keyframes cgPop {
+            0% {
+                transform: scale(0)
+            }
+
+            70% {
+                transform: scale(1.15)
+            }
+
+            100% {
+                transform: scale(1)
+            }
+        }
+
+        .cg-modal-bg {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .88);
+            backdrop-filter: blur(10px);
+            z-index: 5000;
+            display: none;
+            align-items: flex-start;
+            justify-content: center;
+            overflow-y: auto;
+            padding: 24px 16px
+        }
+
+        .cg-modal-bg.open {
+            display: flex
+        }
+
+        .cg-modal {
+            background: var(--bg-card);
+            border: 1px solid rgba(74, 144, 226, .25);
+            width: 100%;
+            max-width: 880px;
+            margin: auto;
+            position: relative;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, .7)
+        }
+
+        .cg-modal-close {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .2s;
+            z-index: 10
+        }
+
+        .cg-modal-close:hover {
+            border-color: #e74c3c;
+            color: #e74c3c
+        }
+
+        .cg-modal-header {
+            padding: 22px 28px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: rgba(74, 144, 226, .03)
+        }
+
+        .cg-modal-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 17px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            flex: 1
+        }
+
+        .cg-secure-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            color: var(--text-secondary);
+            letter-spacing: 1px
+        }
+
+        .cg-secure-badge i {
+            color: #4ade80
+        }
+
+        .cg-modal-body {
+            display: grid;
+            grid-template-columns: 1fr 360px
+        }
+
+        .cg-left {
+            padding: 28px 32px;
+            border-right: 1px solid var(--border)
+        }
+
+        .cg-right {
+            padding: 24px;
+            background: rgba(255, 255, 255, .01)
+        }
+
+        .cg-step-head {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 2px solid var(--border);
+            margin-bottom: 24px;
+            transition: all .3s;
+            opacity: .45
+        }
+
+        .cg-step-num {
+            width: 30px;
+            height: 30px;
+            border: 1px solid var(--earth-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--earth-blue);
+            flex-shrink: 0;
+            transition: all .3s
+        }
+
+        .cg-step-lbl {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.5px
+        }
+
+        .cg-grid2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 14px
+        }
+
+        .cg-field {
+            margin-bottom: 14px
+        }
+
+        .cg-lbl {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 9px;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            display: block;
+            margin-bottom: 6px;
+            text-transform: uppercase
+        }
+
+        .cg-inp {
+            width: 100%;
+            padding: 11px 14px;
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid var(--border);
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            outline: none;
+            transition: border-color .3s
+        }
+
+        .cg-inp:focus {
+            border-color: var(--earth-blue);
+            background: rgba(74, 144, 226, .03)
+        }
+
+        .cg-inp::placeholder {
+            color: rgba(255, 255, 255, .2)
+        }
+
+        .cg-sel {
+            width: 100%;
+            padding: 11px 14px;
+            background: #0d0d18;
+            border: 1px solid var(--border);
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 14px;
+            outline: none;
+            cursor: pointer;
+            transition: border-color .3s
+        }
+
+        .cg-sel:focus {
+            border-color: var(--earth-blue)
+        }
+
+        .cg-sel option {
+            background: #1a1a24
+        }
+
+        .cg-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--earth-blue);
+            border: none;
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all .3s;
+            margin-top: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px
+        }
+
+        .cg-btn:hover {
+            background: #6bb6ff;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(74, 144, 226, .3)
+        }
+
+        .cg-btn-back {
+            width: 100%;
+            padding: 11px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all .3s;
+            margin-top: 8px;
+            text-transform: uppercase
+        }
+
+        .cg-btn-back:hover {
+            border-color: var(--earth-blue);
+            color: var(--earth-blue)
+        }
+
+        .cg-pay-opt {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 16px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all .25s;
+            margin-bottom: 10px
+        }
+
+        .cg-pay-opt:hover {
+            border-color: rgba(74, 144, 226, .5)
+        }
+
+        .cg-pay-opt input[type=radio] {
+            accent-color: var(--earth-blue);
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            cursor: pointer
+        }
+
+        .cg-pay-icon {
+            font-size: 20px;
+            color: var(--earth-blue);
+            width: 26px;
+            text-align: center;
+            flex-shrink: 0
+        }
+
+        .cg-pay-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 3px
+        }
+
+        .cg-pay-sub {
+            font-size: 12px;
+            color: var(--text-secondary)
+        }
+
+        .cg-card-fields {
+            padding: 16px;
+            background: rgba(74, 144, 226, .03);
+            border: 1px solid rgba(74, 144, 226, .2);
+            margin-bottom: 10px;
+            display: none
+        }
+
+        .cg-summary-lbl {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10px;
+            letter-spacing: 3px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .cg-trust {
+            margin-top: 22px;
+            padding-top: 18px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 10px
+        }
+
+        .cg-trust-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+            color: var(--text-secondary)
+        }
+
+        .cg-trust-row i {
+            color: #4ade80;
+            font-size: 13px;
+            width: 16px;
+            text-align: center
+        }
+
+        @media(max-width:720px) {
+            .cg-modal-body {
+                grid-template-columns: 1fr
+            }
+
+            .cg-right {
+                border-top: 1px solid var(--border)
+            }
+
+            .cg-grid2 {
+                grid-template-columns: 1fr
+            }
+        }
+
+        @media(max-width:480px) {
+            .cg-left {
+                padding: 20px
+            }
+
+            .cg-modal-header {
+                padding: 18px 20px
+            }
+        }
+
+        .product-card {
+            background: transparent;
+            border: 1px solid var(--border);
+            transition: all .3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden
+        }
+
+        .product-card:hover {
+            border-color: rgba(74, 144, 226, .45);
+            transform: translateY(-5px);
+            box-shadow: 0 14px 36px rgba(0, 0, 0, .5)
+        }
+
+        .product-card:hover .product-img-tag {
+            transform: scale(1.06)
+        }
+
+        .product-img {
+            width: 100%;
+            height: 280px;
+            position: relative;
+            overflow: hidden;
+            background: transparent
+        }
+
+        .product-img-tag {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
+            transition: transform .5s ease
+        }
+
+        .product-info {
+            padding: 14px 16px 16px;
+            background: rgba(10, 10, 15, 0.75);
+            backdrop-filter: blur(4px)
+        }
+    </style>
+</head>
+
+<body>
+    <div class="grid-overlay"></div>
+    <div class="stars"></div>
+
+    <!-- SEARCH OVERLAY -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-box">
+            <div class="search-label">Search Products</div>
+            <div class="search-input-wrap">
+                <input class="search-input" id="searchInput" type="text"
+                    placeholder="e.g. nebula hoodie, mars jacket...">
+                <button class="search-close-btn" onclick="closeSearch()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="search-hints">
+                <button class="search-hint" onclick="goShop('tshirt')">T-Shirts</button>
+                <button class="search-hint" onclick="goShop('hoodie')">Hoodies</button>
+                <button class="search-hint" onclick="goShop('jacket')">Jackets</button>
+                <button class="search-hint" onclick="goShop('cargo')">Cargo Pants</button>
+                <button class="search-hint" onclick="goShop('accessories')">Accessories</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CART OVERLAY + DRAWER -->
+    <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+    <div class="cart-drawer" id="cartDrawer">
+        <div class="cart-header">
+            <div class="cart-title">YOUR CART <span id="cartItemCount"
+                    style="color:var(--earth-blue);font-size:12px">(0)</span></div>
+            <button class="cart-close-btn" onclick="closeCart()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-body" id="cartBody">
+            <div class="cart-empty-state" id="cartEmptyState">
+                <i class="fas fa-shopping-bag"></i>
+                <p>Your cart is empty.<br>Explore the cosmos and add something!</p>
+                <button class="btn-checkout" style="width:auto;padding:10px 24px"
+                    onclick="closeCart();window.location='shop.html'">Browse Shop</button>
+            </div>
+        </div>
+        <div class="cart-footer" id="cartFooter" style="display:none">
+            <div class="cart-row"><span>Subtotal</span><span id="cartSubtotal">&#8377;0</span></div>
+            <div class="cart-row"><span>Shipping</span><span id="cartShipping" style="color:#4ade80">FREE</span></div>
+            <div class="cart-total-row"><span>Total</span><span id="cartTotal">&#8377;0</span></div>
+            <button class="btn-checkout" onclick="openCheckout()">Proceed to Checkout</button>
+            <button class="btn-keep-shopping" onclick="closeCart()">Continue Shopping</button>
+        </div>
+    </div>
+
+    <!-- MOBILE NAV -->
+    <div class="mobile-nav-overlay" id="mobileNavOverlay" onclick="closeMobileNav()"></div>
+    <div class="mobile-nav" id="mobileNav">
+        <a href="index.html" class="mobile-nav-link">Home</a>
+        <a href="shop.html" class="mobile-nav-link">Shop</a>
+        <a href="collections.html" class="mobile-nav-link active">Collections</a>
+        <a href="#" class="mobile-nav-link" onclick="closeMobileNav();showToast('Lookbook coming soon!')">Lookbook</a>
+        <a href="#" class="mobile-nav-link" onclick="closeMobileNav();showToast('About coming soon!')">About</a>
+        <div class="mobile-nav-actions">
+            <a href="login.html" class="btn-nav" style="width:100%" onclick="closeMobileNav()">Login</a>
+            <a href="signup.html" class="btn-nav-primary" style="width:100%" onclick="closeMobileNav()">Sign Up</a>
+        </div>
+    </div>
+
+    <!-- ANNOUNCEMENT -->
+    <div class="announcement-bar">
+        FREE SHIPPING ON ORDERS ABOVE &#8377;999 &nbsp;&bull;&nbsp; USE CODE <strong>COSMIC10</strong> FOR 10% OFF
+        <a href="shop.html">Shop Now</a>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo"><span class="logo-dot"></span> COSMIC GALAXY</a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="shop.html" class="nav-link">Shop</a></li>
+                <li><a href="collections.html" class="nav-link active">Collections</a></li>
+                <li><a href="lookbook.html" class="nav-link">Lookbook</a>
+                </li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="nav-icon-btn" onclick="openSearch()" title="Search"><i
+                        class="fas fa-search"></i></button>
+                <button class="nav-icon-btn cart-wrap" onclick="openCart()" title="Cart">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span id="cartCount">0</span>
+                </button>
+                <a href="login.html" class="btn-nav">Login</a>
+                <a href="signup.html" class="btn-nav-primary">Sign Up</a>
+                <button class="nav-mobile-toggle" onclick="openMobileNav()"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- PAGE BANNER -->
+    <div class="page-banner">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <span class="crumb-current">Collections</span>
+        </div>
+        <div class="page-banner-inner">
+            <div>
+                <h1 class="page-title">OUR <span>COLLECTIONS</span></h1>
+                <p class="page-subtitle">Two universes. Infinite style. Choose your world.</p>
+            </div>
+            <div class="page-stats">
+                <div>
+                    <div class="page-stat-num">2</div>
+                    <div class="page-stat-label">Universes</div>
+                </div>
+                <div>
+                    <div class="page-stat-num">48</div>
+                    <div class="page-stat-label">Products</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- UNIVERSE TABS -->
+    <div class="universe-tabs">
+        <button class="universe-tab active" id="earthTab" onclick="switchUniverse('earth')">
+            <span class="tab-dot" style="background:var(--earth-blue)"></span>
+            Earth Series
+        </button>
+        <button class="universe-tab mars-tab" id="marsTab" onclick="switchUniverse('mars')">
+            <span class="tab-dot" style="background:var(--mars-red)"></span>
+            Mars Series
+        </button>
+    </div>
+
+    <!-- ══════════════ EARTH COLLECTION ══════════════ -->
+    <div class="collection-panel active" id="earthPanel">
+
+        <!-- HERO -->
+        <div class="collection-hero earth-hero-bg">
+            <div class="coll-hero-inner active">
+                <div class="coll-hero-text">
+                    <div class="coll-series-badge"
+                        style="color:var(--earth-blue);border-color:rgba(74,144,226,.4);background:rgba(74,144,226,.08)">
+                        <span class="tab-dot"
+                            style="background:var(--earth-blue);width:6px;height:6px;border-radius:50%;display:inline-block"></span>
+                        Earth Series — 2025
+                    </div>
+                    <h2 class="coll-hero-title">BLUE PLANET<br><span style="color:var(--earth-blue)">COLLECTION</span>
+                    </h2>
+                    <p class="coll-hero-desc">Inspired by Earth from above — deep ocean blues, cloud-layer whites, and
+                        the silence of the atmosphere. Wear the planet you call home.</p>
+                    <div class="coll-hero-actions">
+                        <a href="shop.html?cat=tshirt" class="btn-coll-primary"
+                            style="background:var(--earth-blue);border-color:var(--earth-blue);color:white">
+                            <i class="fas fa-rocket"></i> Shop Earth Series
+                        </a>
+                        <button class="btn-coll-secondary" onclick="scrollToProducts('earthProducts')">
+                            <i class="fas fa-th"></i> View All Pieces
+                        </button>
+                    </div>
+                    <div class="coll-hero-stats">
+                        <div>
+                            <div class="coll-stat-num" style="color:var(--earth-blue)">18</div>
+                            <div class="coll-stat-label">T-Shirts</div>
+                        </div>
+                        <div>
+                            <div class="coll-stat-num" style="color:var(--earth-blue)">10</div>
+                            <div class="coll-stat-label">Hoodies</div>
+                        </div>
+                        <div>
+                            <div class="coll-stat-num" style="color:var(--earth-blue)">6</div>
+                            <div class="coll-stat-label">Accessories</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="coll-hero-visual">
+                    <div class="coll-ring-2" style="width:440px;height:440px;border:1px solid rgba(74,144,226,.07)">
+                        <div class="coll-orbit-dot"
+                            style="background:var(--earth-blue);box-shadow:0 0 10px var(--earth-blue)"></div>
+                    </div>
+                    <div class="coll-ring" style="width:400px;height:400px;border:1px dashed rgba(255,255,255,.1)">
+                    </div>
+                    <div class="coll-planet"
+                        style="background:radial-gradient(circle at 35% 30%,#87CEEB,#4a90e2 35%,#1e3a8a 70%,#0d1b3e);box-shadow:inset -20px -20px 40px rgba(0,0,0,.6),0 0 60px rgba(74,144,226,.4)">
+                        <div class="planet-surface"></div>
+                        <div class="planet-highlight"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FEATURED BANNER -->
+        <div class="banner-strip">
+            <div class="banner-inner banner-bg-earth">
+                <div class="tech-corner tc-tl"></div>
+                <div class="tech-corner tc-tr"></div>
+                <div class="tech-corner tc-bl"></div>
+                <div class="tech-corner tc-br"></div>
+                <div class="banner-planet-sm banner-planet-earth"></div>
+                <div class="banner-text">
+                    <h3>NEW DROP — NEBULA SERIES</h3>
+                    <p>Our latest Earth-inspired drop features deep-dye nebula prints on heavyweight 280gsm cotton.
+                        Limited run. Once it's gone, it's gone.</p>
+                </div>
+                <div class="banner-cta">
+                    <a href="shop.html?cat=hoodie" class="btn-coll-primary"
+                        style="background:var(--earth-blue);border-color:var(--earth-blue);color:white;white-space:nowrap">
+                        Shop Drop <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- PRODUCTS -->
+        <div class="products-section" id="earthProducts">
+            <div class="section-header">
+                <div class="section-badge">EARTH SERIES</div>
+                <h2 class="section-title">SIGNATURE PIECES</h2>
+                <p class="section-subtitle">Ocean blues, sky greys and glacier whites — the palette of our home planet.
+                </p>
+            </div>
+            <div class="products-grid">
+
+                <div class="product-card">
+                    <div class="tech-corner tc-tl"></div>
+                    <div class="tech-corner tc-tr"></div>
+                    <div class="product-img">
+                        <img class="product-img-tag" src="images/1.png" alt="" loading="lazy">
+                        <span class="product-badge badge-new">NEW</span>
+                        <button class="product-wishlist" onclick="toggleWishlist(event,1)"><i
+                                class="far fa-heart"></i></button>
+                        <div class="product-overlay"><button class="btn-quick-add" onclick="addToCart(1,event)">Add to
+                                Cart</button></div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category cat-blue">T-Shirts</div>
+                        <div class="product-name">LAUNCH SEQUENCE TEE</div>
+                        <div class="product-rating"><span
+                                class="stars-display">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span
+                                class="rating-count">(48)</span></div>
+                        <div class="product-footer">
+                            <div class="price-wrap"><span class="product-price">&#8377;1,299</span><span
+                                    class="product-price-old">&#8377;1,799</span></div>
+                            <button class="btn-add-cart" onclick="addToCart(1,event)"><i
+                                    class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="tech-corner tc-tl"></div>
+                    <div class="tech-corner tc-tr"></div>
+                    <div class="product-img">
+                        <img class="product-img-tag" src="images/19.png" alt="" loading="lazy">
+                        <span class="product-badge badge-hot">HOT</span>
+                        <button class="product-wishlist" onclick="toggleWishlist(event,2)"><i
+                                class="far fa-heart"></i></button>
+                        <div class="product-overlay"><button class="btn-quick-add" onclick="addToCart(2,event)">Add to
+                                Cart</button></div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category cat-blue">Hoodies</div>
+                        <div class="product-name">NEBULA DRIFT HOODIE</div>
+                        <div class="product-rating"><span
+                                class="stars-display">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span
+                                class="rating-count">(91)</span></div>
+                        <div class="product-footer">
+                            <div class="price-wrap"><span class="product-price">&#8377;2,799</span></div>
+                            <button class="btn-add-cart" onclick="addToCart(2,event)"><i
+                                    class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="tech-corner tc-tl"></div>
+                    <div class="tech-corner tc-tr"></div>
+                    <div class="product-img">
+                        <img class="product-img-tag" src="images/4.png" alt="" loading="lazy">
+                        <span class="product-badge badge-new">NEW</span>
+                        <button class="product-wishlist" onclick="toggleWishlist(event,10)"><i
+                                class="far fa-heart"></i></button>
+                        <div class="product-overlay"><button class="btn-quick-add" onclick="addToCart(10,event)">Add to
+                                Cart</button></div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category cat-blue">T-Shirts</div>
+                        <div class="product-name">ORBIT STATION TEE</div>
+                        <div class="product-rating"><span
+                                class="stars-display">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span
+                                class="rating-count">(11)</span></div>
+                        <div class="product-footer">
+                            <div class="price-wrap"><span class="product-price">&#8377;1,099</span></div>
+                            <button class="btn-add-cart" onclick="addToCart(10,event)"><i
+                                    class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="tech-corner tc-tl"></div>
+                    <div class="tech-corner tc-tr"></div>
+                    <div class="product-img">
+                        <img class="product-img-tag" src="images/46.png" alt="" loading="lazy">
+                        <button class="product-wishlist" onclick="toggleWishlist(event,8)"><i
+                                class="far fa-heart"></i></button>
+                        <div class="product-overlay"><button class="btn-quick-add" onclick="addToCart(8,event)">Add to
+                                Cart</button></div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category cat-blue">Accessories</div>
+                        <div class="product-name">COSMOS CAP</div>
+                        <div class="product-rating"><span
+                                class="stars-display">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span
+                                class="rating-count">(33)</span></div>
+                        <div class="product-footer">
+                            <div class="price-wrap"><span class="product-price">&#8377;699</span></div>
+                            <button class="btn-add-cart" onclick="addToCart(8,event)"><i
+                                    class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="tech-corner tc-tl"></div>
+                    <div class="tech-corner tc-tr"></div>
+                    <div class="product-img">
+                        <img class="product-img-tag" src="images/23.png" alt="" loading="lazy">
+                        <span class="product-badge badge-hot">HOT</span>
+                        <button class="product-wishlist" onclick="toggleWishlist(event,23)"><i
+                                class="far fa-heart"></i></button>
+                        <div class="product-overlay"><button class="btn-quick-add" onclick="addToCart(23,event)">Add to
+                                Cart</button></div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category cat-blue">Hoodies</div>
+                        <div class="product-name">BLACK HOLE CROP HOODIE</div>
+                        <div class="product-rating"><span
+                                class="stars-display">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span
+                                class="rating-count">(54)</span></div>
+                        <div class="product-footer">
+                            <div class="price-wrap"><span class="product-price">&#8377;2,199</span></div>
+                            <button class="btn-add-cart" onclick="addToCart(23,event)"><i
+                                    class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="tech-corner tc-tl"></div>
+                    <div class="tech-corner tc-tr"></div>
+                    <div class="product-img">
+                        <img class="product-img-tag" src="images/47.png" alt="" loading="lazy">
+                        <span class="product-badge badge-sale">SALE</span>
+                        <button class="product-wishlist" onclick="toggleWishlist(event,11)"><i
+                                class="far fa-heart"></i></button>
+                        <div class="product-overlay"><button class="btn-quick-add" onclick="addToCart(11,event)">Add to
+                                Cart</button></div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category cat-blue">Accessories</div>
+                        <div class="product-name">GALAXY TOTE BAG</div>
+                        <div class="product-rating"><span
+                                class="stars-display">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span
+                                class="rating-count">(44)</span></div>
+                        <div class="product-footer">
+                            <div class="price-wrap"><span class="product-price">&#8377;599</span></div>
+                            <button class="btn-add-cart" onclick="addToCart(11,event)"><i
+                                    class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="tech-corner tc-tl"></div>
+                    <div class="tech-corner tc-tr"></div>
+                    <div class="product-img">
+                        <img class="product-img-tag" src="images/3.png" alt="" loading="lazy">
+                        <span class="product-badge badge-sale">SALE</span>
+                        <button class="product-wishlist" onclick="toggleWishlist(event,7)"><i
+                                class="far fa-heart"></i></button>
+                        <div class="product-overlay"><button class="btn-quick-add" onclick="addToCart(7,event)">Add to
+                                Cart</button></div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category cat-blue">T-Shirts</div>
+                        <div class="product-name">EVENT HORIZON TEE</div>
+                        <div class="product-rating"><span
+                                class="stars-display">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span
+                                class="rating-count">(77)</span></div>
+                        <div class="product-footer">
+                            <div class="price-wrap"><span class="product-price">&#8377;1,199</span><span
+                                    class="product-price-old">&#8377;1,499</span></div>
+                            <button class="btn-add-cart" onclick="addToCart(7,event)"><i
+                                    class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="tech-corner tc-tl"></div>
+                    <div class="tech-corner tc-tr"></div>
+                    <div class="product-img">
+                        <img class="product-img-tag" src="images/20.png" alt="" loading="lazy">
+                        <span class="product-badge badge-new">NEW</span>
+                        <button class="product-wishlist" onclick="toggleWishlist(event,6)"><i
+                                class="far fa-heart"></i></button>
+                        <div class="product-overlay"><button class="btn-quick-add" onclick="addToCart(6,event)">Add to
+                                Cart</button></div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category cat-blue">Hoodies</div>
+                        <div class="product-name">PULSAR ZIP HOODIE</div>
+                        <div class="product-rating"><span
+                                class="stars-display">&#9733;&#9733;&#9733;&#9733;&#9734;</span><span
+                                class="rating-count">(14)</span></div>
+                        <div class="product-footer">
+                            <div class="price-wrap"><span class="product-price">&#8377;2,499</span></div>
+                            <button class="btn-add-cart" onclick="addToCart(6,event)"><i
+                                    class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div style="text-align:center;margin-top:36px">
+                <a href="shop.html?cat=tshirt" class="btn-coll-primary"
+                    style="background:var(--earth-blue);border-color:var(--earth-blue);color:white;display:inline-flex;align-items:center;gap:10px;padding:13px 36px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:1.5px;text-decoration:none">
+                    View Full Earth Series <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- LOOKBOOK -->
+        <div class="lookbook-section">
+            <div class="section-header">
+                <div class="section-badge">LOOKBOOK</div>
+                <h2 class="section-title">EARTH SERIES — STYLED</h2>
+                <p class="section-subtitle">See how the collection looks in the wild. Add your images here.</p>
+            </div>
+            <div class="lookbook-grid">
+                <div class="lookbook-item tall" onclick="showToast('Lookbook viewer coming soon!')">
+                    <div class="lookbook-bg" style="background:linear-gradient(135deg,#0d1b3e,#1e3a8a 50%,#0a0a0f)">
+
+                        <img class="product-img-tag" src="images/18.png" alt="" loading="lazy">
+
+                    </div>
+                    <div class="lookbook-overlay"><i class="fas fa-expand"></i><span>View Look</span></div>
+                </div>
+                <div class="lookbook-item" onclick="showToast('Lookbook viewer coming soon!')">
+                    <div class="lookbook-bg" style="background:linear-gradient(135deg,#1e3a8a,#0a0a0f)">
+
+                        <img class="product-img-tag" src="images/19.png" alt="" loading="lazy">
+
+                    </div>
+                    <div class="lookbook-overlay"><i class="fas fa-expand"></i><span>View Look</span></div>
+                </div>
+                <div class="lookbook-item" onclick="showToast('Lookbook viewer coming soon!')">
+                    <div class="lookbook-bg" style="background:linear-gradient(135deg,#0a0a2e,#4a90e2 80%,#0a0a0f)">
+
+                        <img class="product-img-tag" src="images/20.png" alt="" loading="lazy">
+
+                    </div>
+                    <div class="lookbook-overlay"><i class="fas fa-expand"></i><span>View Look</span></div>
+                </div>
+                <div class="lookbook-item" onclick="showToast('Lookbook viewer coming soon!')">
+                    <div class="lookbook-bg" style="background:linear-gradient(135deg,#0a1a3e,#1e3a8a 60%,#0a0a0f)">
+
+                        <img class="product-img-tag" src="images/21.png" alt="" loading="lazy">
+
+                    </div>
+                    <div class="lookbook-overlay"><i class="fas fa-expand"></i><span>View Look</span></div>
+                </div>
+                <div class="lookbook-item" onclick="showToast('Lookbook viewer coming soon!')">
+                    <div class="lookbook-bg" style="background:linear-gradient(135deg,#061430,#2a5ca8 70%,#0a0a0f)">
+
+                        <img class="product-img-tag" src="images/22.png" alt="" loading="lazy">
+
+                    </div>
+                    <div class="lookbook-overlay"><i class="fas fa-expand"></i><span>View Look</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- COLOUR PALETTE -->
+        <div class="palette-section">
+            <div class="section-header">
+                <div class="section-badge">PALETTE</div>
+                <h2 class="section-title">EARTH SERIES COLOURS</h2>
+                <p class="section-subtitle">Click a colour to filter shop products by shade.</p>
+            </div>
+            <div class="palette-grid">
+                <div class="palette-swatch selected" onclick="togglePalette(this,'Navy')">
+                    <div class="palette-check"><i class="fas fa-check"></i></div>
+                    <div class="palette-color" style="background:#1e3a8a"></div>
+                    <div class="palette-name">Deep Navy</div>
+                    <div class="palette-desc">Core colour</div>
+                </div>
+                <div class="palette-swatch" onclick="togglePalette(this,'Ocean Blue')">
+                    <div class="palette-check"><i class="fas fa-check"></i></div>
+                    <div class="palette-color" style="background:#4a90e2"></div>
+                    <div class="palette-name">Ocean Blue</div>
+                    <div class="palette-desc">Accent shade</div>
+                </div>
+                <div class="palette-swatch" onclick="togglePalette(this,'Sky')">
+                    <div class="palette-check"><i class="fas fa-check"></i></div>
+                    <div class="palette-color" style="background:#87CEEB"></div>
+                    <div class="palette-name">Sky</div>
+                    <div class="palette-desc">Highlight</div>
+                </div>
+                <div class="palette-swatch" onclick="togglePalette(this,'Glacier')">
+                    <div class="palette-check"><i class="fas fa-check"></i></div>
+                    <div class="palette-color" style="background:#e0f0ff"></div>
+                    <div class="palette-name">Glacier</div>
+                    <div class="palette-desc">Light tone</div>
+                </div>
+                <div class="palette-swatch" onclick="togglePalette(this,'Storm Grey')">
+                    <div class="palette-check"><i class="fas fa-check"></i></div>
+                    <div class="palette-color" style="background:#555577"></div>
+                    <div class="palette-name">Storm Grey</div>
+                    <div class="palette-desc">Neutral</div>
+                </div>
+                <div class="palette-swatch" onclick="togglePalette(this,'Black')">
+                    <div class="palette-check"><i class="fas fa-check"></i></div>
+                    <div class="palette-color" style="background:#0a0a0f;border:1px solid rgba(255,255,255,.2)"></div>
+                    <div class="palette-name">Space Black</div>
+                    <div class="palette-desc">Base tone</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-section">
+            <div class="cta-inner">
+                <div class="tech-corner tc-tl"></div>
+                <div class="tech-corner tc-tr"></div>
+                <div class="tech-corner tc-bl"></div>
+                <div class="tech-corner tc-br"></div>
+                <div class="cta-bg-glow-earth"></div>
+                <div class="cta-badge"
+                    style="color:var(--earth-blue);border-color:rgba(74,144,226,.3);background:rgba(74,144,226,.08)">
+                    EARTH SERIES</div>
+                <h2 class="cta-title">EXPLORE THE FULL BLUE PLANET COLLECTION</h2>
+                <p class="cta-subtitle">34 pieces inspired by the only planet we know has life.<br>Limited seasonal
+                    drops — don't miss yours.</p>
+                <div class="cta-actions">
+                    <a href="shop.html" class="btn-coll-primary"
+                        style="background:var(--earth-blue);border-color:var(--earth-blue);color:white">
+                        <i class="fas fa-shopping-bag"></i> Shop All Products
+                    </a>
+                    <button class="btn-coll-secondary" onclick="switchUniverse('mars')">
+                        Switch to Mars Series <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- end earthPanel -->
+
+    <!-- ══════════════ MARS COLLECTION ══════════════ -->
+    <div class="collection-panel" id="marsPanel">
+
+        <!-- HERO -->
+        <div class="collection-hero mars-hero-bg">
+            <div class="coll-hero-inner active">
+                <div class="coll-hero-text">
+                    <div class="coll-series-badge"
+                        style="color:var(--mars-red);border-color:rgba(231,76,60,.4);background:rgba(231,76,60,.08)">
+                        <span class="tab-dot"
+                            style="background:var(--mars-red);width:6px;height:6px;border-radius:50%;display:inline-block"></span>
+                        Mars Series — 2025
+                    </div>
+                    <h2 class="coll-hero-title">RED PLANET<br><span style="color:var(--mars-red)">COLLECTION</span></h2>
+                    <p class="coll-hero-desc">Forged from the iron-red dust of Mars — volcanic tones, crater blacks and
+                        the raw ferocity of a planet waiting to be claimed. For those who go first.</p>
+                    <div class="coll-hero-actions">
+                        <a href="shop.html?cat=jacket" class="btn-coll-primary"
+                            style="background:var(--mars-red);border-color:var(--mars-red);color:white">
+                            <i class="fas fa-fire"></i> Shop Mars Series
+                        </a>
+                        <button class="btn-coll-secondary" onclick="scrollToProducts('marsProducts')">
+                            <i class="fas fa-th"></i> View All Pieces
+                        </button>
+                    </div>
+                    <div class="coll-hero-stats">
+                        <div>
+                            <div class="coll-stat-num" style="color:var(--mars-red)">8</div>
+                            <div class="coll-stat-label">Jackets</div>
+                        </div>
+                        <div>
+                            <div class="coll-stat-num" style="color:var(--mars-red)">6</div>
+                            <div class="coll-stat-label">Cargo Pants</div>
+                        </div>
+                        <div>
+                            <div class="coll-stat-num" style="color:var(--mars-red)">6</div>
+                            <div class="coll-stat-label">Accessories</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="coll-hero-visual">
+                    <div class="coll-ring-2" style="width:440px;height:440px;border:1px solid rgba(231,76,60,.07)">
+                        <div class="coll-orbit-dot"
+                            style="background:var(--mars-red);box-shadow:0 0 10px var(--mars-red)"></div>
+                    </div>
+                    <div class="coll-ring" style="width:400px;height:400px;border:1px dashed rgba(255,255,255,.1)">
+                    </div>
+                    <div class="coll-planet"
+                        style="background:radial-gradient(circle at 35% 30%,#ff8080,#e74c3c 35%,#8b0000 70%,#3d0a0a);box-shadow:inset -20px -20px 40px rgba(0,0,0,.6),0 0 60px rgba(231,76,60,.4)">
+                        <div class="planet-surface"></div>
+                        <div class="planet-highlight"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FEATURED BANNER -->
+        <div class="banner-strip">
+            <div class="banner-inner banner-bg-mars">
+                <div class="tech-corner tc-tl"></div>
+                <div class="tech-corner tc-tr"></div>
+                <div class="tech-corner tc-bl"></div>
+                <div class="tech-corner tc-br"></div>
+                <div class="banner-planet-sm banner-planet-mars"></div>
+                <div class="banner-text">
+                    <h3>CRATER PACK — LIMITED EDITION</h3>
+                    <p>The Crater Pack drops this season: a jacket, cargo and cap trio in matching volcanic rust. Each
+                        piece numbered. Only 100 sets available.</p>
+                </div>
+                <div class="banner-cta">
+                    <a href="shop.html?cat=jacket" class="btn-coll-primary"
+                        style="background:var(--mars-red);border-color:var(--mars-red);color:white;white-space:nowrap">
+                        Grab Yours <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- PRODUCTS -->
+        <div class="products-section" id="marsProducts">
+            <div class="section-header">
+                <div class="section-badge red">MARS SERIES</div>
+                <h2 class="section-title">SIGNATURE PIECES</h2>
+                <p class="section-subtitle">Rust reds, crater blacks and volcanic tones — the palette of the red planet.
+                </p>
+            </div>
+            <div class="products-grid">
+
+                <div class="product-card">
+                    <div class="tech-corner tc-tl"></div>
+                    <div class="tech-corner tc-tr"></div>
+                    <div class="product-img">
+                        <img class="product-img-tag" src="images/30.png" alt="" loading="lazy">
+
+                        <span class="product-badge badge-new">NEW</span>
+                        <button class="product-wishlist" onclick="toggleWishlist(event,3)"><i
+                                class="far fa-heart"></i></button>
+                        <div class="product-overlay"><button class="btn-quick-add red" onclick="addToCart(3,event)">Add
+                                to Cart</button></div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category cat-red">Jackets</div>
+                        <div class="product-name">MARS ORBIT JACKET</div>
+                        <div class="product-rating"><span
+                                class="stars-display">&#9733;&#9733;&#9733;&#9733;&#9734;</span><span
+                                class="rating-count">(36)</span></div>
+                        <div class="product-footer">
+                            <div class="price-wrap"><span class="product-price red">&#8377;4,499</span><span
+                                    class="product-price-old">&#8377;5,999</span></div>
+                            <button class="btn-add-cart red" onclick="addToCart(3,event)"><i
+                                    class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="tech-corner tc-tl"></div>
+                    <div class="tech-corner tc-tr"></div>
+                    <div class="product-img">
+                        <img class="product-img-tag" src="images/38.png" alt="" loading="lazy">
+
+                        <span class="product-badge badge-sale">SALE</span>
+                        <button class="product-wishlist" onclick="toggleWishlist(event,4)"><i
+                                class="far fa-heart"></i></button>
+                        <div class="product-overlay"><button class="btn-quick-add red" onclick="addToCart(4,event)">Add
+                                to Cart</button></div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category cat-red">Cargo Pants</div>
+                        <div class="product-name">STARDUST CARGO PANTS</div>
+                        <div class="product-rating"><span
+                                class="stars-display">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span
+                                class="rating-count">(62)</span></div>
+                        <div class="product-footer">
+                            <div class="price-wrap"><span class="product-price red">&#8377;3,199</span><span
+                                    class="product-price-old">&#8377;3,999</span></div>
+                            <button class="btn-add-cart red" onclick="addToCart(4,event)"><i
+                                    class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="tech-corner tc-tl"></div>
+                    <div class="tech-corner tc-tr"></div>
+                    <div class="product-img">
+                        <img class="product-img-tag" src="images/31.png" alt="" loading="lazy">
+
+                        <span class="product-badge badge-sale">SALE</span>
+                        <button class="product-wishlist" onclick="toggleWishlist(event,9)"><i
+                                class="far fa-heart"></i></button>
+                        <div class="product-overlay"><button class="btn-quick-add red" onclick="addToCart(9,event)">Add
+                                to Cart</button></div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category cat-red">Jackets</div>
+                        <div class="product-name">DARK MATTER WINDBREAKER</div>
+                        <div class="product-rating"><span
+                                class="stars-display">&#9733;&#9733;&#9733;&#9733;&#9734;</span><span
+                                class="rating-count">(21)</span></div>
+                        <div class="product-footer">
+                            <div class="price-wrap"><span class="product-price red">&#8377;3,499</span><span
+                                    class="product-price-old">&#8377;4,499</span></div>
+                            <button class="btn-add-cart red" onclick="addToCart(9,event)"><i
+                                    class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="tech-corner tc-tl"></div>
+                    <div class="tech-corner tc-tr"></div>
+                    <div class="product-img">
+                        <img class="product-img-tag" src="images/41.png" alt="" loading="lazy">
+
+                        <span class="product-badge badge-hot">HOT</span>
+                        <button class="product-wishlist" onclick="toggleWishlist(event,29)"><i
+                                class="far fa-heart"></i></button>
+                        <div class="product-overlay"><button class="btn-quick-add red" onclick="addToCart(29,event)">Add
+                                to Cart</button></div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category cat-red">Cargo Pants</div>
+                        <div class="product-name">TITAN TECH PANTS</div>
+                        <div class="product-rating"><span
+                                class="stars-display">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span
+                                class="rating-count">(41)</span></div>
+                        <div class="product-footer">
+                            <div class="price-wrap"><span class="product-price red">&#8377;3,499</span><span
+                                    class="product-price-old">&#8377;3,999</span></div>
+                            <button class="btn-add-cart red" onclick="addToCart(29,event)"><i
+                                    class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="tech-corner tc-tl"></div>
+                    <div class="tech-corner tc-tr"></div>
+                    <div class="product-img">
+                        <img class="product-img-tag" src="images/32.png" alt="" loading="lazy">
+
+                        <span class="product-badge badge-hot">HOT</span>
+                        <button class="product-wishlist" onclick="toggleWishlist(event,15)"><i
+                                class="far fa-heart"></i></button>
+                        <div class="product-overlay"><button class="btn-quick-add red" onclick="addToCart(15,event)">Add
+                                to Cart</button></div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category cat-red">Jackets</div>
+                        <div class="product-name">ECLIPSE DENIM JACKET</div>
+                        <div class="product-rating"><span
+                                class="stars-display">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span
+                                class="rating-count">(39)</span></div>
+                        <div class="product-footer">
+                            <div class="price-wrap"><span class="product-price red">&#8377;5,499</span></div>
+                            <button class="btn-add-cart red" onclick="addToCart(15,event)"><i
+                                    class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="tech-corner tc-tl"></div>
+                    <div class="tech-corner tc-tr"></div>
+                    <div class="product-img">
+                        <img class="product-img-tag" src="images/37.png" alt="" loading="lazy">
+
+                        <span class="product-badge badge-hot">HOT</span>
+                        <button class="product-wishlist" onclick="toggleWishlist(event,43)"><i
+                                class="far fa-heart"></i></button>
+                        <div class="product-overlay"><button class="btn-quick-add red" onclick="addToCart(43,event)">Add
+                                to Cart</button></div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category cat-red">Jackets</div>
+                        <div class="product-name">STRATOSPHERE PARKA</div>
+                        <div class="product-rating"><span
+                                class="stars-display">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span
+                                class="rating-count">(20)</span></div>
+                        <div class="product-footer">
+                            <div class="price-wrap"><span class="product-price red">&#8377;6,999</span><span
+                                    class="product-price-old">&#8377;7,999</span></div>
+                            <button class="btn-add-cart red" onclick="addToCart(43,event)"><i
+                                    class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="tech-corner tc-tl"></div>
+                    <div class="tech-corner tc-tr"></div>
+                    <div class="product-img">
+                        <img class="product-img-tag" src="images/40.png" alt="" loading="lazy">
+
+                        <span class="product-badge badge-new">NEW</span>
+                        <button class="product-wishlist" onclick="toggleWishlist(event,21)"><i
+                                class="far fa-heart"></i></button>
+                        <div class="product-overlay"><button class="btn-quick-add red" onclick="addToCart(21,event)">Add
+                                to Cart</button></div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category cat-red">Cargo Pants</div>
+                        <div class="product-name">ZERO GRAVITY JOGGERS</div>
+                        <div class="product-rating"><span
+                                class="stars-display">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span
+                                class="rating-count">(43)</span></div>
+                        <div class="product-footer">
+                            <div class="price-wrap"><span class="product-price red">&#8377;2,599</span></div>
+                            <button class="btn-add-cart red" onclick="addToCart(21,event)"><i
+                                    class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="tech-corner tc-tl"></div>
+                    <div class="tech-corner tc-tr"></div>
+                    <div class="product-img">
+                        <img class="product-img-tag" src="images/52.png" alt="" loading="lazy">
+
+                        <span class="product-badge badge-sale">SALE</span>
+                        <button class="product-wishlist" onclick="toggleWishlist(event,36)"><i
+                                class="far fa-heart"></i></button>
+                        <div class="product-overlay"><button class="btn-quick-add red" onclick="addToCart(36,event)">Add
+                                to Cart</button></div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category cat-red">Accessories</div>
+                        <div class="product-name">COSMIC PINS SET (5pc)</div>
+                        <div class="product-rating"><span
+                                class="stars-display">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span
+                                class="rating-count">(71)</span></div>
+                        <div class="product-footer">
+                            <div class="price-wrap"><span class="product-price red">&#8377;249</span><span
+                                    class="product-price-old">&#8377;399</span></div>
+                            <button class="btn-add-cart red" onclick="addToCart(36,event)"><i
+                                    class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div style="text-align:center;margin-top:36px">
+                <a href="shop.html?cat=jacket" class="btn-coll-primary"
+                    style="background:var(--mars-red);border-color:var(--mars-red);color:white;display:inline-flex;align-items:center;gap:10px;padding:13px 36px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:1.5px;text-decoration:none">
+                    View Full Mars Series <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- LOOKBOOK -->
+        <div class="lookbook-section">
+            <div class="section-header">
+                <div class="section-badge red">LOOKBOOK</div>
+                <h2 class="section-title">MARS SERIES — STYLED</h2>
+                <p class="section-subtitle">The red planet, brought to Earth. Add your lookbook images below.</p>
+            </div>
+            <div class="lookbook-grid">
+                <div class="lookbook-item tall mars-accent" onclick="showToast('Lookbook viewer coming soon!')">
+                    <div class="lookbook-bg" style="background:linear-gradient(135deg,#3d0a0a,#8b0000 50%,#0a0a0f)">
+
+                        <div class="lookbook-placeholder"><i class="fas fa-camera"></i><span>Lookbook Photo 1</span>
+                        </div>
+                    </div>
+                    <div class="lookbook-overlay"><i class="fas fa-expand" style="color:var(--mars-red)"></i><span>View
+                            Look</span></div>
+                </div>
+                <div class="lookbook-item mars-accent" onclick="showToast('Lookbook viewer coming soon!')">
+                    <div class="lookbook-bg" style="background:linear-gradient(135deg,#5a0a0a,#0a0a0f)">
+
+                        <div class="lookbook-placeholder"><i class="fas fa-camera"></i><span>Lookbook Photo 2</span>
+                        </div>
+                    </div>
+                    <div class="lookbook-overlay"><i class="fas fa-expand" style="color:var(--mars-red)"></i><span>View
+                            Look</span></div>
+                </div>
+                <div class="lookbook-item mars-accent" onclick="showToast('Lookbook viewer coming soon!')">
+                    <div class="lookbook-bg" style="background:linear-gradient(135deg,#8b0000,#3d0a0a 80%,#0a0a0f)">
+
+                        <div class="lookbook-placeholder"><i class="fas fa-camera"></i><span>Lookbook Photo 3</span>
+                        </div>
+                    </div>
+                    <div class="lookbook-overlay"><i class="fas fa-expand" style="color:var(--mars-red)"></i><span>View
+                            Look</span></div>
+                </div>
+                <div class="lookbook-item mars-accent" onclick="showToast('Lookbook viewer coming soon!')">
+                    <div class="lookbook-bg" style="background:linear-gradient(135deg,#4a0808,#0a0a0f)">
+                        <img class="product-img-tag" src="images/34.png" alt="" loading="lazy">
+                        <div class="lookbook-placeholder"><i class="fas fa-camera"></i><span>Lookbook Photo 4</span>
+                        </div>
+                    </div>
+                    <div class="lookbook-overlay"><i class="fas fa-expand" style="color:var(--mars-red)"></i><span>View
+                            Look</span></div>
+                </div>
+                <div class="lookbook-item mars-accent" onclick="showToast('Lookbook viewer coming soon!')">
+                    <div class="lookbook-bg" style="background:linear-gradient(135deg,#6b1010,#0a0a0f)">
+                        <img class="product-img-tag" src="images/36.png" alt="" loading="lazy">
+                        <div class="lookbook-placeholder"><i class="fas fa-camera"></i><span>Lookbook Photo 5</span>
+                        </div>
+                    </div>
+                    <div class="lookbook-overlay"><i class="fas fa-expand" style="color:var(--mars-red)"></i><span>View
+                            Look</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- COLOUR PALETTE -->
+        <div class="palette-section">
+            <div class="section-header">
+                <div class="section-badge red">PALETTE</div>
+                <h2 class="section-title">MARS SERIES COLOURS</h2>
+                <p class="section-subtitle">Click a colour to filter shop products by shade.</p>
+            </div>
+            <div class="palette-grid">
+                <div class="palette-swatch mars-palette selected" onclick="togglePalette(this,'Volcanic Red')">
+                    <div class="palette-check"><i class="fas fa-check"></i></div>
+                    <div class="palette-color" style="background:#e74c3c"></div>
+                    <div class="palette-name">Volcanic Red</div>
+                    <div class="palette-desc">Core colour</div>
+                </div>
+                <div class="palette-swatch mars-palette" onclick="togglePalette(this,'Crater Black')">
+                    <div class="palette-check"><i class="fas fa-check"></i></div>
+                    <div class="palette-color" style="background:#2a0a0a;border:1px solid rgba(255,255,255,.15)"></div>
+                    <div class="palette-name">Crater Black</div>
+                    <div class="palette-desc">Base tone</div>
+                </div>
+                <div class="palette-swatch mars-palette" onclick="togglePalette(this,'Rust')">
+                    <div class="palette-check"><i class="fas fa-check"></i></div>
+                    <div class="palette-color" style="background:#b7410e"></div>
+                    <div class="palette-name">Rust</div>
+                    <div class="palette-desc">Mid tone</div>
+                </div>
+                <div class="palette-swatch mars-palette" onclick="togglePalette(this,'Lava Orange')">
+                    <div class="palette-check"><i class="fas fa-check"></i></div>
+                    <div class="palette-color" style="background:#e67e22"></div>
+                    <div class="palette-name">Lava Orange</div>
+                    <div class="palette-desc">Accent</div>
+                </div>
+                <div class="palette-swatch mars-palette" onclick="togglePalette(this,'Iron Dust')">
+                    <div class="palette-check"><i class="fas fa-check"></i></div>
+                    <div class="palette-color" style="background:#8b4513"></div>
+                    <div class="palette-name">Iron Dust</div>
+                    <div class="palette-desc">Earth tone</div>
+                </div>
+                <div class="palette-swatch mars-palette" onclick="togglePalette(this,'Ash')">
+                    <div class="palette-check"><i class="fas fa-check"></i></div>
+                    <div class="palette-color" style="background:#666666"></div>
+                    <div class="palette-name">Volcanic Ash</div>
+                    <div class="palette-desc">Neutral</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-section">
+            <div class="cta-inner">
+                <div class="tech-corner tc-tl"></div>
+                <div class="tech-corner tc-tr"></div>
+                <div class="tech-corner tc-bl"></div>
+                <div class="tech-corner tc-br"></div>
+                <div class="cta-bg-glow-mars"></div>
+                <div class="cta-badge"
+                    style="color:var(--mars-red);border-color:rgba(231,76,60,.3);background:rgba(231,76,60,.08)">MARS
+                    SERIES</div>
+                <h2 class="cta-title">EXPLORE THE FULL RED PLANET COLLECTION</h2>
+                <p class="cta-subtitle">14 pieces forged in the spirit of the Red Planet.<br>Bold. Aggressive.
+                    Unstoppable. Limited seasonal drops.</p>
+                <div class="cta-actions">
+                    <a href="shop.html?cat=jacket" class="btn-coll-primary"
+                        style="background:var(--mars-red);border-color:var(--mars-red);color:white">
+                        <i class="fas fa-fire"></i> Shop Mars Series
+                    </a>
+                    <button class="btn-coll-secondary" onclick="switchUniverse('earth')">
+                        Switch to Earth Series <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- end marsPanel -->
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div>
+                <div class="footer-logo"><span class="logo-dot"></span> COSMIC GALAXY</div>
+                <p class="footer-desc">Space-inspired clothing for those who dream beyond the horizon. Wear the cosmos.
+                    Own the galaxy.</p>
+                <div class="social-links">
+                    <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+                    <a href="https://pinterest.com" target="_blank"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4 class="footer-heading">SHOP</h4>
+                <ul class="footer-links">
+                    <li><a href="shop.html">New Arrivals</a></li>
+                    <li><a href="shop.html?cat=tshirt">T-Shirts</a></li>
+                    <li><a href="shop.html?cat=hoodie">Hoodies</a></li>
+                    <li><a href="shop.html?cat=jacket">Jackets</a></li>
+                    <li><a href="shop.html?cat=accessories">Accessories</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-heading">COLLECTIONS</h4>
+                <ul class="footer-links">
+                    <li><a href="#" onclick="switchUniverse('earth');return false">Earth Series</a></li>
+                    <li><a href="#" onclick="switchUniverse('mars');return false">Mars Series</a></li>
+                    <li><a href="shop.html?badge=new">New Drops</a></li>
+                    <li><a href="shop.html?badge=sale">On Sale</a></li>
+                    <li><a href="shop.html?badge=hot">Best Sellers</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-heading">MISSION CONTROL</h4>
+                <p style="color:var(--text-secondary);font-size:13px;line-height:1.9">
+                    Mon – Sat, 10AM – 7PM IST<br>
+                    <a href="/cdn-cgi/l/email-protection#5d2e282d2d322f291d3e322e30343e2e35342f292e733433"
+                        style="color:var(--text-secondary);text-decoration:none"><span class="__cf_email__"
+                            data-cfemail="62111712120d101622010d110f0b01110a0b1016114c0b0c">[email&#160;protected]</span></a><br>
+                    <a href="tel:+919876543210" style="color:var(--text-secondary);text-decoration:none">+91 98765
+                        43210</a>
+                </p>
+                <div style="display:flex;align-items:center;gap:8px;margin-top:14px">
+                    <i class="fas fa-map-marker-alt" style="color:var(--earth-blue);font-size:12px"></i>
+                    <span style="color:var(--text-secondary);font-size:13px">Chandigarh, India</span>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">&copy; 2025 <span>COSMIC GALAXY</span>. All rights reserved.</div>
+    </footer>
+
+    <div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toastMsg">Done!</span></div>
+    <button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i
+            class="fas fa-chevron-up"></i></button>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script>
+        // ── CART STATE ──────────────────────────────
+        const PRODUCTS = {
+            1: { id: 1, name: 'LAUNCH SEQUENCE TEE', category: 'T-Shirts', price: '₹1,299', priceNum: 1299 },
+            2: { id: 2, name: 'NEBULA DRIFT HOODIE', category: 'Hoodies', price: '₹2,799', priceNum: 2799 },
+            3: { id: 3, name: 'MARS ORBIT JACKET', category: 'Jackets', price: '₹4,499', priceNum: 4499 },
+            4: { id: 4, name: 'STARDUST CARGO PANTS', category: 'Cargo Pants', price: '₹3,199', priceNum: 3199 },
+            6: { id: 6, name: 'PULSAR ZIP HOODIE', category: 'Hoodies', price: '₹2,499', priceNum: 2499 },
+            7: { id: 7, name: 'EVENT HORIZON TEE', category: 'T-Shirts', price: '₹1,199', priceNum: 1199 },
+            8: { id: 8, name: 'COSMOS CAP', category: 'Accessories', price: '₹699', priceNum: 699 },
+            9: { id: 9, name: 'DARK MATTER WINDBREAKER', category: 'Jackets', price: '₹3,499', priceNum: 3499 },
+            10: { id: 10, name: 'ORBIT STATION TEE', category: 'T-Shirts', price: '₹1,099', priceNum: 1099 },
+            11: { id: 11, name: 'GALAXY TOTE BAG', category: 'Accessories', price: '₹599', priceNum: 599 },
+            15: { id: 15, name: 'ECLIPSE DENIM JACKET', category: 'Jackets', price: '₹5,499', priceNum: 5499 },
+            21: { id: 21, name: 'ZERO GRAVITY JOGGERS', category: 'Cargo Pants', price: '₹2,599', priceNum: 2599 },
+            23: { id: 23, name: 'BLACK HOLE CROP HOODIE', category: 'Hoodies', price: '₹2,199', priceNum: 2199 },
+            29: { id: 29, name: 'TITAN TECH PANTS', category: 'Cargo Pants', price: '₹3,499', priceNum: 3499 },
+            36: { id: 36, name: 'COSMIC PINS SET (5pc)', category: 'Accessories', price: '₹249', priceNum: 249 },
+            43: { id: 43, name: 'STRATOSPHERE PARKA', category: 'Jackets', price: '₹6,999', priceNum: 6999 },
+        };
+        const wishlist = new Set();
+        let toastTimer;
+
+        // ── CART LOGIC ──────────────────────────────
+
+        // ── WISHLIST ──────────────────────────────
+        function toggleWishlist(e, id) {
+            e.stopPropagation();
+            const btn = e.currentTarget; const icon = btn.querySelector('i');
+            if (wishlist.has(id)) {
+                wishlist.delete(id); btn.classList.remove('wishlisted'); icon.className = 'far fa-heart';
+                showToast('Removed from wishlist');
+            } else {
+                wishlist.add(id); btn.classList.add('wishlisted'); icon.className = 'fas fa-heart';
+                btn.style.transform = 'scale(1.3)'; setTimeout(() => btn.style.transform = '', 200);
+                showToast('Added to wishlist!');
+            }
+        }
+
+        // ── UNIVERSE TABS ──────────────────────────────
+        function switchUniverse(universe) {
+            document.querySelectorAll('.collection-panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.universe-tab').forEach(t => t.classList.remove('active'));
+            document.getElementById(universe + 'Panel').classList.add('active');
+            document.getElementById(universe + 'Tab').classList.add('active');
+            window.scrollTo({ top: document.querySelector('.universe-tabs').offsetTop - 110, behavior: 'smooth' });
+        }
+
+        // ── SCROLL TO PRODUCTS ──────────────────────────────
+        function scrollToProducts(id) {
+            const el = document.getElementById(id);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // ── PALETTE TOGGLE ──────────────────────────────
+        function togglePalette(el, colorName) {
+            el.classList.toggle('selected');
+            const selected = el.classList.contains('selected');
+            showToast(selected ? colorName + ' selected — filter applied!' : colorName + ' deselected');
+        }
+
+        // ── SEARCH ──────────────────────────────
+        function openSearch() { document.getElementById('searchOverlay').classList.add('open'); document.body.style.overflow = 'hidden'; setTimeout(() => document.getElementById('searchInput').focus(), 100); }
+        function closeSearch() { document.getElementById('searchOverlay').classList.remove('open'); document.body.style.overflow = ''; }
+        function goShop(cat) { window.location = 'shop.html' + (cat ? '?cat=' + cat : ''); }
+        document.getElementById('searchInput').addEventListener('keydown', e => {
+            if (e.key === 'Enter') { const q = e.target.value.trim(); if (q) window.location = 'shop.html?q=' + encodeURIComponent(q); }
+            if (e.key === 'Escape') closeSearch();
+        });
+
+        // ── MOBILE NAV ──────────────────────────────
+        function openMobileNav() { document.getElementById('mobileNav').classList.add('open'); document.getElementById('mobileNavOverlay').classList.add('open'); document.body.style.overflow = 'hidden'; }
+        function closeMobileNav() { document.getElementById('mobileNav').classList.remove('open'); document.getElementById('mobileNavOverlay').classList.remove('open'); document.body.style.overflow = ''; }
+
+        // ── TOAST ──────────────────────────────
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            document.getElementById('toastMsg').textContent = msg;
+            t.classList.add('show'); clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+        }
+
+        // ── SCROLL ──────────────────────────────
+        window.addEventListener('scroll', () => {
+            document.getElementById('scrollTopBtn').classList.toggle('visible', window.scrollY > 400);
+            document.getElementById('navbar').style.boxShadow = window.scrollY > 50 ? '0 4px 30px rgba(0,0,0,.6)' : '';
+        });
+
+        // ── CHECK URL FOR UNIVERSE PARAM ───────────────�
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('universe') === 'mars') switchUniverse('mars');
+
+
+        // ═══════════════════════════════════════════════════════════
+        // COSMIC GALAXY · UNIVERSAL CART SYSTEM · v4
+        // Single source of truth via localStorage — works on ALL pages
+        // ═══════════════════════════════════════════════════════════
+
+        const _CG_KEY = 'cg_cart';
+
+        // Master product list — every product across the whole site
+        const _CG_DB = {
+            1: { id: 1, name: 'LAUNCH SEQUENCE TEE', category: 'T-Shirts', price: '₹1,299', priceNum: 1299 },
+            2: { id: 2, name: 'NEBULA DRIFT HOODIE', category: 'Hoodies', price: '₹2,799', priceNum: 2799 },
+            3: { id: 3, name: 'MARS ORBIT JACKET', category: 'Jackets', price: '₹4,499', priceNum: 4499 },
+            4: { id: 4, name: 'STARDUST CARGO PANTS', category: 'Cargo Pants', price: '₹3,199', priceNum: 3199 },
+            5: { id: 5, name: 'GALAXY HOODIE', category: 'Hoodies', price: '₹2,599', priceNum: 2599 },
+            6: { id: 6, name: 'PULSAR ZIP HOODIE', category: 'Hoodies', price: '₹2,499', priceNum: 2499 },
+            7: { id: 7, name: 'EVENT HORIZON TEE', category: 'T-Shirts', price: '₹1,199', priceNum: 1199 },
+            8: { id: 8, name: 'COSMOS CAP', category: 'Accessories', price: '₹699', priceNum: 699 },
+            9: { id: 9, name: 'DARK MATTER WINDBREAKER', category: 'Jackets', price: '₹3,499', priceNum: 3499 },
+            10: { id: 10, name: 'ORBIT STATION TEE', category: 'T-Shirts', price: '₹1,099', priceNum: 1099 },
+            11: { id: 11, name: 'GALAXY TOTE BAG', category: 'Accessories', price: '₹599', priceNum: 599 },
+            12: { id: 12, name: 'NEBULA CROP TEE', category: 'T-Shirts', price: '₹999', priceNum: 999 },
+            13: { id: 13, name: 'SATELLITE BEANIE', category: 'Accessories', price: '₹499', priceNum: 499 },
+            14: { id: 14, name: 'WARP DRIVE SHORTS', category: 'Cargo Pants', price: '₹1,799', priceNum: 1799 },
+            15: { id: 15, name: 'ECLIPSE DENIM JACKET', category: 'Jackets', price: '₹5,499', priceNum: 5499 },
+            16: { id: 16, name: 'SOLAR FLARE HOODIE', category: 'Hoodies', price: '₹2,299', priceNum: 2299 },
+            17: { id: 17, name: 'SUPERNOVA GRAPHIC TEE', category: 'T-Shirts', price: '₹1,399', priceNum: 1399 },
+            18: { id: 18, name: 'ASTEROID CARGO PANTS', category: 'Cargo Pants', price: '₹2,999', priceNum: 2999 },
+            19: { id: 19, name: 'COMET TAIL HOODIE', category: 'Hoodies', price: '₹2,699', priceNum: 2699 },
+            20: { id: 20, name: 'VOYAGER JACKET', category: 'Jackets', price: '₹4,999', priceNum: 4999 },
+            21: { id: 21, name: 'ZERO GRAVITY JOGGERS', category: 'Cargo Pants', price: '₹2,599', priceNum: 2599 },
+            22: { id: 22, name: 'COSMIC CREW NECK', category: 'Hoodies', price: '₹2,199', priceNum: 2199 },
+            23: { id: 23, name: 'BLACK HOLE CROP HOODIE', category: 'Hoodies', price: '₹2,199', priceNum: 2199 },
+            24: { id: 24, name: 'INTERSTELLAR TEE', category: 'T-Shirts', price: '₹1,299', priceNum: 1299 },
+            25: { id: 25, name: 'LUNAR CARGO PANTS', category: 'Cargo Pants', price: '₹3,499', priceNum: 3499 },
+            26: { id: 26, name: 'DEEP SPACE JACKET', category: 'Jackets', price: '₹5,999', priceNum: 5999 },
+            27: { id: 27, name: 'NOVA BURST TEE', category: 'T-Shirts', price: '₹1,199', priceNum: 1199 },
+            28: { id: 28, name: 'ORBIT RING KEYCHAIN', category: 'Accessories', price: '₹399', priceNum: 399 },
+            29: { id: 29, name: 'TITAN TECH PANTS', category: 'Cargo Pants', price: '₹3,499', priceNum: 3499 },
+            30: { id: 30, name: 'AURORA TRACK JACKET', category: 'Jackets', price: '₹4,299', priceNum: 4299 },
+            36: { id: 36, name: 'COSMIC PINS SET', category: 'Accessories', price: '₹249', priceNum: 249 },
+            43: { id: 43, name: 'STRATOSPHERE PARKA', category: 'Jackets', price: '₹6,999', priceNum: 6999 },
+            48: { id: 48, name: 'COSMOS SOCKS 3-PACK', category: 'Accessories', price: '₹349', priceNum: 349 },
+        };
+
+        // ── helpers ──────────────────────────────────────────────
+        function _cgLoad() { try { return JSON.parse(localStorage.getItem(_CG_KEY)) || []; } catch (e) { return []; } }
+        function _cgSave(c) { try { localStorage.setItem(_CG_KEY, JSON.stringify(c)); } catch (e) { } }
+        function _cgFmt(n) { return '\u20b9' + n.toLocaleString('en-IN'); }
+        function _cgSetEl(id, val) { var el = document.getElementById(id); if (el) el.textContent = val; }
+
+        // ── public API ───────────────────────────────────────────
+        function addToCart(id, e) {
+            if (e) { e.stopPropagation(); e.preventDefault(); }
+            // Support both numeric id AND product object (shop.html passes object sometimes)
+            var pid = (typeof id === 'object' && id !== null) ? parseInt(id.id) : parseInt(id);
+            var p = _CG_DB[pid];
+            if (!p) { showToast('Product not found'); return; }
+            var cart = _cgLoad();
+            var item = cart.find(function (i) { return i.id === pid; });
+            if (item) item.qty++;
+            else cart.push({ id: pid, qty: 1 });
+            _cgSave(cart);
+            _cgRender();
+            _cgBadgePop();
+            showToast(p.name.split(' ').slice(0, 3).join(' ') + ' added to cart!');
+        }
+
+        function removeFromCart(id) {
+            var pid = parseInt(id);
+            _cgSave(_cgLoad().filter(function (i) { return i.id !== pid; }));
+            _cgRender();
+        }
+
+        function changeQty(id, delta) {
+            var pid = parseInt(id);
+            var cart = _cgLoad();
+            var item = cart.find(function (i) { return i.id === pid; });
+            if (!item) return;
+            item.qty = Math.max(1, item.qty + delta);
+            _cgSave(cart);
+            _cgRender();
+        }
+
+        function _cgBadgePop() {
+            ['cartCount', 'cart-count'].forEach(function (bid) {
+                var el = document.getElementById(bid);
+                if (!el) return;
+                el.style.transform = 'scale(1.8)';
+                el.style.transition = 'transform .12s';
+                setTimeout(function () { el.style.transform = 'scale(1)'; }, 200);
+            });
+        }
+
+        function _cgRender() {
+            var cart = _cgLoad();
+            var total = cart.reduce(function (s, i) { return s + i.qty; }, 0);
+
+            // Update ALL badge variants used across pages
+            _cgSetEl('cartCount', total);
+            _cgSetEl('cart-count', total);
+            _cgSetEl('cartItemCount', '(' + total + ')');
+            _cgSetEl('cart-item-count', '(' + total + ')');
+
+            var body = document.getElementById('cartBody');
+            var footer = document.getElementById('cartFooter');
+            if (!body) return;
+
+            // ── EMPTY ─────────────────────────────────────────
+            if (cart.length === 0) {
+                body.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px;text-align:center;height:100%;min-height:280px">'
+                    + '<i class="fas fa-shopping-bag" style="font-size:46px;color:rgba(74,144,226,.15);margin-bottom:18px"></i>'
+                    + '<p style="font-family:\'Orbitron\',sans-serif;font-size:12px;letter-spacing:2px;color:var(--text-secondary);margin-bottom:8px">CART IS EMPTY</p>'
+                    + '<p style="color:var(--text-secondary);font-size:13px;line-height:1.65;margin-bottom:24px">Add some cosmic gear<br>to get started.</p>'
+                    + '<button onclick="closeCart();window.location=\'shop.html\'" style="padding:11px 28px;background:var(--earth-blue);border:none;color:white;font-family:\'Orbitron\',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;cursor:pointer" onmouseover="this.style.background=\'#6bb6ff\'" onmouseout="this.style.background=\'var(--earth-blue)\'">BROWSE SHOP</button>'
+                    + '</div>';
+                if (footer) footer.style.display = 'none';
+                return;
+            }
+
+            // ── ITEMS ─────────────────────────────────────────
+            if (footer) footer.style.display = 'block';
+            var html = '', subtotal = 0;
+            cart.forEach(function (item) {
+                var p = _CG_DB[item.id];
+                if (!p) return;
+                subtotal += p.priceNum * item.qty;
+                html += '<div style="display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)">'
+                    + '<div style="width:68px;height:68px;background:linear-gradient(135deg,#0c0e18,#0f1320);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0">'
+                    + '<i class="fas fa-tshirt" style="color:rgba(74,144,226,.3);font-size:22px"></i></div>'
+                    + '<div style="flex:1;min-width:0">'
+                    + '<div style="font-size:9px;color:var(--earth-blue);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:3px">' + p.category + '</div>'
+                    + '<div style="font-family:\'Orbitron\',sans-serif;font-size:11px;font-weight:700;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + p.name + '</div>'
+                    + '<div style="font-family:\'Orbitron\',sans-serif;font-size:14px;color:var(--earth-blue);font-weight:700;margin-bottom:10px">' + p.price + '</div>'
+                    + '<div style="display:flex;align-items:center;justify-content:space-between">'
+                    + '<div style="display:flex;align-items:center;border:1px solid var(--border)">'
+                    + '<button onclick="changeQty(' + item.id + ',-1)" style="width:30px;height:30px;background:none;border:none;color:var(--text-secondary);cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;transition:all .2s" onmouseover="this.style.background=\'rgba(74,144,226,.1)\';this.style.color=\'var(--earth-blue)\'" onmouseout="this.style.background=\'none\';this.style.color=\'var(--text-secondary)\'"><i class="fas fa-minus"></i></button>'
+                    + '<span style="min-width:34px;text-align:center;font-family:\'Orbitron\',sans-serif;font-size:12px;font-weight:700;border-left:1px solid var(--border);border-right:1px solid var(--border);height:30px;line-height:30px;display:inline-block;padding:0 4px">' + item.qty + '</span>'
+                    + '<button onclick="changeQty(' + item.id + ',1)" style="width:30px;height:30px;background:none;border:none;color:var(--text-secondary);cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;transition:all .2s" onmouseover="this.style.background=\'rgba(74,144,226,.1)\';this.style.color=\'var(--earth-blue)\'" onmouseout="this.style.background=\'none\';this.style.color=\'var(--text-secondary)\'"><i class="fas fa-plus"></i></button>'
+                    + '</div>'
+                    + '<span style="font-family:\'Orbitron\',sans-serif;font-size:12px;font-weight:700;color:white">' + _cgFmt(p.priceNum * item.qty) + '</span>'
+                    + '<button onclick="removeFromCart(' + item.id + ')" style="background:none;border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.3);cursor:pointer;padding:5px 8px;font-size:11px;transition:all .2s" onmouseover="this.style.borderColor=\'#e74c3c\';this.style.color=\'#e74c3c\'" onmouseout="this.style.borderColor=\'rgba(255,255,255,.1)\';this.style.color=\'rgba(255,255,255,.3)\'"><i class="fas fa-trash-alt"></i></button>'
+                    + '</div></div></div>';
+            });
+            body.innerHTML = html;
+
+            // Update totals — support both ID variants
+            var shipping = subtotal >= 999 ? 0 : 99;
+            var grandTotal = subtotal + shipping;
+            var shipText = shipping === 0 ? 'FREE' : _cgFmt(shipping);
+            var shipColor = shipping === 0 ? '#4ade80' : 'white';
+
+            ['cartSubtotal', 'cart-subtotal'].forEach(function (id) { _cgSetEl(id, _cgFmt(subtotal)); });
+            ['cartTotal', 'cart-total'].forEach(function (id) { _cgSetEl(id, _cgFmt(grandTotal)); });
+
+            // update shipping display
+            ['cartShipping', 'cart-shipping'].forEach(function (id) {
+                var el = document.getElementById(id);
+                if (el) { el.textContent = shipText; el.style.color = shipColor; }
+            });
+
+            // items count label
+            _cgSetEl('cartItemsLabel', total + ' ' + (total === 1 ? 'item' : 'items'));
+        }
+
+        // ── open / close ─────────────────────────────────────────
+        function openCart() {
+            _cgRender();
+            var d = document.getElementById('cartDrawer');
+            var o = document.getElementById('cartOverlay');
+            if (d) d.classList.add('open');
+            if (o) o.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeCart() {
+            var d = document.getElementById('cartDrawer');
+            var o = document.getElementById('cartOverlay');
+            if (d) d.classList.remove('open');
+            if (o) o.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        // ── checkout ─────────────────────────────────────────────
+        function openCheckout() {
+            var cart = _cgLoad();
+            if (cart.length === 0) { showToast('Your cart is empty!'); return; }
+            closeCart();
+            var modal = document.getElementById('checkoutModal');
+            if (modal) {
+                _cgBuildSummary();
+                modal.classList.add('open');
+                document.body.style.overflow = 'hidden';
+                _cgShowStep(1);
+            }
+        }
+        function closeCheckout() {
+            var modal = document.getElementById('checkoutModal');
+            if (modal) modal.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+        function _cgShowStep(n) {
+            [1, 2, 3].forEach(function (i) {
+                var s = document.getElementById('cgStep' + i);
+                var h = document.getElementById('cgHead' + i);
+                if (s) s.style.display = (i === n ? 'block' : 'none');
+                if (h) {
+                    h.style.borderBottomColor = i === n ? 'var(--earth-blue)' : (i < n ? 'rgba(74,144,226,.4)' : 'var(--border)');
+                    h.style.opacity = i <= n ? '1' : '0.45';
+                }
+            });
+            var modal = document.getElementById('checkoutModal');
+            if (modal) modal.scrollTop = 0;
+        }
+        function _cgBuildSummary() {
+            var cart = _cgLoad();
+            var subtotal = 0, rows = '';
+            cart.forEach(function (item) {
+                var p = _CG_DB[item.id]; if (!p) return;
+                subtotal += p.priceNum * item.qty;
+                rows += '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)">'
+                    + '<div style="flex:1;min-width:0;margin-right:10px">'
+                    + '<div style="font-size:10px;color:var(--earth-blue);text-transform:uppercase;letter-spacing:1px;margin-bottom:2px">' + p.category + '</div>'
+                    + '<div style="font-family:\'Orbitron\',sans-serif;font-size:11px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + p.name + '</div>'
+                    + '<div style="font-size:12px;color:var(--text-secondary);margin-top:2px">' + p.price + ' x ' + item.qty + '</div>'
+                    + '</div>'
+                    + '<div style="font-family:\'Orbitron\',sans-serif;font-size:12px;font-weight:700;white-space:nowrap">' + _cgFmt(p.priceNum * item.qty) + '</div>'
+                    + '</div>';
+            });
+            var shipping = subtotal >= 999 ? 0 : 99;
+            var total = subtotal + shipping;
+            rows += '<div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">'
+                + '<div style="display:flex;justify-content:space-between;font-size:13px;color:var(--text-secondary);margin-bottom:8px"><span>Subtotal</span><span>' + _cgFmt(subtotal) + '</span></div>'
+                + '<div style="display:flex;justify-content:space-between;font-size:13px;color:var(--text-secondary);margin-bottom:14px"><span>Shipping</span><span style="color:' + (shipping === 0 ? '#4ade80' : 'white') + '">' + (shipping === 0 ? 'FREE' : _cgFmt(shipping)) + '</span></div>'
+                + '<div style="display:flex;justify-content:space-between;font-family:\'Orbitron\',sans-serif;font-size:16px;font-weight:700"><span>TOTAL</span><span style="color:var(--earth-blue)">' + _cgFmt(total) + '</span></div>'
+                + '</div>';
+            var el = document.getElementById('cgSummary');
+            if (el) el.innerHTML = rows;
+        }
+        function cgNext(step) {
+            if (step === 1) {
+                var name = document.getElementById('cgName') || { value: '' };
+                var email = document.getElementById('cgEmail') || { value: '' };
+                var phone = document.getElementById('cgPhone') || { value: '' };
+                var addr = document.getElementById('cgAddr') || { value: '' };
+                var city = document.getElementById('cgCity') || { value: '' };
+                var pin = document.getElementById('cgPin') || { value: '' };
+                if (!name.value.trim() || !phone.value.trim() || !email.value.trim() || !email.value.includes('@') || !addr.value.trim() || !city.value.trim() || !pin.value.trim()) {
+                    showToast('Please fill all required fields!'); return;
+                }
+                _cgShowStep(2);
+            } else if (step === 2) {
+                var sel = document.querySelector('input[name="cgPay"]:checked');
+                if (!sel) { showToast('Please select a payment method!'); return; }
+                if (sel.value === 'card') {
+                    var cn = document.getElementById('cgCardNum') || { value: '' };
+                    var ce = document.getElementById('cgCardExp') || { value: '' };
+                    var cv = document.getElementById('cgCardCvv') || { value: '' };
+                    if (!cn.value.trim() || !ce.value.trim() || !cv.value.trim()) {
+                        showToast('Please enter your card details!'); return;
+                    }
+                }
+                _cgPlaceOrder();
+            }
+        }
+        function _cgPlaceOrder() {
+            _cgShowStep(3);
+            var name = (document.getElementById('cgName') || { value: 'Crew Member' }).value.trim() || 'Crew Member';
+            var email = (document.getElementById('cgEmail') || { value: '' }).value.trim();
+            var orderId = 'CG' + Date.now().toString().slice(-7);
+            var conf = document.getElementById('cgConfirm');
+            if (conf) conf.innerHTML = '<div style="text-align:center;padding:20px 0 10px">'
+                + '<div style="width:76px;height:76px;background:rgba(74,144,226,.1);border:2px solid rgba(74,144,226,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--earth-blue);margin:0 auto 20px;animation:cgPop .4s ease"><i class="fas fa-check"></i></div>'
+                + '<p style="font-family:\'Orbitron\',sans-serif;font-size:20px;font-weight:900;margin-bottom:10px;letter-spacing:1px">ORDER PLACED!</p>'
+                + '<p style="color:var(--text-secondary);font-size:14px;margin-bottom:6px">Thank you, <strong style="color:white">' + name + '</strong>!</p>'
+                + (email ? '<p style="color:var(--text-secondary);font-size:13px;margin-bottom:20px">Confirmation sent to<br><strong style="color:var(--earth-blue)">' + email + '</strong></p>' : '')
+                + '<div style="background:rgba(74,144,226,.06);border:1px solid rgba(74,144,226,.2);padding:16px 20px;margin-bottom:22px">'
+                + '<p style="font-size:10px;color:var(--text-secondary);letter-spacing:2px;margin-bottom:6px;text-transform:uppercase">Order ID</p>'
+                + '<p style="font-family:\'Orbitron\',sans-serif;font-size:18px;font-weight:700;color:var(--earth-blue)">#' + orderId + '</p>'
+                + '</div>'
+                + '<p style="color:var(--text-secondary);font-size:13px;margin-bottom:28px;line-height:1.7">Your cosmic gear is being packed.<br>Estimated delivery: <strong style="color:white">3–5 business days</strong></p>'
+                + '<button onclick="_cgDone()" style="padding:13px 36px;background:var(--earth-blue);border:none;color:white;font-family:\'Orbitron\',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:background .3s" onmouseover="this.style.background=\'#6bb6ff\'" onmouseout="this.style.background=\'var(--earth-blue)\'">CONTINUE SHOPPING</button>'
+                + '</div>';
+        }
+        function _cgDone() {
+            _cgSave([]);
+            _cgRender();
+            closeCheckout();
+            showToast('Order confirmed! Welcome to the crew!');
+        }
+        function cgSelectPay(el, method) {
+            document.querySelectorAll('.cg-pay-opt').forEach(function (m) { m.style.borderColor = 'var(--border)'; m.style.background = 'transparent'; });
+            el.style.borderColor = 'var(--earth-blue)';
+            el.style.background = 'rgba(74,144,226,.05)';
+            var cf = document.getElementById('cgCardFields');
+            if (cf) cf.style.display = method === 'card' ? 'block' : 'none';
+        }
+
+        // ── init on every page load ───────────────────────────────
+        _cgRender();
+
+
+        // Card number auto-format
+        (function () {
+            document.addEventListener('input', function (e) {
+                if (e.target.id === 'cgCardNum') {
+                    var v = e.target.value.replace(/\D/g, '').slice(0, 16);
+                    var m = v.match(/.{1,4}/g);
+                    e.target.value = m ? m.join('  ') : v;
+                }
+                if (e.target.id === 'cgCardExp') {
+                    var v = e.target.value.replace(/\D/g, '').slice(0, 4);
+                    if (v.length > 2) v = v.slice(0, 2) + '/' + v.slice(2);
+                    e.target.value = v;
+                }
+                if (e.target.id === 'cgCardCvv') {
+                    e.target.value = e.target.value.replace(/\D/g, '').slice(0, 3);
+                }
+                if (e.target.id === 'cgPin') {
+                    e.target.value = e.target.value.replace(/\D/g, '').slice(0, 6);
+                }
+            });
+        })();
+
+    </script>
+
+    <!-- CHECKOUT MODAL -->
+    <div class="cg-modal-bg" id="checkoutModal" onclick="if(event.target===this)closeCheckout()">
+        <div class="cg-modal">
+            <button class="cg-modal-close" onclick="closeCheckout()"><i class="fas fa-times"></i></button>
+            <div class="cg-modal-header">
+                <i class="fas fa-rocket" style="color:var(--earth-blue);font-size:20px"></i>
+                <span class="cg-modal-title">CHECKOUT</span>
+                <div class="cg-secure-badge"><i class="fas fa-lock"></i> 100% SECURE</div>
+            </div>
+            <div class="cg-modal-body">
+                <!-- LEFT: STEPS -->
+                <div class="cg-left">
+
+                    <!-- STEP 1: DELIVERY -->
+                    <div id="cgStep1">
+                        <div class="cg-step-head" id="cgHead1">
+                            <div class="cg-step-num">1</div>
+                            <div class="cg-step-lbl">DELIVERY DETAILS</div>
+                        </div>
+                        <div class="cg-grid2">
+                            <div><label class="cg-lbl">Full Name *</label><input class="cg-inp" id="cgName" type="text"
+                                    placeholder="Arjun Sharma" autocomplete="name"></div>
+                            <div><label class="cg-lbl">Phone Number *</label><input class="cg-inp" id="cgPhone"
+                                    type="tel" placeholder="98765 43210" autocomplete="tel"></div>
+                        </div>
+                        <div class="cg-field"><label class="cg-lbl">Email Address *</label><input class="cg-inp"
+                                id="cgEmail" type="email" placeholder="you@example.com" autocomplete="email"></div>
+                        <div class="cg-field"><label class="cg-lbl">Flat / House No, Street, Area *</label><input
+                                class="cg-inp" id="cgAddr" type="text"
+                                placeholder="House 42, Sector 17, Near Clock Tower" autocomplete="street-address"></div>
+                        <div class="cg-grid2">
+                            <div><label class="cg-lbl">City *</label><input class="cg-inp" id="cgCity" type="text"
+                                    placeholder="Chandigarh" autocomplete="address-level2"></div>
+                            <div><label class="cg-lbl">State</label>
+                                <select class="cg-sel" id="cgState">
+                                    <option value="">Select state...</option>
+                                    <option>Punjab</option>
+                                    <option>Haryana</option>
+                                    <option>Delhi</option>
+                                    <option>Himachal Pradesh</option>
+                                    <option>Uttarakhand</option>
+                                    <option>Uttar Pradesh</option>
+                                    <option>Rajasthan</option>
+                                    <option>Gujarat</option>
+                                    <option>Maharashtra</option>
+                                    <option>Madhya Pradesh</option>
+                                    <option>Karnataka</option>
+                                    <option>Tamil Nadu</option>
+                                    <option>Kerala</option>
+                                    <option>Andhra Pradesh</option>
+                                    <option>Telangana</option>
+                                    <option>West Bengal</option>
+                                    <option>Odisha</option>
+                                    <option>Bihar</option>
+                                    <option>Jharkhand</option>
+                                    <option>Assam</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="cg-grid2">
+                            <div><label class="cg-lbl">PIN Code *</label><input class="cg-inp" id="cgPin" type="text"
+                                    placeholder="160017" maxlength="6" autocomplete="postal-code"></div>
+                            <div><label class="cg-lbl">Coupon Code</label><input class="cg-inp" id="cgCoupon"
+                                    type="text" placeholder="COSMIC10" style="text-transform:uppercase"></div>
+                        </div>
+                        <button class="cg-btn" onclick="cgNext(1)">CONTINUE TO PAYMENT &nbsp;<i
+                                class="fas fa-arrow-right"></i></button>
+                    </div>
+
+                    <!-- STEP 2: PAYMENT -->
+                    <div id="cgStep2" style="display:none">
+                        <div class="cg-step-head" id="cgHead2">
+                            <div class="cg-step-num">2</div>
+                            <div class="cg-step-lbl">PAYMENT METHOD</div>
+                        </div>
+
+                        <label class="cg-pay-opt" onclick="cgSelectPay(this,'upi')">
+                            <input type="radio" name="cgPay" value="upi">
+                            <div class="cg-pay-icon"><i class="fas fa-mobile-alt"></i></div>
+                            <div>
+                                <div class="cg-pay-name">UPI / BHIM</div>
+                                <div class="cg-pay-sub">Google Pay, PhonePe, Paytm, BHIM</div>
+                            </div>
+                        </label>
+
+                        <label class="cg-pay-opt" onclick="cgSelectPay(this,'card')">
+                            <input type="radio" name="cgPay" value="card">
+                            <div class="cg-pay-icon"><i class="fas fa-credit-card"></i></div>
+                            <div>
+                                <div class="cg-pay-name">CREDIT / DEBIT CARD</div>
+                                <div class="cg-pay-sub">Visa, Mastercard, RuPay, Amex</div>
+                            </div>
+                        </label>
+
+                        <div class="cg-card-fields" id="cgCardFields">
+                            <div class="cg-field"><label class="cg-lbl">Card Number</label><input class="cg-inp"
+                                    id="cgCardNum" type="text" placeholder="1234  5678  9012  3456" maxlength="19">
+                            </div>
+                            <div class="cg-grid2">
+                                <div><label class="cg-lbl">Expiry (MM/YY)</label><input class="cg-inp" id="cgCardExp"
+                                        type="text" placeholder="08/27" maxlength="5"></div>
+                                <div><label class="cg-lbl">CVV</label><input class="cg-inp" id="cgCardCvv"
+                                        type="password" placeholder="•••" maxlength="3"></div>
+                            </div>
+                        </div>
+
+                        <label class="cg-pay-opt" onclick="cgSelectPay(this,'netbank')">
+                            <input type="radio" name="cgPay" value="netbank">
+                            <div class="cg-pay-icon"><i class="fas fa-university"></i></div>
+                            <div>
+                                <div class="cg-pay-name">NET BANKING</div>
+                                <div class="cg-pay-sub">SBI, HDFC, ICICI, Axis &amp; all banks</div>
+                            </div>
+                        </label>
+
+                        <label class="cg-pay-opt" onclick="cgSelectPay(this,'cod')">
+                            <input type="radio" name="cgPay" value="cod">
+                            <div class="cg-pay-icon"><i class="fas fa-money-bill-wave"></i></div>
+                            <div>
+                                <div class="cg-pay-name">CASH ON DELIVERY</div>
+                                <div class="cg-pay-sub">Pay when your order arrives at door</div>
+                            </div>
+                        </label>
+
+                        <button class="cg-btn" onclick="cgNext(2)"><i class="fas fa-rocket"></i> &nbsp;PLACE
+                            ORDER</button>
+                        <button class="cg-btn-back" onclick="_cgShowStep(1)"><i class="fas fa-chevron-left"></i>
+                            &nbsp;Back to Delivery</button>
+                    </div>
+
+                    <!-- STEP 3: CONFIRMATION -->
+                    <div id="cgStep3" style="display:none">
+                        <div class="cg-step-head" id="cgHead3">
+                            <div class="cg-step-num"
+                                style="background:var(--earth-blue);color:white;border-color:var(--earth-blue)"><i
+                                    class="fas fa-check" style="font-size:11px"></i></div>
+                            <div class="cg-step-lbl">ORDER CONFIRMED</div>
+                        </div>
+                        <div id="cgConfirm"></div>
+                    </div>
+
+                </div>
+
+                <!-- RIGHT: ORDER SUMMARY -->
+                <div class="cg-right">
+                    <div class="cg-summary-lbl">ORDER SUMMARY</div>
+                    <div id="cgSummary" style="max-height:420px;overflow-y:auto"></div>
+                    <div class="cg-trust">
+                        <div class="cg-trust-row"><i class="fas fa-shield-alt"></i> 100% secure &amp; encrypted</div>
+                        <div class="cg-trust-row"><i class="fas fa-undo-alt"></i> Easy 7-day returns</div>
+                        <div class="cg-trust-row"><i class="fas fa-shipping-fast"></i> Free shipping over ₹999</div>
+                        <div class="cg-trust-row"><i class="fas fa-headset"></i> 24hr support</div>
+                        <div class="cg-trust-row"><i class="fab fa-cc-visa" style="font-size:15px"></i> Visa, MC, RuPay,
+                            UPI accepted</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
